@@ -1,4 +1,5 @@
 import { DefaultProps } from "@/@types";
+import Link from "next/link";
 import { Logo } from "../Logo";
 import { Nav } from "./Nav";
 
@@ -13,8 +14,11 @@ export const Header = ({
 }: Props) => {
 
     return (
-        <header className="w-full h-24 p-8">
-            <Logo className="h-52 w-52" />
+        <header className="flex flex-row items-center justify-between w-full h-24 p-8 mt-20">
+            <Link href="/">
+                <Logo className="h-52 w-52" />
+            </Link>
+
             <Nav />
             {children}
         </header>
