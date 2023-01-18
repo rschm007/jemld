@@ -1,8 +1,19 @@
 import Head from 'next/head'
 import { Inter } from '@next/font/google'
 import { LayoutPrimary } from '@/components'
+import { apiUrl, app, db } from '@/database/firebase';
+import { doc, getDoc } from 'firebase/firestore';
+import axios from 'axios';
 
-export default function Home() {
+interface PropType {
+  data: any;
+}
+
+export default function Home({
+  data
+}) {
+  console.log(data)
+
   return (
     <>
       <Head>
@@ -24,4 +35,21 @@ export default function Home() {
       </main>
     </>
   )
+}
+
+// @ts-ignore
+export async function getServerSideProps({ req, res }) {
+
+  const data = await app.content.get({ schemaKey: 'theatre' })
+    .then((response) => {
+      return response;
+    }).catch((error) => {
+      console.error(error);
+    })
+
+  return {
+    props: {
+      data
+    }
+  }
 }

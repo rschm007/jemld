@@ -1,6 +1,6 @@
 import { DefaultProps } from "@/@types";
 import Link from "next/link";
-import { Logo } from "../Logo";
+import { LogoSmall } from "../Logos";
 import { Nav } from "./Nav";
 
 export interface Props extends DefaultProps {
@@ -16,7 +16,7 @@ export const Header = ({
     return (
         <header className="flex flex-row items-center justify-between w-full h-24 p-8 mt-20">
             <Link href="/">
-                <Logo className="h-52 w-52" />
+                <LogoSmall className="h-64 w-64" />
             </Link>
 
             <Nav />
