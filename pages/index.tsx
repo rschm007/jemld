@@ -1,6 +1,5 @@
 import Head from 'next/head'
 import { LayoutPrimary } from '@/components'
-import { app } from '@/database/firebase';
 import { useEffect } from 'react';
 import { getTheatre } from '@/database/theatre/theatre';
 
