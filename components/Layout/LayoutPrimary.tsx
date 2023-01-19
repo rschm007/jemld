@@ -1,15 +1,11 @@
-import { DefaultProps } from "@/@types";
+import { IDefaultPropsWithChildrenRequired } from "@/@types/DefaultProps";
 import { Header } from "./Header";
-
-export interface LayoutPrimaryProps extends DefaultProps {
-    children: JSX.Element | JSX.Element[];
-}
 
 export const LayoutPrimary = ({
     className = "",
     id,
     children
-}: LayoutPrimaryProps) => {
+}: IDefaultPropsWithChildrenRequired) => {
 
     return (
         <div className={"w-full h-full " + className} id={id}>

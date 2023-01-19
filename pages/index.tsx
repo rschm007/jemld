@@ -12,11 +12,12 @@ export default function Home({
 }) {
 
   useEffect(() => {
-    getTheatre().then((response) => {
-      console.log(response);
-    }).catch((error) => {
-      console.error(error);
-    })
+    getTheatre()
+      .then((response) => {
+        console.log(response);
+      }).catch((error) => {
+        console.error(error);
+      })
   }, [])
 
   return (
@@ -33,21 +34,3 @@ export default function Home({
     </>
   )
 }
-
-// @ts-ignore
-// export async function getServerSideProps({ req, res }) {
-
-//   const data = await app.content.get({ schemaKey: 'theatre' })
-//     .then((response) => {
-//       console.log(response)
-//       return response;
-//     }).catch((error) => {
-//       console.error(error);
-//     })
-
-//   return {
-//     props: {
-//       data
-//     }
-//   }
-// }

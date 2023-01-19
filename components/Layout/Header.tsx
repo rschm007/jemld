@@ -1,9 +1,9 @@
-import { DefaultProps } from "@/@types";
+import { IDefaultProps } from "@/@types";
 import Link from "next/link";
 import { LogoSmall } from "../Logos";
 import { Nav } from "./Nav";
 
-export interface Props extends DefaultProps {
+export interface Props extends IDefaultProps {
     children?: JSX.Element | JSX.Element[];
 }
 

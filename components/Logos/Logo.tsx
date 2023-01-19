@@ -1,9 +1,9 @@
-import { DefaultProps } from "@/@types"
+import { IDefaultProps } from "@/@types"
 
 export const Logo = ({
     className = "",
     id
-}: DefaultProps) => {
+}: IDefaultProps) => {
 
     return (
 

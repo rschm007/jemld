@@ -1,6 +1,6 @@
-import { DefaultProps } from "@/@types"
+import { IDefaultProps } from "@/@types"
 
-interface LogoSmallProps extends DefaultProps {
+interface LogoSmallProps extends IDefaultProps {
     svgClasses?: string;
 }
 
