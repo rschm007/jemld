@@ -1,9 +1,11 @@
-import axios from "axios"
-import { apiUrl } from "../firebase"
-
-const fl_id = "nLay31Us53WiSCfpKpyA";
+import { collection, getDocs } from "firebase/firestore/lite"
+import { firestore } from "../firebase"
 
 // GET all theatre projects
-export const getAllTheatre = async () => {
-    await axios.get(`${apiUrl}/databases/(default)/documents/documents/fl_schemas/${fl_id}`)
+export const getTheatre = async () => {
+    const theatreCol = collection(firestore, "theatre");
+    const theatreSnapshot = await getDocs(theatreCol);
+    const theatreList = theatreSnapshot.docs.map((doc) => doc.data());
+
+    return theatreList;
 }

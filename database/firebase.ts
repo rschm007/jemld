@@ -1,9 +1,6 @@
-// Import the functions you need from the SDKs you need
-import firebase, { initializeApp } from "firebase/app";
-import { getAnalytics } from "firebase/analytics";
-import { getFirestore } from "firebase/firestore";
-import flamelink from "flamelink";
-
+// Firebase app is always required and must be first
+import { initializeApp } from 'firebase/app'
+import { getFirestore, collection, getDocs } from 'firebase/firestore/lite';
 
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
@@ -22,26 +19,10 @@ export const firebaseConfig = {
 };
 
 // Initialize Firebase
-let analytics, firebaseApp, firestore;
+export let firebaseApp, firestore;
 if (firebaseConfig?.projectId) {
-    if (!firebase.apps.length) {
-        firebaseApp = initializeApp(firebaseConfig);
-    }
-
-    if (firebaseApp.name && typeof window !== 'undefined') {
-        analytics = getAnalytics(firebaseApp)
-    }
+    firebaseApp = initializeApp(firebaseConfig);
 
     // Initialize Cloud Firestore and get a reference to the service
     firestore = getFirestore(firebaseApp);
 }
-
-export const app = flamelink({
-    firebaseApp,
-    env: 'production',
-    locale: 'en-us',
-    dbType: 'cf'
-})
-
-export const firebaseApi = "https://firestore.googleapis.com/v1/";
-export const apiUrl = `${firebaseApi}/projects/${firebaseConfig.projectId}`;
