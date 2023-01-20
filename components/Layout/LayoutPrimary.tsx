@@ -8,7 +8,7 @@ export const LayoutPrimary = ({
 }: IDefaultPropsWithChildrenRequired) => {
 
     return (
-        <div className={"w-full h-full " + className} id={id}>
+        <div className={"w-full h-full bg-offWhite " + className} id={id}>
             <Header />
             {children}
         </div>
