@@ -1,7 +1,7 @@
 import Head from 'next/head'
 import { LayoutPrimary } from '@/components'
 import { useEffect, useState } from 'react';
-import { getTheatre } from '@/database/collections/theatre';
+import { getFiles, getTheatre } from '@/database/collections/theatre';
 import Image from 'next/image';
 import { firebaseApp, getImage } from '@/database';
 import { getStorage, ref, getDownloadURL } from 'firebase/storage';
@@ -32,7 +32,16 @@ export default function Home({
         }).catch((error) => {
           console.error(error);
         })
+
+      await getFiles()
+        .then(async (response) => {
+          console.log(response);
+        }).catch((error) => {
+          console.error(error);
+        })
     }
+
+    getData();
 
   }, [])
 
