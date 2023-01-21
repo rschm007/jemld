@@ -22,7 +22,6 @@ export default function Home({
     await getTheatre()
       .then((response) => {
         response.map((x) => {
-          console.log(response)
           imageNames.push({
             title: x.title,
             imageNameId: `${x.imageNameId}_0.webp`

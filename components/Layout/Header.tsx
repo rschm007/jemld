@@ -48,8 +48,8 @@ export const Header = ({
 
     return (
         <header
-            className={"header-section fixed top-0 z-50 flex flex-row items-center justify-between w-full  px-8 " +
-                (sticky ? "h-36 " : "h-48 ") + className}
+            className={"header-section fixed top-0 z-50 flex flex-row items-center justify-between w-full  px-8 transition-all ease-in-out delay-75 " +
+                (sticky ? "h-32 " : "h-48 ") + className}
             id={id}
             style={{
                 backgroundColor: bgColor
