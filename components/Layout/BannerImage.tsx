@@ -36,7 +36,7 @@ export const BannerImage = ({
                     {children}
                 </img>
 
-                <h2 className="-mt-20 mx-8 font-montserrat text-offWhite font-normal text-xl absolute z-10">
+                <h2 className="-mt-20 mx-8 font-montserrat text-offWhite tracking-wide font-normal text-xl absolute z-10">
                     {title}
                 </h2>
             </Link>

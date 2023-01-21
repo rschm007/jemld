@@ -2,12 +2,16 @@ import { IDefaultProps } from "@/@types"
 import { Menu, Transition } from "@headlessui/react"
 import Link from "next/link"
 import { Fragment } from "react"
-import { linkStyles } from "./Nav"
+
+export interface PortfolioMenuProps extends IDefaultProps {
+    linkStyles: string;
+}
 
 export const PortfolioMenu = ({
     className = "",
-    id
-}: IDefaultProps) => {
+    id,
+    linkStyles
+}: PortfolioMenuProps) => {
 
     return (
         <Menu>

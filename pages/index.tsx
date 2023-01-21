@@ -60,7 +60,7 @@ export default function Home({
       <main className="w-screen h-screen">
         <LayoutPrimary>
 
-          <section className="space-y-2 mt-8">
+          <section className="space-y-2 mt-48">
             {imgNames.map((img, i) => (
               <BannerImage
                 key={i}
