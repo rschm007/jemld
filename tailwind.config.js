@@ -11,6 +11,9 @@ module.exports = {
       'lavender': "#a057b1",
       "darkViolet": "#160d33",
     },
+    objectPosition: {
+      'cover': 'cover',
+    },
   },
   plugins: [],
 }

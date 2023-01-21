@@ -1,10 +1,10 @@
 import Head from 'next/head'
 import { LayoutPrimary } from '@/components'
 import { useEffect, useState } from 'react';
-import { getFiles, getTheatre } from '@/database/collections/theatre';
-import Image from 'next/image';
-import { firebaseApp, getImage } from '@/database';
-import { getStorage, ref, getDownloadURL } from 'firebase/storage';
+import { getTheatre } from '@/database/collections/theatre';
+import { getImageURL } from '@/database';
+import { BannerImage } from '@/components/Layout/BannerImage';
+import { Image } from '@/@types/Image';
 
 interface PropType {
   data: any;
@@ -13,36 +13,42 @@ interface PropType {
 export default function Home({
   data
 }) {
-  const [img, setImg] = useState("");
+  const [imgUrls, setImgUrls] = useState<Array<string>>([]);
+  const [imgNames, setImgNames] = useState<Array<Image>>([]);
+
+  // get imageNameID paramater from each collection and push to array so we can retrieve image URLs from storage
+  let imageNames: Array<Image> = [];
+  const getData = async () => {
+    await getTheatre()
+      .then((response) => {
+        response.map((x) => {
+          console.log(response)
+          imageNames.push({
+            title: x.title,
+            imageNameId: `${x.imageNameId}_0.webp`
+          });
+        })
+      }).catch((error) => {
+        console.error(error);
+      })
+
+    await setImgNames(imageNames);
+
+    // retreive image download URLs
+    imageNames.forEach(async (img) => {
+      await getImageURL(img.imageNameId)
+        .then(async (response) => {
+          await setImgUrls((prev) => [
+            ...prev, response
+          ])
+        }).catch((error) => {
+          console.error(error);
+        })
+    })
+  }
 
   useEffect(() => {
-
-    const getData = async () => {
-      await getTheatre()
-        .then((response) => {
-          console.log(response);
-        }).catch((error) => {
-          console.error(error);
-        })
-
-      await getImage("bb_0.webp")
-        .then(async (response) => {
-          console.log(response)
-          setImg(response);
-        }).catch((error) => {
-          console.error(error);
-        })
-
-      await getFiles()
-        .then(async (response) => {
-          console.log(response);
-        }).catch((error) => {
-          console.error(error);
-        })
-    }
-
     getData();
-
   }, [])
 
   return (
@@ -53,11 +59,18 @@ export default function Home({
 
       <main className="w-screen h-screen">
         <LayoutPrimary>
-          <>
 
-            <img alt="" src={img} />
+          <section className="space-y-2 mt-8">
+            {imgNames.map((img, i) => (
+              <BannerImage
+                key={i}
+                src={imgUrls[i]}
+                alt={img.title}
+                title={img.title}
+              />
+            ))}
+          </section>
 
-          </>
         </LayoutPrimary>
       </main>
     </>

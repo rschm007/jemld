@@ -5,7 +5,7 @@ import { getDownloadURL, getStorage, ref } from "firebase/storage";
  * @param fileId id field for file
  * @returns url
  */
-export const getImage = async (fileName: string) => {
+export const getImageURL = async (fileName: string) => {
     const storage = getStorage();
     const imageRef = ref(storage, `flamelink/media/${fileName}`)
 
