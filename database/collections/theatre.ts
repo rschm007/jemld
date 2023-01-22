@@ -20,7 +20,7 @@ export const getTheatre = async () => {
  * @returns Array<Image>
  */
 export const getTheatreMainImages = async () => {
-    let images: Array<Image> = [];
+    let images: Array<any> = [];
     let imageNames: Array<string> = [];
     let imageUrls: Array<any> = [];
 
