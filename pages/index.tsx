@@ -1,54 +1,18 @@
 import Head from 'next/head'
 import { LayoutPrimary } from '@/components'
-import { useEffect, useState } from 'react';
-import { getTheatre } from '@/database/collections/theatre';
-import { getImageURL } from '@/database';
-import { BannerImage } from '@/components/Layout/BannerImage';
-import { Image } from '@/@types/Image';
+import { useEffect } from 'react';
+import { getContent, getSocialMedia } from '@/database';
+import { socialsAtom } from '@/state/socials';
+import { useAtom } from 'jotai';
+import { useHydrateAtoms } from 'jotai/utils'
 
 interface PropType {
-  data: any;
+  contentData: any;
 }
 
-export default function Home({
-  data
-}) {
-  const [imgUrls, setImgUrls] = useState<Array<string>>([]);
-  const [imgNames, setImgNames] = useState<Array<Image>>([]);
-
-  // get imageNameID paramater from each collection and push to array so we can retrieve image URLs from storage
-  let imageNames: Array<Image> = [];
-  const getData = async () => {
-    await getTheatre()
-      .then((response) => {
-        response.map((x) => {
-          imageNames.push({
-            title: x.title,
-            imageNameId: `${x.imageNameId}_0.webp`
-          });
-        })
-      }).catch((error) => {
-        console.error(error);
-      })
-
-    await setImgNames(imageNames);
-
-    // retreive image download URLs
-    imageNames.forEach(async (img) => {
-      await getImageURL(img.imageNameId)
-        .then(async (response) => {
-          await setImgUrls((prev) => [
-            ...prev, response
-          ])
-        }).catch((error) => {
-          console.error(error);
-        })
-    })
-  }
-
-  useEffect(() => {
-    getData();
-  }, [])
+export const Home = ({
+  contentData
+}: PropType) => {
 
   return (
     <>
@@ -60,14 +24,14 @@ export default function Home({
         <LayoutPrimary>
 
           <section className="space-y-2 mt-48">
-            {imgNames.map((img, i) => (
+            {/* {imgNames.map((img, i) => (
               <BannerImage
                 key={i}
                 src={imgUrls[i]}
                 alt={img.title}
                 title={img.title}
               />
-            ))}
+            ))} */}
           </section>
 
         </LayoutPrimary>
@@ -75,3 +39,15 @@ export default function Home({
     </>
   )
 }
+
+export async function getServerSideProps() {
+  const contentData = await getContent();
+
+  return {
+    props: {
+      contentData: contentData
+    }
+  }
+}
+
+export default Home;

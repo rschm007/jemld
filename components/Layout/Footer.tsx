@@ -1,5 +1,4 @@
 import { IDefaultPropsWithChildren } from "@/@types"
-import { LogoSmall } from "../Logos"
 import { SocialMediaIcons } from "./SocialMediaIcons"
 
 export const Footer = ({
@@ -10,7 +9,7 @@ export const Footer = ({
 
     return (
         <footer className={"flex flex-col w-full h-80 bg-[#404040] mt-4 " + className} id={id}>
-            <div className="flex flex-row w-full justify-between px-24 pt-16">
+            <div className="flex flex-row w-full justify-between px-32 pt-16">
 
                 <div className="flex flex-col items-center justify-start">
                     <span className="font-montserrat font-semibold text-base text-offWhite">
@@ -18,7 +17,7 @@ export const Footer = ({
                     </span>
                 </div>
 
-                <SocialMediaIcons />
+                <SocialMediaIcons linkedIn />
             </div>
 
             {children}

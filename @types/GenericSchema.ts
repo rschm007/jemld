@@ -5,10 +5,11 @@ import { fl_ImageGalleryImage, fl_Meta } from "./Flamelink"
  * 
  */
 export type GenericSchema = {
-    fl_meta: fl_Meta;
+    _fl_meta: fl_Meta;
     clientName: string;
     id: string;
     imageGallery: Array<fl_ImageGalleryImage>;
+    imageNameId: string;
     longItemDescription: string;
     mainImage: Array<any>;
     order: number;

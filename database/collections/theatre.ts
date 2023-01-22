@@ -1,4 +1,3 @@
-import { Image } from "@/@types/Image";
 import { collection, getDocs } from "firebase/firestore/lite"
 import { firestore } from "../firebase"
 import { getImageURL } from "../media";

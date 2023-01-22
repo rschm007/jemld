@@ -1,15 +1,16 @@
-import { getContent } from "./content";
+/**
+ * @description GET socialMedia schema content
+ * @param contentData JSON of content data returend from getContent()
+ * @returns JSONF
+ */
+export const getSocialMedia = async (contentData: any) => {
+    let socialsData = [];
+    contentData.forEach(async (content: any) => {
+        if (content.hasOwnProperty('platform')) {
+            socialsData.push(content);
+        }
+    });
+    const socialsJson = JSON.parse(JSON.stringify(socialsData))
 
-export const getSocialMedia = async () => {
-    let socialsArr = [];
-
-    await getContent().then((res) => {
-        res.filter((r) => {
-            if (r._fl_meta_.schema === "socialMedia") {
-                socialsArr.push(r);
-            }
-        })
-    })
-
-    return socialsArr;
+    return socialsJson;
 }

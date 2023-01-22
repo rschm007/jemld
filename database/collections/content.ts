@@ -3,12 +3,16 @@ import { firestore } from "../firebase";
 
 /**
  * @description get ALL collections
- * @returns <GenericSchema> object
+ * @returns JSON
  */
 export const getContent = async () => {
-    const col = collection(firestore, "fl_content");
-    const snapshot = await getDocs(col);
-    const list = snapshot.docs.map((doc) => doc.data());
+    const contentCol = await collection(firestore, "fl_content")
+    const contentSnapshot = await getDocs(contentCol);
+    const contentData = contentSnapshot.docs.map((entry) => ({
+        id: entry.id,
+        ...entry.data()
+    }))
+    const contentJson = JSON.parse(JSON.stringify(contentData));
 
-    return list;
+    return contentJson;
 }
