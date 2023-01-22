@@ -11,5 +11,5 @@ export interface IDefaultPropsWithChildrenRequired extends IDefaultProps {
 }
 
 export interface IDefaultPropsWithChildren extends IDefaultProps {
-    children?: JSX.Element | JSON.Element[];
+    children?: JSX.Element | JSX.Element[];
 }
