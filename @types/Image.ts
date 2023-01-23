@@ -8,5 +8,4 @@ export type Image = {
     title: string;
     url: string;
     alt: string;
-    data: any;
 }

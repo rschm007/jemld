@@ -9,7 +9,7 @@ export const LayoutPrimary = ({
 }: IDefaultPropsWithChildrenRequired) => {
 
     return (
-        <div className={"w-full h-full bg-offWhite " + className} id={id}>
+        <div className={"flex flex-col w-full h-full justify-between bg-offWhite " + className} id={id}>
             <Header />
 
             {children}

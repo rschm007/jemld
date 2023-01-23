@@ -1,18 +1,26 @@
 import Head from 'next/head'
 import { LayoutPrimary } from '@/components'
 import { useEffect } from 'react';
-import { getContent, getSocialMedia } from '@/database';
-import { socialsAtom } from '@/state/socials';
+import { getContent, getMainImageURLs, mapImagesMetaData } from '@/database';
+import { BannerImage } from '@/components/Layout/BannerImage';
+import { homeImagesAtom } from '@/state';
 import { useAtom } from 'jotai';
 import { useHydrateAtoms } from 'jotai/utils'
 
 interface PropType {
   contentData: any;
+  imagesMetaData: any;
 }
 
 export const Home = ({
-  contentData
+  contentData,
+  imagesMetaData
 }: PropType) => {
+  //@ts-ignore
+  useHydrateAtoms([[homeImagesAtom, imagesMetaData]])
+  const [imagesMeta] = useAtom(homeImagesAtom)
+
+  console.log(imagesMetaData)
 
   return (
     <>
@@ -24,14 +32,14 @@ export const Home = ({
         <LayoutPrimary>
 
           <section className="space-y-2 mt-48">
-            {/* {imgNames.map((img, i) => (
+            {imagesMeta.map((img, i) => (
               <BannerImage
                 key={i}
-                src={imgUrls[i]}
+                src={img.url}
                 alt={img.title}
                 title={img.title}
               />
-            ))} */}
+            ))}
           </section>
 
         </LayoutPrimary>
@@ -42,10 +50,13 @@ export const Home = ({
 
 export async function getServerSideProps() {
   const contentData = await getContent();
+  const imageUrlsData = await getMainImageURLs(contentData);
+  const imagesMetaData = await mapImagesMetaData(contentData, imageUrlsData);
 
   return {
     props: {
-      contentData: contentData
+      contentData: contentData,
+      imagesMetaData: imagesMetaData
     }
   }
 }

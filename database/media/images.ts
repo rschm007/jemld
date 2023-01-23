@@ -1,22 +1,49 @@
+import { Image } from "@/@types/Image";
 import { getDownloadURL, getStorage, ref } from "firebase/storage";
 
 /**
- * @description GET an image from firebase by fileId
- * @param fileId id field for file
+ * @description GET an image from firebase
+ * @param contentData contentData JSON of content data returend from getContent()
  * @returns url
  */
-export const getImageURL = async (fileName: string) => {
+export const getMainImageURLs = async (contentData: any) => {
+    const imageNameIds = [];
+
+    contentData.forEach((data) => {
+        if (data?.imageNameId) {
+            imageNameIds.push(`${data.imageNameId}_0.webp`);
+        }
+    })
+
+    const imageUrls = [];
     const storage = getStorage();
-    const imageRef = ref(storage, `flamelink/media/${fileName}`)
+    imageNameIds.forEach((imageName) => {
+        const imageRef = ref(storage, `flamelink/media/${imageName}`)
+        const url = getDownloadURL(imageRef).then((res) => {
+            return res
+        });
+        imageUrls.push(url);
+    })
 
-    let response;
+    const imageData = await Promise.all(imageUrls);
+    return imageData;
+}
 
-    try {
-        response = await getDownloadURL(imageRef);
-    } catch (error) {
-        return console.error(error);
-    }
+export const mapImagesMetaData = async (contentData: any, imageUrls: any) => {
+    const images: Array<Image> = [];
 
-    // if success return value
-    return response ? response : null
+    imageUrls.forEach((url) => {
+        contentData.forEach((data) => {
+            if (url.includes(`${data.imageNameId}_0`)) {
+                const imageMeta: Image = {
+                    title: data.title,
+                    url: url,
+                    alt: data.title
+                }
+                images.push(imageMeta);
+            }
+        })
+    })
+
+    return images;
 }
