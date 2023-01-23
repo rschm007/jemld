@@ -29,7 +29,7 @@ export const PortfolioMenu = ({
                     <div className="flex flex-col items-center justify-start p-2">
                         <Menu.Item>
                             {({ active }) => (
-                                <Link className={linkStyles} href="/theatre">
+                                <Link className={linkStyles} href="/portfolio/theatre">
                                     Theatre
                                 </Link>
                             )}
@@ -37,7 +37,7 @@ export const PortfolioMenu = ({
 
                         <Menu.Item>
                             {({ active }) => (
-                                <Link className={linkStyles} href="/dance">
+                                <Link className={linkStyles} href="/portfolio/dance">
                                     Dance
                                 </Link>
                             )}
@@ -45,7 +45,7 @@ export const PortfolioMenu = ({
 
                         <Menu.Item>
                             {({ active }) => (
-                                <Link className={linkStyles} href="/cadDesign">
+                                <Link className={linkStyles} href="/portfolio/cadDesign">
                                     CAD Design
                                 </Link>
                             )}

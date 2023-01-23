@@ -22,7 +22,7 @@ export const Home = ({
     [homeImagesAtom, imagesMetaData]
   ])
   const [content] = useAtom(contentAtom);
-  const [imagesMeta] = useAtom(homeImagesAtom)
+  const [imagesMeta] = useAtom(homeImagesAtom);
 
   console.log(imagesMeta)
 
