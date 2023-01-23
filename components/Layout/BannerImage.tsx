@@ -28,7 +28,6 @@ export const BannerImage = ({
         >
             <Link
                 href={href}
-                target="_blank"
             >
                 <img
                     className={"object-cover w-full max-h-[40vh] object-bottom relative brightness-100 group-hover:brightness-[0.25] transition-all ease-in-out delay-75 z-0" + imgClasses}

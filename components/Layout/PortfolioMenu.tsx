@@ -29,25 +29,25 @@ export const PortfolioMenu = ({
                     <div className="flex flex-col items-center justify-start p-2">
                         <Menu.Item>
                             {({ active }) => (
-                                <Link className={linkStyles} href="/portfolio/theatre">
+                                <a className={linkStyles} href="/portfolio/theatre">
                                     Theatre
-                                </Link>
+                                </a>
                             )}
                         </Menu.Item>
 
                         <Menu.Item>
                             {({ active }) => (
-                                <Link className={linkStyles} href="/portfolio/dance">
+                                <a className={linkStyles} href="/portfolio/dance">
                                     Dance
-                                </Link>
+                                </a>
                             )}
                         </Menu.Item>
 
                         <Menu.Item>
                             {({ active }) => (
-                                <Link className={linkStyles} href="/portfolio/cadDesign">
+                                <a className={linkStyles} href="/portfolio/cadDesign">
                                     CAD Design
-                                </Link>
+                                </a>
                             )}
                         </Menu.Item>
                     </div>

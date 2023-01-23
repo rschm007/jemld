@@ -55,7 +55,7 @@ export const Header = ({
                 backgroundColor: bgColor
             }}
         >
-            <Link href="/">
+            <Link href="/" passHref>
                 <LogoSmall
                     className={sticky ? "h-48 w-48" : "h-64 w-64"}
                     fill={sticky ? "#FDFDF0" : "#111111"}
