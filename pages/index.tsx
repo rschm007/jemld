@@ -1,11 +1,11 @@
 import Head from 'next/head'
 import { LayoutPrimary } from '@/components'
-import { useEffect } from 'react';
 import { getContent, getMainImageURLs, mapImagesMetaData } from '@/database';
 import { BannerImage } from '@/components/Layout/BannerImage';
 import { homeImagesAtom } from '@/state';
 import { useAtom } from 'jotai';
 import { useHydrateAtoms } from 'jotai/utils'
+import { contentAtom } from '@/state/content';
 
 interface PropType {
   contentData: any;
@@ -17,10 +17,14 @@ export const Home = ({
   imagesMetaData
 }: PropType) => {
   //@ts-ignore
-  useHydrateAtoms([[homeImagesAtom, imagesMetaData]])
+  useHydrateAtoms([
+    [contentAtom, contentData],
+    [homeImagesAtom, imagesMetaData]
+  ])
+  const [content] = useAtom(contentAtom);
   const [imagesMeta] = useAtom(homeImagesAtom)
 
-  console.log(imagesMetaData)
+  console.log(imagesMeta)
 
   return (
     <>
@@ -32,12 +36,13 @@ export const Home = ({
         <LayoutPrimary>
 
           <section className="space-y-2 mt-48">
-            {imagesMeta.map((img, i) => (
+            {imagesMeta.sort((a, b) => a.orderNo - b.orderNo).map((img, i) => (
               <BannerImage
                 key={i}
                 src={img.url}
                 alt={img.title}
                 title={img.title}
+                href={img.pageSlug}
               />
             ))}
           </section>

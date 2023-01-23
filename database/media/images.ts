@@ -1,4 +1,5 @@
 import { Image } from "@/@types/Image";
+import { stringToCamelcase } from "@/utils";
 import { getDownloadURL, getStorage, ref } from "firebase/storage";
 
 /**
@@ -29,6 +30,37 @@ export const getMainImageURLs = async (contentData: any) => {
     return imageData;
 }
 
+/**
+ * @description GET an image from firebase
+ * @param contentData contentData JSON of content data returend from getContent()
+ * @returns url
+ */
+export const getImageURLsByImageNameId = async (contentData: any, imageNameId: string) => {
+    const imageNameIds = [];
+    let imageCount;
+
+    contentData.forEach((data, i) => {
+        if (data?.imageNameId === imageNameId) {
+            imageNameIds.push(`${data.imageNameId}_[${imageCount}].webp`);
+        }
+        imageCount++;
+    })
+
+    const imageUrls = [];
+    const storage = getStorage();
+    imageNameIds.forEach((imageName) => {
+        const imageRef = ref(storage, `flamelink/media/${imageName}`)
+        const url = getDownloadURL(imageRef).then((res) => {
+            return res
+        });
+        imageUrls.push(url);
+    })
+
+    const imageData = await Promise.all(imageUrls);
+    return imageData;
+}
+
+
 export const mapImagesMetaData = async (contentData: any, imageUrls: any) => {
     const images: Array<Image> = [];
 
@@ -38,7 +70,9 @@ export const mapImagesMetaData = async (contentData: any, imageUrls: any) => {
                 const imageMeta: Image = {
                     title: data.title,
                     url: url,
-                    alt: data.title
+                    alt: data.title,
+                    pageSlug: `portfolio/${data._fl_meta_.schema}/${stringToCamelcase(data.id)}`,
+                    orderNo: data.orderNo
                 }
                 images.push(imageMeta);
             }
