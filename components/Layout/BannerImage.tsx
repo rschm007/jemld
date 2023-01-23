@@ -7,6 +7,7 @@ export interface BannerImageProps extends IDefaultPropsWithChildren {
     href?: string;
     alt: string;
     title: string;
+    imgClasses?: string;
 }
 
 export const BannerImage = ({
@@ -16,12 +17,13 @@ export const BannerImage = ({
     src,
     href = "#",
     alt,
-    title = "Image"
+    title = "Image",
+    imgClasses = ""
 }: BannerImageProps) => {
 
     return (
         <article
-            className={"max-h-[40vh] relative " + className}
+            className={"group max-h-[40vh] relative " + className}
             id={id}
         >
             <Link
@@ -29,14 +31,14 @@ export const BannerImage = ({
                 target="_blank"
             >
                 <img
-                    className={"object-cover w-full max-h-[40vh] object-bottom relative z-0"}
+                    className={"object-cover w-full max-h-[40vh] object-bottom relative brightness-100 group-hover:brightness-[0.25] transition-all ease-in-out delay-75 z-0" + imgClasses}
                     src={src}
                     alt={alt}
                 >
                     {children}
                 </img>
 
-                <h2 className="-mt-20 mx-8 font-montserrat text-offWhite tracking-wide font-normal text-xl absolute z-10">
+                <h2 className="-mt-20 mx-8 font-montserrat text-offWhite drop-shadow-sm tracking-wide font-normal text-xl absolute z-10">
                     {title}
                 </h2>
             </Link>
