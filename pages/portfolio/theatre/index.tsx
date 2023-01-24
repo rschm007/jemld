@@ -5,7 +5,8 @@ import { useAtom } from "jotai";
 import { useRouter } from "next/router";
 import { useState } from "react";
 import { useHydrateAtoms } from 'jotai/utils'
-import { BannerImage } from "@/components/Layout/BannerImage";
+import { BannerImage } from "@/components/Images/BannerImage";
+import BannerHeader from "@/components/Layout/BannerHeader";
 
 interface PropType {
     contentData: any;
@@ -23,8 +24,6 @@ export const TheatrePage = ({
     const [content] = useAtom(theatreContentAtom);
     const [imagesMeta] = useState(imagesMetaData);
 
-    console.log(imagesMeta)
-
     const router = useRouter();
     const id = router.query.id;
 
@@ -34,6 +33,9 @@ export const TheatrePage = ({
                 <LayoutPrimary>
 
                     <section className="space-y-2 mt-48">
+
+                        <BannerHeader text="Theatre" />
+
                         {imagesMeta.sort((a, b) => a.orderNo - b.orderNo).map((img, i) => (
                             <BannerImage
                                 key={i}

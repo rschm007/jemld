@@ -22,7 +22,7 @@ export const BannerImage = ({
 }: BannerImageProps) => {
 
     return (
-        <article
+        <figure
             className={"group max-h-[40vh] relative " + className}
             id={id}
         >
@@ -41,6 +41,6 @@ export const BannerImage = ({
                     {title}
                 </h2>
             </Link>
-        </article>
+        </figure>
     )
 }

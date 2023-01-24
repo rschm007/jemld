@@ -1,7 +1,7 @@
 import Head from 'next/head'
 import { LayoutPrimary } from '@/components'
 import { getContent, getMainImageURLs, mapImagesMetaData } from '@/database';
-import { BannerImage } from '@/components/Layout/BannerImage';
+import { BannerImage } from '@/components/Images/BannerImage';
 import { homeImagesAtom } from '@/state';
 import { useAtom } from 'jotai';
 import { useHydrateAtoms } from 'jotai/utils'

@@ -1,30 +1,16 @@
-import { LayoutPrimary } from "@/components";
-import { getContentBySchemaName, getMainImageURLs, mapImagesMetaData } from "@/database";
-import { theatreContentAtom } from "@/state/content";
-import { useAtom } from "jotai";
+import { BannerHeader, LayoutPrimary } from "@/components";
+import { HeroImage } from "@/components/Images";
+import { getContentBySchemaName, getPageContent } from "@/database";
 import { useRouter } from "next/router"
-import { useHydrateAtoms } from 'jotai/utils'
 
 interface PropType {
     contentData: any;
-    imagesMetaData: any;
 }
 
 export const TheatreDocPage = ({
     contentData,
-    imagesMetaData
 }: PropType) => {
-    //@ts-ignore
-    useHydrateAtoms([
-        [theatreContentAtom, contentData]
-    ])
-    const [content] = useAtom(theatreContentAtom);
-
-    const router = useRouter();
-    const id = router.query.id;
-
-    console.log(id)
-    console.log(content);
+    console.log(contentData);
 
     return (
         <>
@@ -32,6 +18,10 @@ export const TheatreDocPage = ({
                 <LayoutPrimary>
 
                     <section className="space-y-2 mt-48">
+                        <HeroImage src={contentData.urls[0]} alt={contentData.data.title} />
+
+                        <BannerHeader text={contentData.data.title} />
+
 
                     </section>
 
@@ -41,16 +31,15 @@ export const TheatreDocPage = ({
     )
 }
 
-export async function getServerSideProps({ query }) {
-    const id = query;
+export async function getServerSideProps(context) {
+    const id = context.params.id;
 
     const contentData = await getContentBySchemaName("theatre");
-    const imageUrlsData = await getMainImageURLs(contentData);
-    const imagesMetaData = await mapImagesMetaData(contentData, imageUrlsData);
+    const pageContentData = await getPageContent(contentData, id);
 
     return {
         props: {
-            contentData: contentData,
+            contentData: pageContentData
         }
     }
 }

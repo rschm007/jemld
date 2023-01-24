@@ -1,5 +1,6 @@
 import { collection, getDocs } from "firebase/firestore/lite";
 import { firestore } from "../firebase";
+import { getImageURLsByImageGalleryLength } from "../media";
 
 /**
  * @description get ALL collections
@@ -54,6 +55,33 @@ export const getContentBySchemaName = async (schemaName: string) => {
     })
 
     const contentJson = JSON.parse(JSON.stringify(contentFiltered));
-
     return contentJson;
+}
+
+/**
+ * @description get ALL collections that match the schema name
+ * @param contentData firestore content object
+ * @param id
+ * @returns JSON
+ */
+export const getPageContent = async (contentData: any, id: string) => {
+    let contentMatch = await contentData.find((c) => c.id.toLowerCase() === id.toLowerCase());
+
+    // console.log(contentMatch)
+
+    let imageUrls = [];
+    await getImageURLsByImageGalleryLength(contentMatch.imageGallery.length, contentMatch.imageNameId)
+        .then(async (res) => {
+            await imageUrls.push(res);
+        }).catch((error) => {
+            console.error(error);
+        });
+
+    const content = {
+        data: contentMatch,
+        urls: imageUrls
+    }
+
+    const pageContentJson = JSON.parse(JSON.stringify(content));
+    return pageContentJson;
 }
