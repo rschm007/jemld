@@ -1,5 +1,5 @@
 import Head from 'next/head'
-import { LayoutPrimary } from '@/components'
+import { BannerHeader, LayoutPrimary } from '@/components'
 import { getContent, getMainImageURLs, mapImagesMetaData } from '@/database';
 import { BannerImage } from '@/components/Images/BannerImage';
 import { homeImagesAtom } from '@/state';
@@ -26,6 +26,8 @@ export const Home = ({
 
   console.log(imagesMeta)
 
+  console.log(content)
+
   return (
     <>
       <Head>
@@ -36,6 +38,7 @@ export const Home = ({
         <LayoutPrimary>
 
           <section className="space-y-2 mt-48">
+
             {imagesMeta.sort((a, b) => a.orderNo - b.orderNo).map((img, i) => (
               <BannerImage
                 key={i}

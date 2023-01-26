@@ -1,16 +1,18 @@
 import { IDefaultProps } from "@/@types"
+import { hexToRgba } from "@/utils";
 import { Menu, Transition } from "@headlessui/react"
 import Link from "next/link"
 import { Fragment } from "react"
 
 export interface PortfolioMenuProps extends IDefaultProps {
     linkStyles: string;
+    scrolledDown: boolean;
 }
 
 export const PortfolioMenu = ({
     className = "",
     id,
-    linkStyles
+    linkStyles, scrolledDown
 }: PortfolioMenuProps) => {
 
     return (
@@ -25,29 +27,32 @@ export const PortfolioMenu = ({
                 leaveFrom="transform opacity-100 scale-100"
                 leaveTo="transform opacity-0 scale-95"
             >
-                <Menu.Items className="flex flex-col absolute !mr-[11rem] mt-[6rem] origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+                <Menu.Items
+                    className="flex flex-col absolute !mr-[13rem] mt-[7rem] origin-top-right divide-y divide-gray-100 bg-white shadow-lg focus:outline-none"
+                    style={{ backgroundColor: scrolledDown ? `${hexToRgba("#a78bfa", 1)}` : `${hexToRgba("#a78bfa", 0.8)}` }}
+                >
                     <div className="flex flex-col items-center justify-start p-2">
                         <Menu.Item>
                             {({ active }) => (
-                                <a className={linkStyles} href="/portfolio/theatre">
+                                <Link className={linkStyles + "text-offWhite"} href="/portfolio/theatre">
                                     Theatre
-                                </a>
+                                </Link>
                             )}
                         </Menu.Item>
 
                         <Menu.Item>
                             {({ active }) => (
-                                <a className={linkStyles} href="/portfolio/dance">
+                                <Link className={linkStyles + "text-offWhite"} href="/portfolio/dance">
                                     Dance
-                                </a>
+                                </Link>
                             )}
                         </Menu.Item>
 
                         <Menu.Item>
                             {({ active }) => (
-                                <a className={linkStyles} href="/portfolio/cadDesign">
+                                <Link className={linkStyles + "text-offWhite"} href="/portfolio/cadDesign">
                                     CAD Design
-                                </a>
+                                </Link>
                             )}
                         </Menu.Item>
                     </div>

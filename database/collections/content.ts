@@ -47,14 +47,17 @@ export const getContentBySchemaName = async (schemaName: string) => {
         id: entry.id,
         ...entry.data()
     }))
-    const contentFiltered = contentData.map((entry) => {
+
+    let contentFiltered = [];
+    contentData.forEach((entry) => {
         // @ts-ignore
         if (entry._fl_meta_.schema === schemaName) {
-            return entry;
+            contentFiltered.push(entry);
         }
     })
 
-    const contentJson = JSON.parse(JSON.stringify(contentFiltered));
+    const contentFilteredPromise = await Promise.all(contentFiltered);
+    const contentJson = JSON.parse(JSON.stringify(contentFilteredPromise));
     return contentJson;
 }
 
@@ -64,10 +67,8 @@ export const getContentBySchemaName = async (schemaName: string) => {
  * @param id
  * @returns JSON
  */
-export const getPageContent = async (contentData: any, id: string) => {
+export const getPageContent = async (contentData: Array<any>, id: string) => {
     let contentMatch = await contentData.find((c) => c.id.toLowerCase() === id.toLowerCase());
-
-    // console.log(contentMatch)
 
     let imageUrls = [];
     await getImageURLsByImageGalleryLength(contentMatch.imageGallery.length, contentMatch.imageNameId)

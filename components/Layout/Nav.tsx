@@ -19,7 +19,7 @@ export const Nav = ({
                 Home
             </Link>
 
-            <PortfolioMenu linkStyles={linkStyles} />
+            <PortfolioMenu linkStyles={linkStyles} scrolledDown={scrolledDown} />
 
             <Link href="/" className={linkStyles}>
                 Resume

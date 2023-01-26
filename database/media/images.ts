@@ -88,23 +88,28 @@ export const getImageURLsByImageGalleryLength = async (imageGalleryLength: numbe
     return imageData;
 }
 
-export const mapImagesMetaData = async (contentData: any, imageUrls: any) => {
+export const mapImagesMetaData = async (contentData: any, imageUrls: Array<any>) => {
     const images: Array<Image> = [];
 
-    imageUrls.forEach((url) => {
-        contentData.forEach((data) => {
-            if (url.includes(`${data.imageNameId}_0`)) {
-                const imageMeta: Image = {
-                    title: data.title,
-                    url: url,
-                    alt: data.title,
-                    pageSlug: `portfolio/${data._fl_meta_.schema}/${stringToCamelcase(data.id)}`,
-                    orderNo: data.orderNo
-                }
-                images.push(imageMeta);
-            }
-        })
-    })
+    console.log(contentData)
 
-    return images;
+    if (imageUrls.length > 0) {
+        imageUrls.forEach((url) => {
+            contentData.forEach((data) => {
+                if (url?.includes(`${data?.imageNameId}_0`)) {
+                    const imageMeta: Image = {
+                        title: data.title,
+                        url: url,
+                        alt: data.title,
+                        pageSlug: `portfolio/${data._fl_meta_.schema}/${stringToCamelcase(data.id)}`,
+                        orderNo: data.orderNo
+                    }
+                    images.push(imageMeta);
+                }
+            })
+        })
+    }
+
+    const imagesData = await Promise.all(images);
+    return imagesData;
 }

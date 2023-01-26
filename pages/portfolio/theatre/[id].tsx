@@ -1,26 +1,48 @@
-import { BannerHeader, LayoutPrimary } from "@/components";
-import { HeroImage } from "@/components/Images";
+import { AttributionBlock, BannerHeader, LayoutPrimary } from "@/components";
+import { GalleryImage, HeroImage } from "@/components/Images";
 import { getContentBySchemaName, getPageContent } from "@/database";
-import { useRouter } from "next/router"
 
 interface PropType {
-    contentData: any;
+    pageContentData: any;
 }
 
 export const TheatreDocPage = ({
-    contentData,
+    pageContentData,
 }: PropType) => {
-    console.log(contentData);
+    console.log(pageContentData)
+
+    const urls = pageContentData.urls;
+    const title = pageContentData.data.title;
+    const clientName = pageContentData.data.clientName;
+    const year = pageContentData.data.year.toString();
+    const longItemDescription = pageContentData.data.longItemDescription;
+    const shortItemDescription = pageContentData.data.shortItemDescription;
 
     return (
         <>
             <main className="w-screen h-screen">
                 <LayoutPrimary>
 
-                    <section className="space-y-2 mt-48">
-                        <HeroImage src={contentData.urls[0]} alt={contentData.data.title} />
+                    <section className="mt-48">
+                        <HeroImage src={urls[0][0]} alt={title} />
 
-                        <BannerHeader text={contentData.data.title} />
+                        <BannerHeader text={title} />
+
+                        <AttributionBlock
+                            clientName={clientName}
+                            year={year}
+                            longItemDescription={longItemDescription}
+                        />
+
+                        <section className="space-y-2">
+                            {urls[0].map((url, i) => (
+                                <GalleryImage
+                                    key={i}
+                                    src={url}
+                                    alt={title}
+                                />
+                            ))}
+                        </section>
 
 
                     </section>
@@ -32,14 +54,14 @@ export const TheatreDocPage = ({
 }
 
 export async function getServerSideProps(context) {
-    const id = context.params.id;
+    const id = context.query.id;
 
     const contentData = await getContentBySchemaName("theatre");
     const pageContentData = await getPageContent(contentData, id);
 
     return {
         props: {
-            contentData: pageContentData
+            pageContentData: pageContentData
         }
     }
 }
