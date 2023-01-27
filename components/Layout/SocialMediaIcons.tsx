@@ -1,8 +1,4 @@
 import { IDefaultProps } from "@/@types";
-import { Socials } from "@/@types/SocialMedia"
-import { socialsAtom } from "@/state";
-import { useAtom } from "jotai";
-import { useEffect } from "react";
 
 export interface SocialMediaIconsProps extends IDefaultProps {
     instagram?: boolean;
