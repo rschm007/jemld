@@ -20,6 +20,7 @@
     "eslint-config-next": "13.1.2",
     "firebase": "^9.15.0",
     "flamelink": "^1.0.0-rc.2",
+    "framer-motion": "^8.5.3",
     "jotai": "^1.13.1",
     "next": "13.1.2",
     "react": "18.2.0",

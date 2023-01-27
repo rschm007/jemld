@@ -13,12 +13,12 @@ export const AttributionContentLabel = ({
 }: AttributionContentLabelProps) => {
 
     return (
-        <div className={"flex flex-col items-center justify-center space-y-1 " + className} id={id}>
-            <p className="text-sm">
+        <div className={"flex flex-col items-center justify-between space-y-1 " + className} id={id}>
+            <p className="text-sm font-montserrat font-medium">
                 {label}
             </p>
 
-            <span className="text-xl font-montserraFt">
+            <span className="text-xl font-montserrat font-semibold">
                 {content}
             </span>
         </div>

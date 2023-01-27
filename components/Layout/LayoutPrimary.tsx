@@ -1,6 +1,7 @@
 import { IDefaultPropsWithChildrenRequired } from "@/@types/DefaultProps";
 import { Footer } from "./Footer";
 import { Header } from "./Header";
+import { motion } from "framer-motion";
 
 export const LayoutPrimary = ({
     className = "",
@@ -9,12 +10,29 @@ export const LayoutPrimary = ({
 }: IDefaultPropsWithChildrenRequired) => {
 
     return (
-        <div className={"flex flex-col w-full h-full justify-between bg-offWhite " + className} id={id}>
+        <div>
             <Header />
 
-            {children}
+            <motion.div
+                className={"flex flex-col w-full h-full justify-between bg-offWhite overflow-x-auto overflow-y-auto " + className}
+                id={id}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{
+                    type: "spring",
+                    stiffness: 260,
+                    damping: 20,
+                }}
+            >
+
+                {children}
+
+            </motion.div>
 
             <Footer />
+
         </div>
+
     )
 }
