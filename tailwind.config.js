@@ -10,6 +10,7 @@ module.exports = {
       'offWhite': "#FDFDF0",
       'lavender': "#a057b1",
       "darkViolet": "#160d33",
+      "darkGray": "#404040"
     },
     objectPosition: {
       'cover': 'cover',

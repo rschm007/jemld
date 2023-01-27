@@ -1,5 +1,5 @@
 import { IDefaultPropsWithChildren } from "@/@types"
-import Image from "next/image";
+import { motion } from "framer-motion";
 import Link from "next/link";
 
 export interface BannerImageProps extends IDefaultPropsWithChildren {
@@ -22,16 +22,24 @@ export const BannerImage = ({
 }: BannerImageProps) => {
 
     return (
-        <figure
+        <motion.figure
             className={"group max-h-[40vh] relative " + className}
             id={id}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{
+                type: "spring",
+                stiffness: 260,
+                damping: 20,
+            }}
         >
 
             <Link
                 href={href}
             >
                 <img
-                    className={"object-cover w-full max-h-[40vh] object-bottom relative brightness-100 group-hover:brightness-[0.25] transition-all ease-in-out delay-75 z-0" + imgClasses}
+                    className={"object-cover w-full max-h-[40vh] object-bottom relative brightness-100 group-hover:brightness-[0.25] transition-all ease-in-out delay-75 z-0 bg-darkGray " + imgClasses}
                     src={src}
                     alt={alt}
                 >
@@ -45,6 +53,6 @@ export const BannerImage = ({
                 )}
             </Link>
 
-        </figure>
+        </motion.figure>
     )
 }

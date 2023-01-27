@@ -1,4 +1,5 @@
 import { IDefaultPropsWithChildren } from "@/@types"
+import { motion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -18,19 +19,27 @@ export const GalleryImage = ({
 }: GalleryImageProps) => {
 
     return (
-        <figure
+        <motion.figure
             className={"group max-h-[80vh] relative " + className}
             id={id}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{
+                type: "spring",
+                stiffness: 260,
+                damping: 20,
+            }}
         >
             <Link target="_blank" href={src}>
                 <img
-                    className={"object-cover w-full max-h-[80vh] object-bottom relative" + imgClasses}
+                    className={"object-cover w-full max-h-[80vh] object-bottom relative bg-darkGray " + imgClasses}
                     src={src}
                     alt={alt}
                 >
                     {children}
                 </img>
             </Link>
-        </figure>
+        </motion.figure>
     )
 }

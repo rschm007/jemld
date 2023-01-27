@@ -45,7 +45,7 @@ export const Home = ({
                 src={img.url}
                 alt={img.title}
                 title={img.title}
-                href={img.pageSlug}
+                href={`portfolio/${img.pageSlug}`}
               />
             ))}
           </section>

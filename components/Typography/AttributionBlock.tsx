@@ -18,7 +18,7 @@ export const AttributionBlock = ({
 }: AttributionBlockProps) => {
 
     return (
-        <article className={"flex flex-col items-center justify-center w-full space-y-11 mt-3 mb-16 " + className} id={id}>
+        <article className={"flex flex-col items-center justify-center w-full space-y-11 mt-3 mb-16 max-w-[55vw] self-center " + className} id={id}>
 
             <div className="flex flex-row items-center justify-center space-x-8">
                 {(clientName != null || "") && (

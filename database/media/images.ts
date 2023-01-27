@@ -5,7 +5,7 @@ import { getDownloadURL, getStorage, ref } from "firebase/storage";
 /**
  * @description GET an image from firebase
  * @param contentData contentData JSON of content data returend from getContent()
- * @returns url
+ * @returns url array
  */
 export const getMainImageURLs = async (contentData: any) => {
     const imageNameIds = [];
@@ -34,7 +34,7 @@ export const getMainImageURLs = async (contentData: any) => {
  * @description GET an image from firebase
  * @param contentData contentData JSON of content data returend from getContent()
  * @param imageNameId field of schema content item
- * @returns url
+ * @returns url array
  */
 export const getImageURLsByImageNameId = async (contentData: any, imageNameId: string) => {
     const imageNameIds = [];
@@ -101,7 +101,7 @@ export const mapImagesMetaData = async (contentData: any, imageUrls: Array<any>)
                         title: data.title,
                         url: url,
                         alt: data.title,
-                        pageSlug: `portfolio/${data._fl_meta_.schema}/${stringToCamelcase(data.id)}`,
+                        pageSlug: `${data._fl_meta_.schema}/${stringToCamelcase(data.id)}`,
                         orderNo: data.orderNo
                     }
                     images.push(imageMeta);
