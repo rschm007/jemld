@@ -1,4 +1,5 @@
 import { IDefaultPropsWithChildren } from "@/@types";
+import { motion } from "framer-motion";
 import Link from "next/link";
 
 export interface NextPrevDynamicPageButtonsProps extends IDefaultPropsWithChildren {
@@ -32,14 +33,14 @@ export const NextPrevDynamicPageButtons = ({
 }: NextPrevDynamicPageButtonsProps) => {
 
     return (
-        <div className="dynamic-buttons fixed flex flex-col items-center justify-center w-full h-full z-50">
+        <div className="dynamic-buttons fixed flex flex-col items-center justify-center w-full h-full">
 
             {children}
 
-            <div className="flex flex-row items-center justify-between w-full">
+            <div className="flex flex-row items-center justify-between w-full pointer-events-none">
                 {!prevItemDisabled && (
                     <Link
-                        className="group flex flex-row items-center justify-center bg-[rgba(0,0,0,0.3)] opacity-80 w-12 h-24 rounded-r-lg z-50 transition-all duration-300 ease-in-out hover:w-80 hover:bg-[rgba(0,0,0,0.8)]"
+                        className="group flex flex-row items-center justify-center bg-[rgba(0,0,0,0.3)] opacity-80 w-12 h-24 rounded-r-lg z-50 transition-all duration-300 ease-in-out hover:w-80 hover:bg-[rgba(0,0,0,0.8)] pointer-events-auto"
                         href={`${pageSlug}/${prevItemId}`}
                     >
                         <span className="absolute left-3">
@@ -48,11 +49,22 @@ export const NextPrevDynamicPageButtons = ({
                             </svg>
                         </span>
 
-                        <div className="flex-row items-center justify-between h-full w-full ml-4 pl-12 hidden group-hover:flex transition-all duration-300 ease-in-out space-x-6">
+                        <div className="flex-row items-center justify-between h-full w-full ml-4 pl-8 hidden group-hover:flex transition-all duration-300 ease-in-out space-x-6">
 
-                            <p className="text-[#fff] font-bold font-montserrat">
+                            <motion.p
+                                className="text-xs text-center text-[#fff] font-semibold font-montserrat truncate"
+                                initial={{ opacity: 0 }}
+                                animate={{ opacity: 1 }}
+                                exit={{ opacity: 0 }}
+                                transition={{
+                                    type: "spring",
+                                    stiffness: 260,
+                                    damping: 20,
+                                    delay: 500
+                                }}
+                            >
                                 {prevItemTitle}
-                            </p>
+                            </motion.p>
 
                             <img src={prevItemImgUrl} className="w-36 h-full object-cover rounded-r-lg" />
                         </div>
@@ -61,16 +73,27 @@ export const NextPrevDynamicPageButtons = ({
 
                 {!nextItemDisabled && (
                     <Link
-                        className="group flex flex-row items-center justify-center bg-[rgba(0,0,0,0.3)] opacity-80 w-12 h-24 rounded-l-lg z-50 transition-all duration-300 ease-in-out hover:w-80 hover:bg-[rgba(0,0,0,0.8)]"
+                        className="group flex flex-row items-center justify-center bg-[rgba(0,0,0,0.3)] opacity-80 w-12 h-24 rounded-l-lg z-50 transition-all duration-300 ease-in-out hover:w-80 hover:bg-[rgba(0,0,0,0.8)] pointer-events-auto"
                         href={`${pageSlug}/${nextItemId}`}
                     >
-                        <div className="flex-row items-center justify-between h-full w-full mr-4 pr-12 hidden group-hover:flex transition-all duration-300 ease-in-out space-x-6">
+                        <div className="flex-row items-center justify-between h-full w-full mr-4 pr-8 hidden group-hover:flex transition-all duration-300 ease-in-out space-x-6">
 
                             <img src={nextItemImgUrl} className="w-36 h-full object-cover rounded-l-lg" />
 
-                            <p className="text-[#fff] font-bold font-montserrat">
+                            <motion.p
+                                className="text-xs text-center text-[#fff] font-semibold font-montserrat truncate"
+                                initial={{ opacity: 0 }}
+                                animate={{ opacity: 1 }}
+                                exit={{ opacity: 0 }}
+                                transition={{
+                                    type: "spring",
+                                    stiffness: 260,
+                                    damping: 20,
+                                    delay: 500
+                                }}
+                            >
                                 {nextItemTitle}
-                            </p>
+                            </motion.p>
                         </div>
 
                         <span className="absolute right-3">
