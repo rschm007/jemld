@@ -32,3 +32,8 @@ ol {
 .font-montserrat {
     font-family: 'Montserrat', sans-serif;
 }
+
+/* nav */
+.active-link {
+    @apply underline underline-offset-4 decoration-bubblegum decoration-4;
+}

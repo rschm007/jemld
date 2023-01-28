@@ -2,6 +2,7 @@ import { AttributionBlock, BannerHeader, LayoutPrimary } from "@/components";
 import { GalleryImage, HeroImage } from "@/components/Images";
 import { getContentBySchemaName, getPageContent } from "@/database";
 import { getFiles } from "@/database/media/files";
+import { useEffect } from "react";
 
 interface PropType {
     filesData: any;
@@ -14,6 +15,10 @@ export const TheatreDocPage = ({
 }: PropType) => {
     console.log(filesData)
     console.log(pageContentData)
+
+    useEffect(() => {
+
+    }, [])
 
     const urls = pageContentData.urls;
     const title = pageContentData.data.title;

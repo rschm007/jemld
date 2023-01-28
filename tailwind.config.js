@@ -9,6 +9,7 @@ module.exports = {
     colors: {
       'offWhite': "#FDFDF0",
       'lavender': "#a057b1",
+      'bubblegum': "#a78bfa",
       "darkViolet": "#160d33",
       "darkGray": "#404040"
     },

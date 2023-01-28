@@ -25,9 +25,8 @@ export const Home = ({
   const [imagesMeta] = useAtom(homeImagesAtom);
 
   console.log(imagesMeta)
-
   console.log(content)
-
+  
   return (
     <>
       <Head>

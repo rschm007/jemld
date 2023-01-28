@@ -2,7 +2,6 @@ import { LayoutPrimary } from "@/components";
 import { getContentBySchemaName, getMainImageURLs, mapImagesMetaData } from "@/database";
 import { theatreContentAtom } from "@/state/content";
 import { useAtom } from "jotai";
-import { useRouter } from "next/router";
 import { useState } from "react";
 import { useHydrateAtoms } from 'jotai/utils'
 import { BannerImage } from "@/components/Images/BannerImage";
@@ -23,9 +22,6 @@ export const TheatrePage = ({
     ])
     const [content] = useAtom(theatreContentAtom);
     const [imagesMeta] = useState(imagesMetaData);
-
-    const router = useRouter();
-    const id = router.query.id;
 
     return (
         <>
@@ -54,8 +50,6 @@ export const TheatrePage = ({
 }
 
 export async function getServerSideProps({ query }) {
-    const id = query;
-
     const contentData = await getContentBySchemaName("theatre");
     const imageUrlsData = await getMainImageURLs(contentData);
     const imagesMetaData = await mapImagesMetaData(contentData, imageUrlsData);
