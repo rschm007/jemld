@@ -5,16 +5,15 @@ import { getContentBySchemaName, getMainImageURLs, getPageContent } from "@/data
 import { theatreContentAtom } from "@/state/content";
 import { useAtom } from "jotai";
 import { useHydrateAtoms } from 'jotai/utils';
+import { useEffect, useState } from "react";
 
 interface PropType {
     contentData: any;
-    neighborPagesImagesData: any;
     pageContentData: any;
 }
 
 export const TheatreDocPage = ({
     contentData,
-    neighborPagesImagesData,
     pageContentData,
 }: PropType) => {
     //@ts-ignore
@@ -22,9 +21,16 @@ export const TheatreDocPage = ({
         [theatreContentAtom, contentData]
     ])
     const [content] = useAtom(theatreContentAtom);
+    const [neighborPagesImages, setNeighborPagesImages] = useState([]);
 
-    console.log(content);
-    console.log(pageContentData);
+    useEffect(() => {
+        if (neighborPagesImages.length === 0) {
+            getMainImageURLs(contentData)
+                .then(async (res) => {
+                    setNeighborPagesImages([...res]);
+                });
+        }
+    }, [])
 
     // variables for attribution block injection
     const urls = pageContentData.urls;
@@ -35,9 +41,9 @@ export const TheatreDocPage = ({
     // variables for next/prev buttons
     const thisPageIndex = content.findIndex((c) => c.id === pageContentData.data.id);
     const prevPageId = content[thisPageIndex - 1].id;
-    const prevPageImgUrl = neighborPagesImagesData[thisPageIndex - 1];
+    const prevPageImgUrl = neighborPagesImages[thisPageIndex - 1];
     const nextPageId = content[thisPageIndex + 1].id;
-    const nextPageImgUrl = neighborPagesImagesData[thisPageIndex + 1];
+    const nextPageImgUrl = neighborPagesImages[thisPageIndex + 1];
     const prevPageTitle = content[thisPageIndex - 1].title;
     const nextPageTitle = content[thisPageIndex + 1].title;
 
@@ -47,7 +53,7 @@ export const TheatreDocPage = ({
                 <LayoutPrimary>
 
                     <NextPrevDynamicPageButtons
-                        pageSlug="/portfolio/theatre/"
+                        pageSlug="/portfolio/theatre"
                         nextItemId={nextPageId}
                         nextItemTitle={nextPageTitle}
                         nextItemImgUrl={nextPageImgUrl}
@@ -94,13 +100,11 @@ export async function getServerSideProps(context) {
     const id = context.query.id;
 
     const contentData = await getContentBySchemaName("theatre");
-    const neighborPagesImagesData = await getMainImageURLs(contentData);
     const pageContentData = await getPageContent(contentData, id);
 
     return {
         props: {
             contentData: contentData,
-            neighborPagesImagesData: neighborPagesImagesData,
             pageContentData: pageContentData
         }
     }

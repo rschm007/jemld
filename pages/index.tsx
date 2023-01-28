@@ -8,25 +8,18 @@ import { useHydrateAtoms } from 'jotai/utils'
 import { contentAtom } from '@/state/content';
 
 interface PropType {
-  contentData: any;
   imagesMetaData: any;
 }
 
 export const Home = ({
-  contentData,
   imagesMetaData
 }: PropType) => {
   //@ts-ignore
   useHydrateAtoms([
-    [contentAtom, contentData],
     [homeImagesAtom, imagesMetaData]
   ])
-  const [content] = useAtom(contentAtom);
   const [imagesMeta] = useAtom(homeImagesAtom);
 
-  console.log(imagesMeta)
-  console.log(content)
-  
   return (
     <>
       <Head>
@@ -62,7 +55,6 @@ export async function getServerSideProps() {
 
   return {
     props: {
-      contentData: contentData,
       imagesMetaData: imagesMetaData
     }
   }

@@ -23,7 +23,7 @@ export const BannerImage = ({
 
     return (
         <motion.figure
-            className={"group max-h-[40vh] relative " + className}
+            className={"group max-h-[40vh] relative z-20 " + className}
             id={id}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}

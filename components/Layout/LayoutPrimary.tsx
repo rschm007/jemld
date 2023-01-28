@@ -2,12 +2,22 @@ import { IDefaultPropsWithChildrenRequired } from "@/@types/DefaultProps";
 import { Footer } from "./Footer";
 import { Header } from "./Header";
 import { motion } from "framer-motion";
+import { useEffect, useState } from "react";
 
 export const LayoutPrimary = ({
     className = "",
     id,
     children
 }: IDefaultPropsWithChildrenRequired) => {
+    const [mounted, setMounted] = useState(false);
+
+    useEffect(() => {
+        setMounted(true);
+
+        return () => {
+            setMounted(false);
+        }
+    })
 
     return (
         <div>
@@ -23,6 +33,7 @@ export const LayoutPrimary = ({
                     type: "spring",
                     stiffness: 260,
                     damping: 20,
+                    duration: 2
                 }}
             >
 

@@ -33,11 +33,11 @@ export const NextPrevDynamicPageButtons = ({
 }: NextPrevDynamicPageButtonsProps) => {
 
     return (
-        <div className="dynamic-buttons fixed flex flex-col items-center justify-center w-full h-full">
+        <div className="dynamic-buttons fixed flex flex-col items-center justify-center w-full h-full z-50 pointer-events-none">
 
             {children}
 
-            <div className="flex flex-row items-center justify-between w-full pointer-events-none">
+            <div className="flex flex-row relative z-0 items-center justify-between w-full">
                 {!prevItemDisabled && (
                     <Link
                         className="group flex flex-row items-center justify-center bg-[rgba(0,0,0,0.3)] opacity-80 w-12 h-24 rounded-r-lg z-50 transition-all duration-300 ease-in-out hover:w-80 hover:bg-[rgba(0,0,0,0.8)] pointer-events-auto"

@@ -18,7 +18,7 @@ export const HeroImage = ({
 
     return (
         <motion.figure
-            className={"max-h-[80vh] relative " + className}
+            className={"max-h-[80vh] relative z-20 " + className}
             id={id}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
