@@ -1,8 +1,10 @@
 import { AttributionBlock, BannerHeader, LayoutPrimary } from "@/components";
-import { GalleryImage, HeroImage } from "@/components/Images";
+import { HeroImage } from "@/components/Images";
 import { getContentBySchemaName, getPageContent } from "@/database";
 import { getFiles } from "@/database/media/files";
-import { useEffect } from "react";
+import AwesomeSlider from "react-awesome-slider";
+import withAutoplay from 'react-awesome-slider/dist/autoplay';
+import 'react-awesome-slider/dist/styles.css';
 
 interface PropType {
     filesData: any;
@@ -13,12 +15,9 @@ export const TheatreDocPage = ({
     filesData,
     pageContentData,
 }: PropType) => {
-    console.log(filesData)
-    console.log(pageContentData)
 
-    useEffect(() => {
+    const AutoplaySlider = withAutoplay(AwesomeSlider);
 
-    }, [])
 
     const urls = pageContentData.urls;
     const title = pageContentData.data.title;
@@ -33,7 +32,6 @@ export const TheatreDocPage = ({
                 <LayoutPrimary>
 
                     <section className="flex flex-col mt-48">
-                        <HeroImage src={urls[0][0]} alt={title} />
 
                         <BannerHeader text={title} />
 
@@ -44,13 +42,18 @@ export const TheatreDocPage = ({
                         />
 
                         <section className="space-y-2">
-                            {urls[0].map((url, i) => (
-                                <GalleryImage
-                                    key={i}
-                                    src={url}
-                                    alt={title}
-                                />
-                            ))}
+                            <AutoplaySlider
+                                name={`${title}-slider`}
+                                bullets
+                                organicArrows={false}
+                                play
+                                cancelOnInteraction
+                                interval={6000}
+                            >
+                                {urls[0].map((url) => (
+                                    <div data-src={url} />
+                                ))}
+                            </AutoplaySlider>
                         </section>
 
 

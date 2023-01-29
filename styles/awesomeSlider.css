@@ -1,6 +1,11 @@
+.awssld,
+.awssld__wrapper {
+    max-height: 90vh;
+}
+
 .awssld__bullets {
     z-index: 50;
-    bottom: 20px !important;
+    bottom: 6% !important;
 }
 
 .awssld__bullets>button {
