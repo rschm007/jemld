@@ -28,9 +28,11 @@ export default function App({ Component, pageProps }: AppProps) {
     }
   }, [])
 
+  console.log(router)
+
   return (
     <AnimatePresence mode="wait" initial={false}>
-      <Component {...pageProps} />
+      <Component {...pageProps} key={router.route} />
     </AnimatePresence>
   )
 }
