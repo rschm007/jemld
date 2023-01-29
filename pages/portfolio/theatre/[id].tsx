@@ -1,11 +1,13 @@
 import { AttributionBlock, BannerHeader, LayoutPrimary } from "@/components";
-import { GalleryImage, HeroImage } from "@/components/Images";
 import { NextPrevDynamicPageButtons } from "@/components/Layout/NextPrevDynamicPageButtons";
 import { getContentBySchemaName, getMainImageURLs, getPageContent } from "@/database";
 import { theatreContentAtom } from "@/state/content";
 import { useAtom } from "jotai";
 import { useHydrateAtoms } from 'jotai/utils';
 import { useEffect, useState } from "react";
+import AwesomeSlider from "react-awesome-slider";
+import withAutoplay from 'react-awesome-slider/dist/autoplay';
+import 'react-awesome-slider/dist/styles.css';
 
 interface PropType {
     contentData: any;
@@ -31,6 +33,8 @@ export const TheatreDocPage = ({
                 });
         }
     }, [])
+
+    const AutoplaySlider = withAutoplay(AwesomeSlider);
 
     // variables for attribution block injection
     const urls = pageContentData.urls;
@@ -67,7 +71,6 @@ export const TheatreDocPage = ({
                     </NextPrevDynamicPageButtons>
 
                     <section className="mt-48 overflow-x-auto">
-                        <HeroImage src={urls[0][0]} alt={title} />
 
                         <BannerHeader text={title} />
 
@@ -77,16 +80,18 @@ export const TheatreDocPage = ({
                             longItemDescription={longItemDescription}
                         />
 
-                        <section className="space-y-2">
-                            {urls[0].map((url, i) => (
-                                <GalleryImage
-                                    key={i}
-                                    src={url}
-                                    alt={title}
-                                />
+                        <AutoplaySlider
+                            name={`${title}-slider`}
+                            bullets
+                            organicArrows={false}
+                            play
+                            cancelOnInteraction
+                            interval={6000}
+                        >
+                            {urls[0].map((url) => (
+                                <div data-src={url} />
                             ))}
-                        </section>
-
+                        </AutoplaySlider>
 
                     </section>
 

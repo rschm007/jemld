@@ -1,0 +1,14 @@
+.awssld__bullets {
+    z-index: 50;
+    bottom: 20px !important;
+}
+
+.awssld__bullets>button {
+    background-color: transparent !important;
+    border: 2px solid white !important;
+    opacity: 0.9;
+}
+
+.awssld__bullets>button.awssld__bullets--active {
+    background-color: #fff !important;
+}
