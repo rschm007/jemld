@@ -7,9 +7,13 @@
     background-color: transparent !important;
 }
 
+.awssld__timer--run {
+    display: none;
+}
+
 .awssld__content>img,
 .awssld__content>video {
-    @apply object-contain;
+    @apply object-contain !important;
 }
 
 
