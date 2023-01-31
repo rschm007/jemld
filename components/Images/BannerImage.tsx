@@ -47,7 +47,7 @@ export const BannerImage = ({
                 </img>
 
                 {title && (
-                    <h2 className="-mt-20 mx-8 font-montserrat text-offWhite drop-shadow-sm tracking-wide font-normal text-xl absolute z-10">
+                    <h2 className="-mt-20 mx-8 font-montserrat text-offWhite drop-shadow-sm tracking-wide font-bold md:font-normal text-lg md:text-xl absolute z-10 md:p-0 p-4 md:bg-transparent bg-darkGray md:bg-opacity-100 bg-opacity-90 rounded-lg md:rounded-none md:max-h-[unset] max-h-[12vh] truncate md:max-w-[unset] max-w-[85vw]">
                         {title}
                     </h2>
                 )}

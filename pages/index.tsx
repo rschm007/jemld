@@ -1,11 +1,10 @@
 import Head from 'next/head'
-import { BannerHeader, LayoutPrimary } from '@/components'
+import { LayoutPrimary } from '@/components'
 import { getContent, getMainImageURLs, mapImagesMetaData } from '@/database';
 import { BannerImage } from '@/components/Images/BannerImage';
 import { homeImagesAtom } from '@/state';
 import { useAtom } from 'jotai';
 import { useHydrateAtoms } from 'jotai/utils'
-import { contentAtom } from '@/state/content';
 
 interface PropType {
   imagesMetaData: any;

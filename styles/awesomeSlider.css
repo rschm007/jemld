@@ -1,6 +1,6 @@
 .awssld,
 .awssld__wrapper {
-    max-height: 90vh;
+    @apply h-screen md:h-[unset] max-h-[110vh] md:max-h-[90vh];
 }
 
 .awssld__bullets {

@@ -48,7 +48,7 @@ export const Header = ({
 
     return (
         <header
-            className={"header-section fixed top-0 z-50 flex flex-row items-center justify-between w-full  px-8 transition-all ease-in-out " +
+            className={"header-section fixed top-0 z-50 flex flex-row items-center justify-between w-full px-4 md:px-8 transition-all ease-in-out " +
                 (sticky ? "h-32 " : "h-48 ") + className}
             id={id}
             style={{
@@ -57,7 +57,7 @@ export const Header = ({
         >
             <Link href="/" passHref>
                 <LogoSmall
-                    className={sticky ? "h-48 w-48" : "h-64 w-64"}
+                    className={"mt-4 md:mt-[unset]" + (sticky ? "h-36 w-36 md:h-48 md:w-48" : "h-44 w-44 md:h-64 md:w-64")}
                     fill={sticky ? "#FDFDF0" : "#111111"}
                 />
             </Link>

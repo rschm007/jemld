@@ -28,7 +28,7 @@ export const PortfolioMenu = ({
                 leaveTo="transform opacity-0 scale-95"
             >
                 <Menu.Items
-                    className="flex flex-col absolute !mr-[13rem] mt-[7rem] origin-top-right divide-y divide-gray-100 bg-white shadow-lg focus:outline-none"
+                    className="flex flex-col relative md:absolute !md:mr-[13rem] md:mt-[7rem] origin-top-right divide-y divide-gray-100 bg-white shadow-lg focus:outline-none"
                     style={{ backgroundColor: scrolledDown ? `${hexToRgba("#a78bfa", 1)}` : `${hexToRgba("#a78bfa", 0.8)}` }}
                 >
                     <div className="flex flex-col items-center justify-start p-2">

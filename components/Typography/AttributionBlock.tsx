@@ -18,7 +18,7 @@ export const AttributionBlock = ({
 }: AttributionBlockProps) => {
 
     return (
-        <article className={"flex flex-col items-center justify-center w-full space-y-11 mt-3 mb-16 self-center px-80" + className} id={id}>
+        <article className={"flex flex-col items-center justify-center w-full space-y-11 mt-3 mb-16 self-center px-12 md:px-80" + className} id={id}>
 
             <div className="flex flex-row items-center justify-center space-x-8">
                 {(clientName != null || "") && (
@@ -37,7 +37,7 @@ export const AttributionBlock = ({
             </div>
 
             {(longItemDescription != null || "") && (
-                <div className="text-center" dangerouslySetInnerHTML={{ __html: longItemDescription }}>
+                <div className="text-left md:text-center" dangerouslySetInnerHTML={{ __html: longItemDescription }}>
                 </div>
             )
             }
