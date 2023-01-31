@@ -1,12 +1,24 @@
 .awssld,
 .awssld__wrapper {
-    @apply h-screen md:h-[unset] max-h-[110vh] md:max-h-[90vh];
+    @apply h-[unset] max-h-[70vh];
 }
+
+.awssld__content {
+    background-color: transparent !important;
+}
+
+.awssld__content>img,
+.awssld__content>video {
+    @apply object-contain;
+}
+
 
 .awssld__bullets {
     z-index: 50;
     bottom: 6% !important;
+    @apply w-[12px] h-[12px];
 }
+
 
 .awssld__bullets>button {
     background-color: transparent !important;
@@ -16,4 +28,20 @@
 
 .awssld__bullets>button.awssld__bullets--active {
     background-color: #fff !important;
+}
+
+@media only screen and (max-width: 768px) {
+
+    .awssld,
+    .awssld__wrapper {
+        height: 100vh;
+        max-height: 100vh;
+    }
+
+    .awssld__bullets button {
+        z-index: 50;
+        bottom: 6% !important;
+        width: 8px !important;
+        height: 8px !important;
+    }
 }

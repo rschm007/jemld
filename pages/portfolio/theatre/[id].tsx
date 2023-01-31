@@ -1,5 +1,5 @@
 import { AttributionBlock, BannerHeader, LayoutPrimary } from "@/components";
-import { NextPrevDynamicPageButtons } from "@/components/Layout/NextPrevDynamicPageButtons";
+import { NextPrevDynamicPageButtons } from "@/components/GUI/NextPrevDynamicPageButtons";
 import { getContentBySchemaName, getMainImageURLs, getPageContent } from "@/database";
 import { theatreContentAtom } from "@/state/content";
 import { useAtom } from "jotai";
