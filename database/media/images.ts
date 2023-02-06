@@ -113,3 +113,19 @@ export const mapImagesMetaData = async (contentData: any, imageUrls: Array<any>)
     const imagesData = await Promise.all(images);
     return imagesData;
 }
+
+/**
+ * @description GET profile image from database
+ * @returns url
+ */
+export const getAboutImageUrl = async () => {
+    let imageUrl;
+    const storage = getStorage();
+    const imageRef = ref(storage, `flamelink/media/profile.webp`)
+    const url = getDownloadURL(imageRef).then((res) => {
+        return res
+    });
+    imageUrl = url;
+
+    return imageUrl;
+}
