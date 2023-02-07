@@ -1,4 +1,4 @@
-import { LayoutPrimary } from "@/components";
+import { ContactForm, LayoutPrimary } from "@/components";
 import { getAboutImageUrl, getContentBySchemaName, getMainImageURLs, mapImagesMetaData } from "@/database";
 import { theatreContentAtom } from "@/state/content";
 import { useAtom } from "jotai";
@@ -31,13 +31,11 @@ export const AboutPage = ({
 
                         <BannerHeader text="About Jacqueline" />
 
-                        <div className="w-full h-full md:h-[40rem] flex flex-col md:flex-row justify-center px-8 md:px-12">
-                            <img className="w-full h-full object-contain" src={image} />
+                        <div className="w-full h-full flex flex-col md:flex-row justify-center px-8 md:px-12 space-x-4">
+                            <img className="w-full h-full md:h-[40rem] object-contain" src={image} />
 
                             <article className="w-full md:w-3/4 md:pr-28 py-10 md:py-4 text-left font-montserrat space-y-8" dangerouslySetInnerHTML={{ __html: content[0].bio }} />
                         </div>
-
-
 
                     </section>
 

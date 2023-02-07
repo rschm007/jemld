@@ -1,4 +1,5 @@
 import { IDefaultPropsWithChildren } from "@/@types"
+import { ContactForm } from "../Form"
 import { SocialMediaIcons } from "./SocialMediaIcons"
 
 export const Footer = ({
