@@ -8,6 +8,10 @@
 /* css modules */
 @import "./awesomeSlider.css";
 
+body {
+    @apply bg-offWhite;
+}
+
 h1,
 h2,
 h3,
