@@ -1,5 +1,4 @@
 import { AttributionBlock, BannerHeader, LayoutPrimary } from "@/components";
-import { HeroImage } from "@/components/Images";
 import { getContentBySchemaName, getPageContent } from "@/database";
 import { getFiles } from "@/database/media/files";
 import AwesomeSlider from "react-awesome-slider";
@@ -50,8 +49,8 @@ export const TheatreDocPage = ({
                                 cancelOnInteraction
                                 interval={6000}
                             >
-                                {urls[0].map((url) => (
-                                    <div data-src={url} />
+                                {urls[0].map((url, i) => (
+                                    <div data-src={url} key={i} />
                                 ))}
                             </AutoplaySlider>
                         </section>
