@@ -16,6 +16,8 @@ export const ContactPage = ({
 
     const AutoplaySlider = withAutoplay(AwesomeSlider);
 
+
+
     return (
         <>
             <main className="w-screen h-screen">
