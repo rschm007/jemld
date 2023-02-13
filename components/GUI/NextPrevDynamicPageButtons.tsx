@@ -66,7 +66,7 @@ export const NextPrevDynamicPageButtons = ({
                                 {prevItemTitle}
                             </motion.p>
 
-                            <img src={prevItemImgUrl} className="w-36 h-full object-cover rounded-r-lg" />
+                            <img src={prevItemImgUrl} className="w-36 h-full object-cover rounded-r-lg" alt={prevItemTitle} />
                         </div>
                     </Link>
                 )}
@@ -78,7 +78,7 @@ export const NextPrevDynamicPageButtons = ({
                     >
                         <div className="flex-row items-center justify-between h-full w-full mr-4 pr-8 hidden group-hover:flex transition-all duration-300 ease-in-out space-x-6">
 
-                            <img src={nextItemImgUrl} className="w-36 h-full object-cover rounded-l-lg" />
+                            <img src={nextItemImgUrl} className="w-36 h-full object-cover rounded-l-lg" alt={nextItemTitle} />
 
                             <motion.p
                                 className="text-xs text-center text-[#fff] font-semibold font-montserrat truncate"

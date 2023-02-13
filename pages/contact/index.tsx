@@ -16,8 +16,6 @@ export const ContactPage = ({
 
     const AutoplaySlider = withAutoplay(AwesomeSlider);
 
-
-
     return (
         <>
             <main className="w-screen h-screen">
@@ -39,8 +37,8 @@ export const ContactPage = ({
                                         background: "#000"
                                     }}
                                 >
-                                    {imagesMeta.map((img) => (
-                                        <div data-src={img.url} />
+                                    {imagesMeta.map((img, i) => (
+                                        <div data-src={img.url} key={i} />
                                     ))}
                                 </AutoplaySlider>
                             </figure>

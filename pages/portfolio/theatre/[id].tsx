@@ -88,8 +88,8 @@ export const TheatreDocPage = ({
                             cancelOnInteraction
                             interval={6000}
                         >
-                            {urls[0].map((url) => (
-                                <div data-src={url} />
+                            {urls[0].map((url, i) => (
+                                <div data-src={url} key={i} />
                             ))}
                         </AutoplaySlider>
 
