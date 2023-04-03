@@ -6,6 +6,7 @@ import { useAtom } from 'jotai';
 import { useHydrateAtoms } from 'jotai/utils'
 import { PanelImage } from '@/components/Images/PanelImage';
 import { useLayoutEffect, useState } from 'react';
+import { getRelevantPageSlug } from '@/utils';
 
 interface PropType {
   imagesMetaData: any;
@@ -25,10 +26,10 @@ export const Home = ({
   useLayoutEffect(() => {
     const panels = getImagePanelsFromMetaData(imagesMeta);
 
-    console.log(panels)
-
     setPanels(panels)
   }, [])
+
+  console.log(imagesMetaData)
 
   return (
     <>
@@ -39,15 +40,15 @@ export const Home = ({
       <main className="w-screen h-screen">
         <LayoutPrimary>
 
-          <section className="flex flex-row items-center space-y-2 mt-48">
+          <section className="md:grid md:grid-cols-4 gap-x-2 mt-48 min-h-screen">
 
             {panels.map((img, i) => (
               <PanelImage
                 key={i}
                 src={img.url}
                 alt={img.title}
-                title={img.title}
-                href={`portfolio/${img.pageSlug}`}
+                title={getRelevantPageSlug(img.pageSlug)}
+                href={`portfolio/design/${getRelevantPageSlug(img.pageSlug)}`}
               />
             ))}
           </section>

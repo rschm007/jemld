@@ -1,5 +1,5 @@
 import { Image } from "@/@types/Image";
-import { stringToCamelcase } from "@/utils";
+import { getFullPageSlug, stringToCamelcase } from "@/utils";
 import { getDownloadURL, getStorage, ref } from "firebase/storage";
 
 /**
@@ -126,4 +126,20 @@ export const getAboutImageUrl = async () => {
     imageUrl = url;
 
     return imageUrl;
+}
+
+export const getImagePanelsFromMetaData = (metadata: Array<any>) => {
+    const unique = {};
+    const distinct = [];
+
+    metadata.forEach(function (x) {
+        const key = getFullPageSlug(x.pageSlug);
+
+        if (!unique[key]) {
+            distinct.push(x);
+            unique[key] = true;
+        }
+    });
+
+    return distinct;
 }

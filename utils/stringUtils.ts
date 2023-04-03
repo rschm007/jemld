@@ -8,3 +8,16 @@ export const stringToCamelcase = (string: string) => {
         return index === 0 ? match.toLowerCase() : match.toUpperCase();
     });
 }
+
+export const getFullPageSlug = (slug: string) => {
+    let regex = /[A-Za-z0-9]+\/[A-Za-z0-9]+/;
+
+    return slug.match(regex)[0];
+}
+
+export const getRelevantPageSlug = (slug: string) => {
+    let regex = /[A-Za-z0-9]+\/[A-Za-z0-9]+/;
+
+    const match = slug.match(regex)[0];
+    return match.split("/")[1];
+}

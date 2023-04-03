@@ -8,6 +8,7 @@ export interface PanelImageProps extends IDefaultPropsWithChildren {
     alt: string;
     title?: string;
     imgClasses?: string;
+    titleClasses?: string;
 }
 
 export const PanelImage = ({
@@ -18,12 +19,13 @@ export const PanelImage = ({
     href,
     alt,
     title,
-    imgClasses = ""
+    imgClasses = "",
+    titleClasses = ""
 }: PanelImageProps) => {
 
     return (
         <motion.figure
-            className={"group max-h-[40vh] relative z-20 " + className}
+            className={"group max-h-[75vh] min-h-[75vh] relative z-20 py-1 " + className}
             id={id}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -39,7 +41,7 @@ export const PanelImage = ({
                 href={href}
             >
                 <img
-                    className={"object-cover w-1/4 max-h-[40vh] object-bottom relative brightness-100 group-hover:brightness-[0.25] transition-all ease-in-out delay-75 z-0 bg-darkGray " + imgClasses}
+                    className={"object-cover w-full h-full object-bottom relative brightness-100 group-hover:brightness-[0.25] transition-all ease-in-out delay-75 z-0 bg-darkGray " + imgClasses}
                     src={src}
                     alt={alt}
                 >
@@ -47,7 +49,7 @@ export const PanelImage = ({
                 </img>
 
                 {title && (
-                    <h2 className="-mt-20 mx-8 font-montserrat text-offWhite drop-shadow-sm tracking-wide font-bold md:font-normal text-lg md:text-xl absolute z-10 md:p-0 p-4 md:bg-[transparent] bg-darkGray md:bg-opacity-100 bg-opacity-90 rounded-lg md:rounded-none md:max-h-[unset] max-h-[12vh] truncate md:max-w-[unset] max-w-[85vw]">
+                    <h2 className={"-mt-24 font-playfair uppercase text-offWhite w-full text-center drop-shadow-sm tracking-wide font-bold md:font-normal text-2xl md:text-4xl absolute z-10 px-4 py-1 bg-darkGray md:bg-opacity-30 bg-opacity-90 rounded-lg md:rounded-none md:max-h-[unset] max-h-[12vh] md:max-w-[unset] max-w-[85vw] " + titleClasses}>
                         {title}
                     </h2>
                 )}

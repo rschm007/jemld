@@ -6,6 +6,8 @@ import { useState } from "react";
 import { useHydrateAtoms } from 'jotai/utils'
 import { BannerImage } from "@/components/Images/BannerImage";
 import BannerHeader from "@/components/Layout/BannerHeader";
+import { PanelImage } from "@/components/Images/PanelImage";
+import { getRelevantPageSlug } from "@/utils";
 
 interface PropType {
     contentData: any;
@@ -28,19 +30,22 @@ export const TheatrePage = ({
             <main className="w-screen h-screen">
                 <LayoutPrimary>
 
-                    <section className="space-y-2 mt-48">
+                    <section className="mt-48">
 
                         <BannerHeader text="Theatre" />
 
-                        {imagesMeta.sort((a, b) => a.orderNo - b.orderNo).map((img, i) => (
-                            <BannerImage
-                                key={i}
-                                src={img.url}
-                                alt={img.title}
-                                title={img.title}
-                                href={img.pageSlug}
-                            />
-                        ))}
+                        <div className="md:grid md:grid-cols-4 gap-x-2 min-h-screen">
+                            {imagesMeta.sort((a, b) => a.orderNo - b.orderNo).map((img, i) => (
+                                <PanelImage
+                                    key={i}
+                                    src={img.url}
+                                    alt={img.title}
+                                    title={img.title}
+                                    href={`${img.pageSlug}`}
+                                    titleClasses="!text-xl !md:text-3xl"
+                                />
+                            ))}
+                        </div>
                     </section>
 
                 </LayoutPrimary>
