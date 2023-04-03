@@ -41,7 +41,7 @@ export const TheatrePage = ({
                                     src={img.url}
                                     alt={img.title}
                                     title={img.title}
-                                    href={`${img.pageSlug}`}
+                                    href={img.pageSlug}
                                     titleClasses="!text-xl !md:text-3xl"
                                 />
                             ))}

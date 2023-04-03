@@ -74,24 +74,29 @@ export const TheatreDocPage = ({
 
                         <BannerHeader text={title} />
 
-                        <AttributionBlock
-                            clientName={clientName}
-                            year={year}
-                            longItemDescription={longItemDescription}
-                        />
+                        <div className="flex flex-row items-center w-full">
 
-                        <AutoplaySlider
-                            name={`${title}-slider`}
-                            bullets
-                            organicArrows={false}
-                            play
-                            cancelOnInteraction
-                            interval={6000}
-                        >
-                            {urls[0].map((url, i) => (
-                                <div data-src={url} key={i} />
-                            ))}
-                        </AutoplaySlider>
+                            <AttributionBlock
+                                clientName={clientName}
+                                year={year}
+                                longItemDescription={longItemDescription}
+                            />
+
+                            <AutoplaySlider
+                                name={`${title}-slider`}
+                                bullets
+                                organicArrows={false}
+                                play={true}
+                                cancelOnInteraction={false}
+                                infinite
+                                mobileTouch
+                                transitionDelay={150}
+                            >
+                                {urls[0].map((url, i) => (
+                                    <div data-src={url} key={i} />
+                                ))}
+                            </AutoplaySlider>
+                        </div>
 
                     </section>
 

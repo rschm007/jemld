@@ -29,8 +29,6 @@ export const Home = ({
     setPanels(panels)
   }, [])
 
-  console.log(imagesMetaData)
-
   return (
     <>
       <Head>

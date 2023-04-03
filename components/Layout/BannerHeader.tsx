@@ -12,8 +12,8 @@ export const BannerHeader = ({
 }: BannerHeaderProps) => {
 
     return (
-        <div className={"flex flex-row items-center justify-center w-fill h-36 " + className} id={id}>
-            <h2 className="text-center font-bold text-[2.5rem]">
+        <div className={"flex flex-row items-center justify-center w-full h-36 " + className} id={id}>
+            <h2 className="text-center text-[2.5rem]">
                 {text}
             </h2>
             {children}
