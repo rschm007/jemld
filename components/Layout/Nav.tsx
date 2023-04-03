@@ -17,7 +17,7 @@ export const Nav = ({
     const [open, setOpen] = useState(false);
     const router = useRouter();
 
-    const linkStyles = "font-montserrat font-semibold text-base tracking-wide transition ease-in-out delay-75 hover:scale-110 " + (scrolledDown ? "!text-offWhite " : "");
+    const linkStyles = "font-montserrat font-medium text-base tracking-wide transition ease-in-out delay-75 hover:scale-110 " + (scrolledDown ? "!text-offWhite " : "");
     const mobileLinkStyles = "font-montserrat text-[#fff] font-semibold text-2xl tracking-wide transition-all ease-in-out delay-75 hover:scale-110"
 
     return (

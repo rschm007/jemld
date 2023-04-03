@@ -88,10 +88,8 @@ export const getImageURLsByImageGalleryLength = async (imageGalleryLength: numbe
     return imageData;
 }
 
-export const mapImagesMetaData = async (contentData: any, imageUrls: Array<any>) => {
+export const mapImagesMetaData = async (contentData: any, imageUrls: Array<any>, indexPage: string) => {
     const images: Array<Image> = [];
-
-    console.log(contentData)
 
     if (imageUrls.length > 0) {
         imageUrls.forEach((url) => {
@@ -101,7 +99,7 @@ export const mapImagesMetaData = async (contentData: any, imageUrls: Array<any>)
                         title: data.title,
                         url: url,
                         alt: data.title,
-                        pageSlug: `${data._fl_meta_.schema}/${stringToCamelcase(data.id)}`,
+                        pageSlug: `${indexPage}/${data._fl_meta_.schema}/${stringToCamelcase(data.id)}`,
                         orderNo: data.orderNo
                     }
                     images.push(imageMeta);

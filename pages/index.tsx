@@ -1,10 +1,11 @@
 import Head from 'next/head'
 import { LayoutPrimary } from '@/components'
-import { getContent, getMainImageURLs, mapImagesMetaData } from '@/database';
-import { BannerImage } from '@/components/Images/BannerImage';
+import { getContent, getImagePanelsFromMetaData, getMainImageURLs, mapImagesMetaData } from '@/database';
 import { homeImagesAtom } from '@/state';
 import { useAtom } from 'jotai';
 import { useHydrateAtoms } from 'jotai/utils'
+import { PanelImage } from '@/components/Images/PanelImage';
+import { useLayoutEffect, useState } from 'react';
 
 interface PropType {
   imagesMetaData: any;
@@ -18,6 +19,16 @@ export const Home = ({
     [homeImagesAtom, imagesMetaData]
   ])
   const [imagesMeta] = useAtom(homeImagesAtom);
+  const [panels, setPanels] = useState([]);
+
+  // grab first images from each design category for our panel images
+  useLayoutEffect(() => {
+    const panels = getImagePanelsFromMetaData(imagesMeta);
+
+    console.log(panels)
+
+    setPanels(panels)
+  }, [])
 
   return (
     <>
@@ -28,10 +39,10 @@ export const Home = ({
       <main className="w-screen h-screen">
         <LayoutPrimary>
 
-          <section className="space-y-2 mt-48">
+          <section className="flex flex-row items-center space-y-2 mt-48">
 
-            {imagesMeta.sort((a, b) => a.orderNo - b.orderNo).map((img, i) => (
-              <BannerImage
+            {panels.map((img, i) => (
+              <PanelImage
                 key={i}
                 src={img.url}
                 alt={img.title}
@@ -50,7 +61,7 @@ export const Home = ({
 export async function getServerSideProps() {
   const contentData = await getContent();
   const imageUrlsData = await getMainImageURLs(contentData);
-  const imagesMetaData = await mapImagesMetaData(contentData, imageUrlsData);
+  const imagesMetaData = await mapImagesMetaData(contentData, imageUrlsData, "design");
 
   return {
     props: {

@@ -7,7 +7,7 @@ module.exports = {
   theme: {
     extend: {},
     colors: {
-      'offWhite': "#FDFDF0",
+      'offWhite': "#f8f8f8",
       'lavender': "#a057b1",
       'bubblegum': "#a78bfa",
       "darkViolet": "#160d33",
