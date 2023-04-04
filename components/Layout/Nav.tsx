@@ -44,7 +44,7 @@ export const Nav = ({
             </div>
 
             {/* mobile nav */}
-            <div className={"md:hidden flex relative transition-all duration-300 delay-75 " + (open ? "!absolute !m-0 w-screen h-screen inset-0 bg-lavender z-[999]" : "")}>
+            <div className={"md:hidden flex relative transition-all duration-300 delay-75 " + (open ? "!absolute !m-0 w-screen h-screen inset-0 bg-[#115e59] z-[999]" : "")}>
                 <MenuHamburger
                     className={(open ? "rotate-90 " : "") + (open ? "absolute right-20 top-20" : "")}
                     color={!open ? (scrolledDown ? "white" : "dark") : "white"}

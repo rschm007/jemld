@@ -76,7 +76,7 @@ export const InstallationDocPage = ({
 
                         <BannerHeader text={title} />
 
-                        <div className="flex flex-row items-center w-full">
+                        <div className="flex flex-col md:flex-row items-center w-full">
 
                             <AttributionBlock
                                 clientName={clientName}

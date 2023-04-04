@@ -25,7 +25,7 @@ export const PanelImage = ({
 
     return (
         <motion.figure
-            className={"group max-h-[75vh] min-h-[75vh] relative z-20 py-1 " + className}
+            className={"group md:max-h-[75vh] md:min-h-[75vh] relative z-20 py-1 " + className}
             id={id}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -49,7 +49,7 @@ export const PanelImage = ({
                 </img>
 
                 {title && (
-                    <h2 className={"-mt-24 font-playfair uppercase text-offWhite w-full text-center drop-shadow-sm tracking-wide font-bold md:font-normal text-2xl md:text-4xl absolute z-10 px-4 py-1 bg-darkGray md:bg-opacity-30 bg-opacity-90 rounded-lg md:rounded-none md:max-h-[unset] max-h-[12vh] md:max-w-[unset] max-w-[85vw] " + titleClasses}>
+                    <h2 className={"-mt-24 font-playfair uppercase text-offWhite w-full text-center drop-shadow-sm tracking-wide font-normal text-4xl absolute z-10 px-4 py-1 bg-darkGray md:bg-opacity-30 bg-opacity-90 rounded-r-lg md:rounded-none md:max-h-[unset] max-h-[12vh] md:max-w-[unset] max-w-[85vw] " + titleClasses}>
                         {title === "installationExhibit" ? "Installation & Exhibit" : title}
                     </h2>
                 )}

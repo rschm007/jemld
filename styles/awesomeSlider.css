@@ -38,8 +38,8 @@
 
     .awssld,
     .awssld__wrapper {
-        height: 100vh;
-        max-height: 100vh;
+        height: 40vh;
+        max-height: 40vh;
     }
 
     .awssld__bullets button {
@@ -47,5 +47,10 @@
         bottom: 6% !important;
         width: 8px !important;
         height: 8px !important;
+    }
+
+    .awssld__content>img,
+    .awssld__content>video {
+        object-fit: cover !important;
     }
 }

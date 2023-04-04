@@ -67,7 +67,7 @@ export const DanceDocPage = ({
                         prevItemId={prevPageId}
                         prevItemTitle={prevPageTitle}
                         prevItemImgUrl={prevPageImgUrl}
-                        prevItemDisabled={prevPageId === null || undefined} 
+                        prevItemDisabled={prevPageId === null || undefined}
                     >
 
                     </NextPrevDynamicPageButtons>
@@ -76,7 +76,7 @@ export const DanceDocPage = ({
 
                         <BannerHeader text={title} />
 
-                        <div className="flex flex-row items-center w-full">
+                        <div className="flex flex-col md:flex-row items-center w-full">
 
                             <AttributionBlock
                                 clientName={clientName}
