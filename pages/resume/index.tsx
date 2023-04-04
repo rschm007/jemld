@@ -13,10 +13,6 @@ export const ResumePage = ({
     imageUrlData
 }: PropType) => {
     const [content] = useState(contentData);
-    const [image] = useState(imageUrlData);
-
-    console.log(content);
-    console.log(imageUrlData);
 
     return (
         <>
@@ -40,13 +36,11 @@ export const ResumePage = ({
 }
 
 export async function getServerSideProps({ query }) {
-    const contentData = await getContentBySchemaName("about");
-    const imageUrlData = await getAboutImageUrl();
+    const contentData = await getContentBySchemaName("resume");
 
     return {
         props: {
-            contentData: contentData,
-            imageUrlData: imageUrlData
+            contentData: contentData
         }
     }
 }
