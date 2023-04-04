@@ -62,7 +62,7 @@ export const PortfolioMenu = ({
                                             <Link className={linkStyles + " text-offWhite !no-underline"} href="/portfolio/design/dance">
                                                 Dance
                                             </Link>
-                                            <Link className={linkStyles + " text-offWhite !no-underline"} href="/portfolio/design/installations">
+                                            <Link className={linkStyles + " text-offWhite !no-underline"} href="/portfolio/design/installationExhibit">
                                                 Installations
                                             </Link>
                                             <Link className={linkStyles + " text-offWhite !no-underline"} href="/portfolio/design/film">

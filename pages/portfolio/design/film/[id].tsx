@@ -1,8 +1,10 @@
-import { AttributionBlock, BannerHeader, LayoutPrimary, NextPrevDynamicPageButtons } from "@/components";
+import { AttributionBlock, BannerHeader, LayoutPrimary } from "@/components";
+import { NextPrevDynamicPageButtons } from "@/components/GUI/NextPrevDynamicPageButtons";
 import { getContentBySchemaName, getMainImageURLs, getPageContent } from "@/database";
-import { filmContentAtom } from "@/state/content";
+import { filmContentAtom, theatreContentAtom } from "@/state/content";
 import { useAtom } from "jotai";
-import { useState, useEffect } from "react";
+import { useHydrateAtoms } from 'jotai/utils';
+import { useEffect, useState } from "react";
 import AwesomeSlider from "react-awesome-slider";
 import withAutoplay from 'react-awesome-slider/dist/autoplay';
 import 'react-awesome-slider/dist/styles.css';
@@ -12,7 +14,7 @@ interface PropType {
     pageContentData: any;
 }
 
-export const FilmDocPage = ({
+export const TheatreDocPage = ({
     contentData,
     pageContentData,
 }: PropType) => {
@@ -49,13 +51,15 @@ export const FilmDocPage = ({
     const prevPageTitle = content[thisPageIndex - 1]?.title || null;
     const nextPageTitle = content[thisPageIndex + 1]?.title || null;
 
+    console.log(prevPageTitle, nextPageTitle)
+
     return (
         <>
             <main className="w-screen h-screen">
                 <LayoutPrimary>
 
                     <NextPrevDynamicPageButtons
-                        pageSlug="/portfolio/design/film"
+                        pageSlug="/portfolio/design/theatre"
                         nextItemId={nextPageId}
                         nextItemTitle={nextPageTitle}
                         nextItemImgUrl={nextPageImgUrl}
@@ -118,4 +122,4 @@ export async function getServerSideProps(context) {
     }
 }
 
-export default FilmDocPage;
+export default TheatreDocPage;
