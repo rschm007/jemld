@@ -29,7 +29,7 @@ export const Header = ({
 
     useEffect(() => {
         if (sticky) {
-            setBgColor(hexToRgba("#a78bfa", 0.6))
+            setBgColor(hexToRgba("#166534", 0.6))
         } else {
             setBgColor("transparent");
         }
@@ -39,7 +39,7 @@ export const Header = ({
     const isSticky = (e) => {
         const scrollTop = window.scrollY;
 
-        if (scrollTop >= 150) {
+        if (scrollTop >= 100) {
             setSticky(true);
         } else {
             setSticky(false);

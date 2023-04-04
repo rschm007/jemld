@@ -57,7 +57,7 @@ export const TheatreDocPage = ({
                 <LayoutPrimary>
 
                     <NextPrevDynamicPageButtons
-                        pageSlug="/portfolio/theatre"
+                        pageSlug="/portfolio/design/theatre"
                         nextItemId={nextPageId}
                         nextItemTitle={nextPageTitle}
                         nextItemImgUrl={nextPageImgUrl}

@@ -46,5 +46,6 @@ ol {
 
 /* nav */
 .active-link {
-    @apply underline underline-offset-4 decoration-bubblegum decoration-4 font-semibold;
+    text-decoration-color: #166534;
+    @apply underline underline-offset-4 decoration-4 font-semibold;
 }

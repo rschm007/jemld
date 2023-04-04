@@ -99,7 +99,7 @@ export const mapImagesMetaData = async (contentData: any, imageUrls: Array<any>,
                         title: data.title,
                         url: url,
                         alt: data.title,
-                        pageSlug: indexPage ? indexPage : "" + `${data._fl_meta_.schema}/${stringToCamelcase(data.id)}`,
+                        pageSlug: (indexPage ? `${indexPage}/` : "") + `${data._fl_meta_.schema}/${stringToCamelcase(data.id)}`,
                         orderNo: data.orderNo
                     }
                     images.push(imageMeta);

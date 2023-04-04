@@ -1,49 +1,100 @@
-import { AttributionBlock, BannerHeader, LayoutPrimary } from "@/components";
-import { GalleryImage, HeroImage } from "@/components/Images";
-import { getContentBySchemaName, getPageContent } from "@/database";
+import { AttributionBlock, BannerHeader, LayoutPrimary, NextPrevDynamicPageButtons } from "@/components";
+import { getContentBySchemaName, getMainImageURLs, getPageContent } from "@/database";
+import { filmContentAtom } from "@/state/content";
+import { useAtom } from "jotai";
+import { useState, useEffect } from "react";
+import AwesomeSlider from "react-awesome-slider";
+import withAutoplay from 'react-awesome-slider/dist/autoplay';
+import 'react-awesome-slider/dist/styles.css';
 
 interface PropType {
+    contentData: any;
     pageContentData: any;
 }
 
-export const TheatreDocPage = ({
+export const FilmDocPage = ({
+    contentData,
     pageContentData,
 }: PropType) => {
-    console.log(pageContentData)
+    //@ts-ignore
+    useHydrateAtoms([
+        [filmContentAtom, contentData]
+    ])
+    const [content] = useAtom(filmContentAtom);
+    const [neighborPagesImages, setNeighborPagesImages] = useState([]);
 
+    useEffect(() => {
+        if (neighborPagesImages.length === 0) {
+            getMainImageURLs(contentData)
+                .then(async (res) => {
+                    setNeighborPagesImages([...res]);
+                });
+        }
+    }, [])
+
+    const AutoplaySlider = withAutoplay(AwesomeSlider);
+
+    // variables for attribution block injection
     const urls = pageContentData.urls;
     const title = pageContentData.data.title;
     const clientName = pageContentData.data.clientName;
     const year = pageContentData.data.year.toString();
     const longItemDescription = pageContentData.data.longItemDescription;
-    const shortItemDescription = pageContentData.data.shortItemDescription;
+    // variables for next/prev buttons
+    const thisPageIndex = content.findIndex((c) => c.id === pageContentData.data.id);
+    const prevPageId = content[thisPageIndex - 1].id;
+    const prevPageImgUrl = neighborPagesImages[thisPageIndex - 1];
+    const nextPageId = content[thisPageIndex + 1].id;
+    const nextPageImgUrl = neighborPagesImages[thisPageIndex + 1];
+    const prevPageTitle = content[thisPageIndex - 1].title;
+    const nextPageTitle = content[thisPageIndex + 1].title;
 
     return (
         <>
             <main className="w-screen h-screen">
                 <LayoutPrimary>
 
-                    <section className="mt-48">
-                        <HeroImage src={urls[0][0]} alt={title} />
+                    <NextPrevDynamicPageButtons
+                        pageSlug="/portfolio/design/film"
+                        nextItemId={nextPageId}
+                        nextItemTitle={nextPageTitle}
+                        nextItemImgUrl={nextPageImgUrl}
+                        nextItemDisabled={nextPageId === null || undefined}
+                        prevItemId={prevPageId}
+                        prevItemTitle={prevPageTitle}
+                        prevItemImgUrl={prevPageImgUrl}
+                        prevItemDisabled={prevPageId === null || undefined}
+                    >
+
+                    </NextPrevDynamicPageButtons>
+
+                    <section className="mt-48 overflow-x-auto">
 
                         <BannerHeader text={title} />
 
-                        <AttributionBlock
-                            clientName={clientName}
-                            year={year}
-                            longItemDescription={longItemDescription}
-                        />
+                        <div className="flex flex-row items-center w-full">
 
-                        <section className="space-y-2">
-                            {urls[0].map((url, i) => (
-                                <GalleryImage
-                                    key={i}
-                                    src={url}
-                                    alt={title}
-                                />
-                            ))}
-                        </section>
+                            <AttributionBlock
+                                clientName={clientName}
+                                year={year}
+                                longItemDescription={longItemDescription}
+                            />
 
+                            <AutoplaySlider
+                                name={`${title}-slider`}
+                                bullets
+                                organicArrows={false}
+                                play={true}
+                                cancelOnInteraction={false}
+                                infinite
+                                mobileTouch
+                                transitionDelay={150}
+                            >
+                                {urls[0].map((url, i) => (
+                                    <div data-src={url} key={i} />
+                                ))}
+                            </AutoplaySlider>
+                        </div>
 
                     </section>
 
@@ -56,14 +107,15 @@ export const TheatreDocPage = ({
 export async function getServerSideProps(context) {
     const id = context.query.id;
 
-    const contentData = await getContentBySchemaName("theatre");
+    const contentData = await getContentBySchemaName("film");
     const pageContentData = await getPageContent(contentData, id);
 
     return {
         props: {
+            contentData: contentData,
             pageContentData: pageContentData
         }
     }
 }
 
-export default TheatreDocPage;
+export default FilmDocPage;
