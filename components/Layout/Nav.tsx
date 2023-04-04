@@ -17,7 +17,7 @@ export const Nav = ({
     const [open, setOpen] = useState(false);
     const router = useRouter();
 
-    const linkStyles = "font-montserrat font-medium text-base tracking-wide transition ease-in-out delay-75 hover:scale-110 " + (scrolledDown ? "!text-offWhite " : "");
+    const linkStyles = "font-montserrat font-medium text-base tracking-wide transition ease-in-out delay-75 hover:scale-110 " + (scrolledDown ? "!text-offWhite " : " ");
     const mobileLinkStyles = "font-montserrat text-[#fff] font-semibold text-2xl tracking-wide transition-all ease-in-out delay-75 hover:scale-110"
 
     return (
@@ -28,7 +28,7 @@ export const Nav = ({
                     Home
                 </Link>
 
-                <PortfolioMenu linkStyles={linkStyles + (router.pathname.includes("portfolio") ? "active-link" : "")} scrolledDown={scrolledDown} />
+                <PortfolioMenu linkStyles={linkStyles} scrolledDown={scrolledDown} />
 
                 <Link href="/resume" className={linkStyles + (router.pathname === "/resume" ? "active-link" : "")}>
                     Resume
@@ -56,7 +56,7 @@ export const Nav = ({
                         Home
                     </Link>
 
-                    <PortfolioMenu linkStyles={mobileLinkStyles + (router.pathname.includes("portfolio") ? "active-link" : "")} scrolledDown={scrolledDown} />
+                    <PortfolioMenu linkStyles={mobileLinkStyles} scrolledDown={scrolledDown} />
 
                     <Link href="/resume" className={mobileLinkStyles + (router.pathname === "/resume" ? "active-link" : "")}>
                         Resume

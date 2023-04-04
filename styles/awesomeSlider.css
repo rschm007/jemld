@@ -1,6 +1,6 @@
 .awssld,
 .awssld__wrapper {
-    @apply h-[unset] max-h-[85vh] min-w-[65vw];
+    @apply h-[unset] max-h-[85vh] min-w-[62vw];
 }
 
 .awssld__content {

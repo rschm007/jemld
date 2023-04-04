@@ -44,12 +44,14 @@ export const TheatreDocPage = ({
     const longItemDescription = pageContentData.data.longItemDescription;
     // variables for next/prev buttons
     const thisPageIndex = content.findIndex((c) => c.id === pageContentData.data.id);
-    const prevPageId = content[thisPageIndex - 1].id;
+    const prevPageId = content[thisPageIndex - 1]?.id || null;
     const prevPageImgUrl = neighborPagesImages[thisPageIndex - 1];
-    const nextPageId = content[thisPageIndex + 1].id;
+    const nextPageId = content[thisPageIndex + 1]?.id || null;
     const nextPageImgUrl = neighborPagesImages[thisPageIndex + 1];
-    const prevPageTitle = content[thisPageIndex - 1].title;
-    const nextPageTitle = content[thisPageIndex + 1].title;
+    const prevPageTitle = content[thisPageIndex - 1]?.title || null;
+    const nextPageTitle = content[thisPageIndex + 1]?.title || null;
+
+    console.log(prevPageTitle, nextPageTitle)
 
     return (
         <>

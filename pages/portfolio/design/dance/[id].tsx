@@ -1,60 +1,104 @@
-import { AttributionBlock, BannerHeader, LayoutPrimary } from "@/components";
-import { getContentBySchemaName, getPageContent } from "@/database";
+import { AttributionBlock, BannerHeader, LayoutPrimary, NextPrevDynamicPageButtons } from "@/components";
+import { getContentBySchemaName, getMainImageURLs, getPageContent } from "@/database";
 import { getFiles } from "@/database/media/files";
+import { danceContentAtom } from "@/state/content";
+import { useAtom } from "jotai";
+import { useState, useEffect } from "react";
 import AwesomeSlider from "react-awesome-slider";
 import withAutoplay from 'react-awesome-slider/dist/autoplay';
 import 'react-awesome-slider/dist/styles.css';
+import { useHydrateAtoms } from 'jotai/utils';
 
 interface PropType {
     filesData: any;
+    contentData: any;
     pageContentData: any;
 }
 
-export const TheatreDocPage = ({
+export const DanceDocPage = ({
     filesData,
+    contentData,
     pageContentData,
 }: PropType) => {
+    //@ts-ignore
+    useHydrateAtoms([
+        [danceContentAtom, contentData]
+    ])
+    const [content] = useAtom(danceContentAtom);
+    const [neighborPagesImages, setNeighborPagesImages] = useState([]);
+
+    useEffect(() => {
+        if (neighborPagesImages.length === 0) {
+            getMainImageURLs(contentData)
+                .then(async (res) => {
+                    setNeighborPagesImages([...res]);
+                });
+        }
+    }, [])
 
     const AutoplaySlider = withAutoplay(AwesomeSlider);
 
-
+    // variables for attribution block injection
     const urls = pageContentData.urls;
     const title = pageContentData.data.title;
     const clientName = pageContentData.data.clientName;
     const year = pageContentData.data.year.toString();
     const longItemDescription = pageContentData.data.longItemDescription;
-    const shortItemDescription = pageContentData.data.shortItemDescription;
+    // variables for next/prev buttons
+    const thisPageIndex = content.findIndex((c) => c.id === pageContentData.data.id);
+    const prevPageId = content[thisPageIndex - 1]?.id || null;
+    const prevPageImgUrl = neighborPagesImages[thisPageIndex - 1];
+    const nextPageId = content[thisPageIndex + 1]?.id || null;
+    const nextPageImgUrl = neighborPagesImages[thisPageIndex + 1];
+    const prevPageTitle = content[thisPageIndex - 1]?.title || null;
+    const nextPageTitle = content[thisPageIndex + 1]?.title || null;
 
     return (
         <>
             <main className="w-screen h-screen">
                 <LayoutPrimary>
 
-                    <section className="flex flex-col mt-48">
+                    <NextPrevDynamicPageButtons
+                        pageSlug="/portfolio/design/dance"
+                        nextItemId={nextPageId}
+                        nextItemTitle={nextPageTitle}
+                        nextItemImgUrl={nextPageImgUrl}
+                        nextItemDisabled={nextPageId === null || undefined}
+                        prevItemId={prevPageId}
+                        prevItemTitle={prevPageTitle}
+                        prevItemImgUrl={prevPageImgUrl}
+                        prevItemDisabled={prevPageId === null || undefined} 
+                    >
+
+                    </NextPrevDynamicPageButtons>
+
+                    <section className="mt-48 overflow-x-auto">
 
                         <BannerHeader text={title} />
 
-                        <AttributionBlock
-                            clientName={clientName}
-                            year={year}
-                            longItemDescription={longItemDescription}
-                        />
+                        <div className="flex flex-row items-center w-full">
 
-                        <section className="space-y-2">
+                            <AttributionBlock
+                                clientName={clientName}
+                                year={year}
+                                longItemDescription={longItemDescription}
+                            />
+
                             <AutoplaySlider
                                 name={`${title}-slider`}
                                 bullets
                                 organicArrows={false}
-                                play
-                                cancelOnInteraction
-                                interval={6000}
+                                play={true}
+                                cancelOnInteraction={false}
+                                infinite
+                                mobileTouch
+                                transitionDelay={150}
                             >
                                 {urls[0].map((url, i) => (
                                     <div data-src={url} key={i} />
                                 ))}
                             </AutoplaySlider>
-                        </section>
-
+                        </div>
 
                     </section>
 
@@ -73,10 +117,11 @@ export async function getServerSideProps(context) {
 
     return {
         props: {
+            contentData: contentData,
             pageContentData: pageContentData,
             filesData: filesData
         }
     }
 }
 
-export default TheatreDocPage;
+export default DanceDocPage;

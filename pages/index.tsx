@@ -1,5 +1,5 @@
 import Head from 'next/head'
-import { LayoutPrimary } from '@/components'
+import { BannerHeader, LayoutPrimary } from '@/components'
 import { getContent, getImagePanelsFromMetaData, getMainImageURLs, mapImagesMetaData } from '@/database';
 import { homeImagesAtom } from '@/state';
 import { useAtom } from 'jotai';
@@ -38,17 +38,21 @@ export const Home = ({
       <main className="w-screen h-screen">
         <LayoutPrimary>
 
-          <section className="md:grid md:grid-cols-4 gap-x-2 mt-48 min-h-screen">
+          <section className="mt-48 min-h-screen">
+            <BannerHeader text="Design" />
 
-            {panels.map((img, i) => (
-              <PanelImage
-                key={i}
-                src={img.url}
-                alt={img.title}
-                title={getRelevantPageSlug(img.pageSlug)}
-                href={`portfolio/design/${getRelevantPageSlug(img.pageSlug)}`}
-              />
-            ))}
+            <div className="md:grid md:grid-cols-4 gap-x-2 ">
+              {panels.map((img, i) => (
+                <PanelImage
+                  key={i}
+                  src={img.url}
+                  alt={img.title}
+                  title={getRelevantPageSlug(img.pageSlug)}
+                  href={`portfolio/design/${getRelevantPageSlug(img.pageSlug)}`}
+                />
+              ))}
+            </div>
+
           </section>
 
         </LayoutPrimary>
