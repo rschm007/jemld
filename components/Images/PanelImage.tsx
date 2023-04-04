@@ -50,7 +50,7 @@ export const PanelImage = ({
 
                 {title && (
                     <h2 className={"-mt-24 font-playfair uppercase text-offWhite w-full text-center drop-shadow-sm tracking-wide font-bold md:font-normal text-2xl md:text-4xl absolute z-10 px-4 py-1 bg-darkGray md:bg-opacity-30 bg-opacity-90 rounded-lg md:rounded-none md:max-h-[unset] max-h-[12vh] md:max-w-[unset] max-w-[85vw] " + titleClasses}>
-                        {title}
+                        {title === "installationExhibit" ? "Installation & Exhibit" : title}
                     </h2>
                 )}
             </Link>
