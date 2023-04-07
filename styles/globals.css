@@ -49,3 +49,9 @@ ol {
     text-decoration-color: #166534;
     @apply underline underline-offset-4 decoration-4 font-semibold;
 }
+
+@media screen and (max-width: 768px) {
+    .nav-panel {
+        background-color: #166534 !important;
+    }
+}

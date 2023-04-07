@@ -12,4 +12,6 @@ export type Image = {
     alt: string;
     pageSlug: string;
     orderNo: number;
+    category: string;
+    subCategory?: string;
 }

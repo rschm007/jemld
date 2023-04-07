@@ -71,12 +71,14 @@ export const getPageContent = async (contentData: Array<any>, id: string) => {
     let contentMatch = await contentData.find((c) => c.id.toLowerCase() === id.toLowerCase());
 
     let imageUrls = [];
-    await getImageURLsByImageGalleryLength(contentMatch.imageGallery.length, contentMatch.imageNameId)
-        .then(async (res) => {
-            await imageUrls.push(res);
-        }).catch((error) => {
-            console.error(error);
-        });
+    if (contentMatch?.imageGallery) {
+        await getImageURLsByImageGalleryLength(contentMatch.imageGallery.length, contentMatch.imageNameId)
+            .then(async (res) => {
+                await imageUrls.push(res);
+            }).catch((error) => {
+                console.error(error);
+            });
+    }
 
     const content = {
         data: contentMatch,

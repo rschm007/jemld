@@ -46,12 +46,12 @@ export const PortfolioMenu = ({
                                     leaveFrom="transform opacity-100 scale-100"
                                     leaveTo="transform opacity-0 scale-95"
                                 >
-                                    <Popover className="relative">
-                                        <Popover.Button className={linkStyles + ((router.pathname.includes("theatre") ? "active-link" : "")) + " text-offWhite !no-underline"}>
+                                    <Popover className="relative hidden md:block">
+                                        <Popover.Button className={linkStyles + ((router.pathname.includes("theatre") ? "active-link" : "")) + " text-offWhite !no-underline text-center w-full"}>
                                             Design
                                         </Popover.Button>
 
-                                        <Popover.Panel className="absolute z-20 ml-[5.4rem] flex flex-col items-center justify-start p-2"
+                                        <Popover.Panel className="nav-panel relative md:absolute z-20 md:ml-[5.4rem] flex flex-col items-center justify-start p-2"
                                             style={{ backgroundColor: scrolledDown ? `${hexToRgba("#115e59", 1)}` : `${hexToRgba("#115e59", 0.8)}` }}>
                                             <Link className={linkStyles +
                                                 ((router.pathname.includes("theatre") ? "active-link" : "")) +
@@ -71,6 +71,14 @@ export const PortfolioMenu = ({
                                         </Popover.Panel>
                                     </Popover>
                                 </Transition>
+                            )}
+                        </Menu.Item>
+
+                        <Menu.Item>
+                            {({ active }) => (
+                                <Link className={linkStyles + " text-offWhite !no-underline visible md:hidden"} href="/portfolio/design">
+                                    Design
+                                </Link>
                             )}
                         </Menu.Item>
 

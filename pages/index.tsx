@@ -1,6 +1,6 @@
 import Head from 'next/head'
 import { BannerHeader, LayoutPrimary } from '@/components'
-import { getContent, getImagePanelsFromMetaData, getMainImageURLs, mapImagesMetaData } from '@/database';
+import { getContent, getHomeImagePanelsFromMetaData, getImagePanelsFromMetaData, getMainImageURLs, mapImagesMetaData } from '@/database';
 import { homeImagesAtom } from '@/state';
 import { useAtom } from 'jotai';
 import { useHydrateAtoms } from 'jotai/utils'
@@ -27,12 +27,12 @@ export const Home = ({
   const [panels, setPanels] = useState([]);
 
   console.log(contentData)
-  console.log(imageUrlsData)
+  // console.log(imageUrlsData)
   console.log(imagesMetaData)
 
   // grab first images from each design category for our panel images
   useLayoutEffect(() => {
-    const panels = getImagePanelsFromMetaData(imagesMeta);
+    const panels = getHomeImagePanelsFromMetaData(imagesMeta);
 
     setPanels(panels)
   }, [])
@@ -47,7 +47,7 @@ export const Home = ({
         <LayoutPrimary>
 
           <section className="mt-48 min-h-screen">
-            <BannerHeader text="Design" />
+            {/* <BannerHeader text="Design" /> */}
 
             <div className="md:grid md:grid-cols-4 gap-x-2 ">
               {panels.map((img, i) => (
@@ -55,8 +55,8 @@ export const Home = ({
                   key={i}
                   src={img.url}
                   alt={img.title}
-                  title={getRelevantPageSlug(img.pageSlug)}
-                  href={`portfolio/design/${getRelevantPageSlug(img.pageSlug)}`}
+                  title={img.category}
+                  href={`portfolio/${img.category}`}
                 />
               ))}
             </div>
@@ -72,7 +72,7 @@ export const Home = ({
 export async function getServerSideProps() {
   const contentData = await getContent();
   const imageUrlsData = await getMainImageURLs(contentData);
-  const imagesMetaData = await mapImagesMetaData(contentData, imageUrlsData, "design");
+  const imagesMetaData = await mapImagesMetaData(contentData, imageUrlsData);
 
   return {
     props: {

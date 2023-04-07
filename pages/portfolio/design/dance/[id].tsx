@@ -88,11 +88,11 @@ export const DanceDocPage = ({
                                 name={`${title}-slider`}
                                 bullets
                                 organicArrows={false}
-                                play={true}
-                                cancelOnInteraction={false}
+                                play
+                                cancelOnInteraction={true}
+                                interval={3000}
                                 infinite
                                 mobileTouch
-                                transitionDelay={150}
                             >
                                 {urls[0].map((url, i) => (
                                     <div data-src={url} key={i} />

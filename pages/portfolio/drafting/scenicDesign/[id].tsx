@@ -1,7 +1,7 @@
 import { AttributionBlock, BannerHeader, LayoutPrimary } from "@/components";
 import { NextPrevDynamicPageButtons } from "@/components/GUI/NextPrevDynamicPageButtons";
 import { getContentBySchemaName, getMainImageURLs, getPageContent } from "@/database";
-import { installationContentAtom, theatreContentAtom } from "@/state/content";
+import { theatreContentAtom } from "@/state/content";
 import { useAtom } from "jotai";
 import { useHydrateAtoms } from 'jotai/utils';
 import { useEffect, useState } from "react";
@@ -14,20 +14,20 @@ interface PropType {
     pageContentData: any;
 }
 
-export const InstallationDocPage = ({
+export const ProgrammingDocPage = ({
     contentData,
     pageContentData,
 }: PropType) => {
     //@ts-ignore
     useHydrateAtoms([
-        [installationContentAtom, contentData]
+        [theatreContentAtom, contentData]
     ])
-    const [content] = useAtom(installationContentAtom);
+    const [content] = useAtom(theatreContentAtom);
     const [neighborPagesImages, setNeighborPagesImages] = useState([]);
 
     useEffect(() => {
         if (neighborPagesImages.length === 0) {
-            getMainImageURLs(contentData)
+            getMainImageURLs(contentData, "scenicDesign")
                 .then(async (res) => {
                     setNeighborPagesImages([...res]);
                 });
@@ -59,7 +59,7 @@ export const InstallationDocPage = ({
                 <LayoutPrimary>
 
                     <NextPrevDynamicPageButtons
-                        pageSlug="/portfolio/design/installatonExhibit"
+                        pageSlug="/portfolio/drafting/scenicDesign"
                         nextItemId={nextPageId}
                         nextItemTitle={nextPageTitle}
                         nextItemImgUrl={nextPageImgUrl}
@@ -76,29 +76,31 @@ export const InstallationDocPage = ({
 
                         <BannerHeader text={title} />
 
-                        <div className="flex flex-col md:flex-row items-center w-full">
+                        {urls.length > 0 && (
+                            <div className="flex flex-col md:flex-row items-center w-full">
 
-                            <AttributionBlock
-                                clientName={clientName}
-                                year={year}
-                                longItemDescription={longItemDescription}
-                            />
+                                <AttributionBlock
+                                    clientName={clientName}
+                                    year={year}
+                                    longItemDescription={longItemDescription}
+                                />
 
-                            <AutoplaySlider
-                                name={`${title}-slider`}
-                                bullets
-                                organicArrows={false}
-                                play
-                                cancelOnInteraction={true}
-                                interval={3000}
-                                infinite
-                                mobileTouch
-                            >
-                                {urls[0].map((url, i) => (
-                                    <div data-src={url} key={i} />
-                                ))}
-                            </AutoplaySlider>
-                        </div>
+                                <AutoplaySlider
+                                    name={`${title}-slider`}
+                                    bullets
+                                    organicArrows={false}
+                                    play
+                                    cancelOnInteraction={true}
+                                    interval={3000}
+                                    infinite
+                                    mobileTouch
+                                >
+                                    {urls[0].map((url, i) => (
+                                        <div data-src={url} key={i} />
+                                    ))}
+                                </AutoplaySlider>
+                            </div>
+                        )}
 
                     </section>
 
@@ -111,7 +113,7 @@ export const InstallationDocPage = ({
 export async function getServerSideProps(context) {
     const id = context.query.id;
 
-    const contentData = await getContentBySchemaName("installationExhibit");
+    const contentData = await getContentBySchemaName("drafting");
     const pageContentData = await getPageContent(contentData, id);
 
     return {
@@ -122,4 +124,4 @@ export async function getServerSideProps(context) {
     }
 }
 
-export default InstallationDocPage;
+export default ProgrammingDocPage;

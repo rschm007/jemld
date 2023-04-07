@@ -7,12 +7,16 @@ import { getDownloadURL, getStorage, ref } from "firebase/storage";
  * @param contentData contentData JSON of content data returend from getContent()
  * @returns url array
  */
-export const getMainImageURLs = async (contentData: any) => {
+export const getMainImageURLs = async (contentData: any, subCategory?: any) => {
     const imageNameIds = [];
 
     contentData.forEach((data) => {
         if (data?.imageNameId) {
-            imageNameIds.push(`${data.imageNameId}_0.webp`);
+            if (data?.subCategory === subCategory) {
+                imageNameIds.push(`${data.imageNameId}_0.webp`);
+            } else {
+                imageNameIds.push(`${data.imageNameId}_0.webp`);
+            }
         }
     })
 
@@ -88,7 +92,7 @@ export const getImageURLsByImageGalleryLength = async (imageGalleryLength: numbe
     return imageData;
 }
 
-export const mapImagesMetaData = async (contentData: any, imageUrls: Array<any>, indexPage?: string) => {
+export const mapImagesMetaData = async (contentData: any, imageUrls: Array<any>) => {
     const images: Array<Image> = [];
 
     if (imageUrls.length > 0) {
@@ -99,8 +103,10 @@ export const mapImagesMetaData = async (contentData: any, imageUrls: Array<any>,
                         title: data.title,
                         url: url,
                         alt: data.title,
-                        pageSlug: (indexPage ? `${indexPage}/` : "") + `${data._fl_meta_.schema}/${stringToCamelcase(data.id)}`,
-                        orderNo: data.orderNo
+                        pageSlug: `${data.category}/${data._fl_meta_.schema}/${stringToCamelcase(data.id)}`,
+                        orderNo: data.orderNo,
+                        category: data.category,
+                        subCategory: data.subCategory || null
                     }
                     images.push(imageMeta);
                 }
@@ -128,16 +134,38 @@ export const getAboutImageUrl = async () => {
     return imageUrl;
 }
 
-export const getImagePanelsFromMetaData = (metadata: Array<any>) => {
+export const getHomeImagePanelsFromMetaData = (metadata: Array<any>) => {
     const unique = {};
     const distinct = [];
 
     metadata.forEach(function (x) {
-        const key = getFullPageSlug(x.pageSlug);
+        const key = x.category;
 
         if (!unique[key]) {
             distinct.push(x);
             unique[key] = true;
+        }
+    });
+
+    distinct.sort((a, b) => {
+        return a.category.localeCompare(b.category)
+    });
+
+    return distinct;
+}
+
+export const getImagePanelsFromMetaData = (metadata: Array<any>, category: string) => {
+    const unique = {};
+    const distinct = [];
+
+    metadata.forEach(function (x) {
+        if (x.category === category) {
+            const key = getFullPageSlug(x.pageSlug);
+
+            if (!unique[key]) {
+                distinct.push(x);
+                unique[key] = true;
+            }
         }
     });
 

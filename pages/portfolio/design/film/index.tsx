@@ -35,16 +35,20 @@ export const TheatrePage = ({
                         <BannerHeader text="Film" />
 
                         <div className="md:grid md:grid-cols-4 gap-x-2 min-h-screen">
-                            {imagesMeta.sort((a, b) => a.orderNo - b.orderNo).map((img, i) => (
-                                <PanelImage
-                                    key={i}
-                                    src={img.url}
-                                    alt={img.title}
-                                    title={img.title}
-                                    href={img.pageSlug}
-                                    titleClasses="!text-xl !md:text-3xl"
-                                />
-                            ))}
+                            {imagesMeta.sort((a, b) => a.orderNo - b.orderNo).map((img, i) => {
+                                const href = img.pageSlug.split("/");
+
+                                return (
+                                    <PanelImage
+                                        key={i}
+                                        src={img.url}
+                                        alt={img.title}
+                                        title={img.title}
+                                        href={href[1] + "/" + href[2]}
+                                        titleClasses="!text-xl !md:text-3xl"
+                                    />
+                                )
+                            })}
                         </div>
                     </section>
 

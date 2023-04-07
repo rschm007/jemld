@@ -12,7 +12,7 @@ interface PropType {
     imagesMetaData: any;
 }
 
-export const Design = ({
+export const Visualization = ({
     imagesMetaData
 }: PropType) => {
     //@ts-ignore
@@ -24,7 +24,7 @@ export const Design = ({
 
     // grab first images from each design category for our panel images
     useLayoutEffect(() => {
-        const panels = getImagePanelsFromMetaData(imagesMeta, "design");
+        const panels = getImagePanelsFromMetaData(imagesMeta, "visualization");
 
         setPanels(panels)
     }, [])
@@ -36,18 +36,25 @@ export const Design = ({
 
                     <section className="mt-48 min-h-screen">
 
-                        <BannerHeader text="Design" />
+                        <BannerHeader text="Visualization" />
 
                         <div className="md:grid md:grid-cols-4 gap-x-2">
-                            {panels.map((img, i) => (
-                                <PanelImage
-                                    key={i}
-                                    src={img.url}
-                                    alt={img.title}
-                                    title={getRelevantPageSlug(img.pageSlug)}
-                                    href={`design/${getRelevantPageSlug(img.pageSlug)}`}
-                                />
-                            ))}
+                            {panels.sort((a, b) => a.orderNo - b.orderNo).map((img, i) => {
+                                const href = img.pageSlug.split("/");
+
+                                console.log(href)
+
+                                return (
+                                    <PanelImage
+                                        key={i}
+                                        src={img.url}
+                                        alt={img.title}
+                                        title={img.title}
+                                        href={href[0] + "/" + href[2]}
+                                        titleClasses="!text-xl !md:text-3xl"
+                                    />
+                                )
+                            })}
                         </div>
 
                     </section>
@@ -70,4 +77,4 @@ export async function getServerSideProps() {
     }
 }
 
-export default Design;
+export default Visualization;

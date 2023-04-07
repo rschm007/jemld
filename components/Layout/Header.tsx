@@ -3,8 +3,8 @@ import { hexToRgba, rgbaToHex } from "@/utils";
 import Link from "next/link";
 import { useState } from "react";
 import { useEffect } from "react";
-import { LogoSmall } from "../Logos";
 import { Nav } from "./Nav";
+import Image from 'next/image'
 
 export interface Props extends IDefaultProps {
     children?: JSX.Element | JSX.Element[];
@@ -56,10 +56,11 @@ export const Header = ({
             }}
         >
             <Link href="/" passHref>
-                <LogoSmall
-                    className={"mt-4 md:mt-[unset]" + (sticky ? "h-36 w-36 md:h-48 md:w-48" : "h-44 w-44 md:h-64 md:w-64")}
-                    fill={sticky ? "#FDFDF0" : "#111111"}
-                />
+                {sticky ? (
+                    <Image src="/JQLogo_full_white-text.svg" className="w-80" alt="JQ Lights" width="150" height="100" />
+                ) : (
+                    <Image src="/JQLogo_full_color.svg" className="w-80" alt="JQ Lights" width="150" height="100" />
+                )}
             </Link>
 
             <Nav scrolledDown={sticky} />

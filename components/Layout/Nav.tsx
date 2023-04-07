@@ -28,14 +28,14 @@ export const Nav = ({
                     Home
                 </Link>
 
+                <Link href="/about" className={linkStyles + (router.pathname === "/about" ? "active-link" : "")}>
+                    About
+                </Link>
+
                 <PortfolioMenu linkStyles={linkStyles} scrolledDown={scrolledDown} />
 
                 <Link href="/resume" className={linkStyles + (router.pathname === "/resume" ? "active-link" : "")}>
                     Resume
-                </Link>
-
-                <Link href="/about" className={linkStyles + (router.pathname === "/about" ? "active-link" : "")}>
-                    About
                 </Link>
 
                 <Link href="/contact" className={linkStyles + (router.pathname === "/contact" ? "active-link" : "")}>
@@ -56,14 +56,14 @@ export const Nav = ({
                         Home
                     </Link>
 
+                    <Link href="/about" className={mobileLinkStyles + (router.pathname === "/about" ? "active-link" : "")}>
+                        About
+                    </Link>
+
                     <PortfolioMenu linkStyles={mobileLinkStyles} scrolledDown={scrolledDown} />
 
                     <Link href="/resume" className={mobileLinkStyles + (router.pathname === "/resume" ? "active-link" : "")}>
                         Resume
-                    </Link>
-
-                    <Link href="/about" className={mobileLinkStyles + (router.pathname === "/about" ? "active-link" : "")}>
-                        About
                     </Link>
 
                     <Link href="/contact" className={mobileLinkStyles + (router.pathname === "/contact" ? "active-link" : "")}>

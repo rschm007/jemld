@@ -9,10 +9,12 @@ import { useLayoutEffect, useState } from 'react';
 import { getRelevantPageSlug } from '@/utils';
 
 interface PropType {
+    contentData: any;
     imagesMetaData: any;
 }
 
-export const Design = ({
+export const Drafting = ({
+    contentData,
     imagesMetaData
 }: PropType) => {
     //@ts-ignore
@@ -24,9 +26,12 @@ export const Design = ({
 
     // grab first images from each design category for our panel images
     useLayoutEffect(() => {
-        const panels = getImagePanelsFromMetaData(imagesMeta, "design");
+        const panels = getImagePanelsFromMetaData(imagesMeta, "drafting");
 
-        setPanels(panels)
+        const _panels = panels.filter((p) => p.subCategory === "lightingDesign");
+
+        setPanels(_panels);
+
     }, [])
 
     return (
@@ -36,18 +41,24 @@ export const Design = ({
 
                     <section className="mt-48 min-h-screen">
 
-                        <BannerHeader text="Design" />
+                        <BannerHeader text="Lighting Design Drafting" />
 
                         <div className="md:grid md:grid-cols-4 gap-x-2">
-                            {panels.map((img, i) => (
-                                <PanelImage
-                                    key={i}
-                                    src={img.url}
-                                    alt={img.title}
-                                    title={getRelevantPageSlug(img.pageSlug)}
-                                    href={`design/${getRelevantPageSlug(img.pageSlug)}`}
-                                />
-                            ))}
+                            {panels.sort((a, b) => a.orderNo - b.orderNo).map((img, i) => {
+                                const href = img.pageSlug.split("/");
+
+                                return (
+                                    <PanelImage
+                                        key={i}
+                                        src={img.url}
+                                        alt={img.title}
+                                        title={img.title}
+                                        href={"lightingDesign/" + href[2]}
+                                        titleClasses="!text-xl !md:text-3xl"
+                                    />
+                                )
+                            })}
+
                         </div>
 
                     </section>
@@ -65,9 +76,10 @@ export async function getServerSideProps() {
 
     return {
         props: {
+            contentData: contentData,
             imagesMetaData: imagesMetaData
         }
     }
 }
 
-export default Design;
+export default Drafting;
