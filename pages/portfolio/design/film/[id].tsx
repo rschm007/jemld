@@ -10,7 +10,7 @@ import AwesomeSlider from "react-awesome-slider";
 import withAutoplay from 'react-awesome-slider/dist/autoplay';
 import 'react-awesome-slider/dist/styles.css';
 
-const neighborPagesImagesAtom = atomWithStorage('portfolio-design_film-neighbors', [])
+const neighborPagesImagesAtom = atomWithStorage<Array<any>>('portfolio-design_film-neighbors', []);
 
 interface PropType {
     contentData: any;
@@ -26,7 +26,8 @@ export const TheatreDocPage = ({
         [filmContentAtom, contentData]
     ])
     const [content] = useAtom(filmContentAtom);
-    const [neighborPagesImages, setNeighborPagesImages] = useAtom(neighborPagesImagesAtom);
+    // @ts-ignore
+    const [neighborPagesImages, setNeighborPagesImages] = useAtom<Array<any>>(neighborPagesImagesAtom);
 
     useEffect(() => {
         if (neighborPagesImages.length === 0) {
@@ -80,6 +81,7 @@ export const TheatreDocPage = ({
                         <div className="flex flex-col md:flex-row items-center w-full">
 
                             <AttributionBlock
+                                title={title}
                                 clientName={clientName}
                                 year={year}
                                 longItemDescription={longItemDescription}

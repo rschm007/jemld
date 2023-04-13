@@ -10,7 +10,7 @@ import AwesomeSlider from "react-awesome-slider";
 import withAutoplay from 'react-awesome-slider/dist/autoplay';
 import 'react-awesome-slider/dist/styles.css';
 
-const neighborPagesImagesAtom = atomWithStorage('portfolio-design_installationExhibit-neighbors', [])
+const neighborPagesImagesAtom = atomWithStorage('portfolio-design_installationExhibit-neighbors', []);
 
 interface PropType {
     contentData: any;
@@ -83,6 +83,7 @@ export const InstallationDocPage = ({
                         <div className="flex flex-col md:flex-row items-center w-full">
 
                             <AttributionBlock
+                                title={title}
                                 clientName={clientName}
                                 year={year}
                                 longItemDescription={longItemDescription}

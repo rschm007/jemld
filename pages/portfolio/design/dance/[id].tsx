@@ -84,6 +84,7 @@ export const DanceDocPage = ({
                         <div className="flex flex-col md:flex-row items-center w-full">
 
                             <AttributionBlock
+                                title={title}
                                 clientName={clientName}
                                 year={year}
                                 longItemDescription={longItemDescription}
