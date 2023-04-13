@@ -1,13 +1,16 @@
 import { AttributionBlock, BannerHeader, LayoutPrimary } from "@/components";
 import { NextPrevDynamicPageButtons } from "@/components/GUI/NextPrevDynamicPageButtons";
+import DynamicWrapper from "@/components/SSR/DynamicWrapper";
 import { getContentBySchemaName, getMainImageURLs, getPageContent } from "@/database";
 import { theatreContentAtom } from "@/state/content";
 import { useAtom } from "jotai";
-import { useHydrateAtoms } from 'jotai/utils';
+import { atomWithStorage, useHydrateAtoms } from 'jotai/utils';
 import { useEffect, useState } from "react";
 import AwesomeSlider from "react-awesome-slider";
 import withAutoplay from 'react-awesome-slider/dist/autoplay';
 import 'react-awesome-slider/dist/styles.css';
+
+const neighborPagesImagesAtom = atomWithStorage('portfolio-design_theatre-neighbors', [])
 
 interface PropType {
     contentData: any;
@@ -22,8 +25,14 @@ export const TheatreDocPage = ({
     useHydrateAtoms([
         [theatreContentAtom, contentData]
     ])
-    const [content] = useAtom(theatreContentAtom);
-    const [neighborPagesImages, setNeighborPagesImages] = useState([]);
+    const [content, setContent] = useAtom(theatreContentAtom);
+    const [neighborPagesImages, setNeighborPagesImages] = useAtom(neighborPagesImagesAtom);
+
+    useEffect(() => {
+        if (content != contentData) {
+            setContent(contentData);
+        }
+    }, [contentData])
 
     useEffect(() => {
         if (neighborPagesImages.length === 0) {
@@ -51,34 +60,37 @@ export const TheatreDocPage = ({
     const prevPageTitle = content[thisPageIndex - 1]?.title || null;
     const nextPageTitle = content[thisPageIndex + 1]?.title || null;
 
-    console.log(prevPageTitle, nextPageTitle)
+    console.log(nextPageId, prevPageId)
 
     return (
         <>
             <main className="w-screen h-screen">
                 <LayoutPrimary>
 
-                    <NextPrevDynamicPageButtons
-                        pageSlug="/portfolio/design/theatre"
-                        nextItemId={nextPageId}
-                        nextItemTitle={nextPageTitle}
-                        nextItemImgUrl={nextPageImgUrl}
-                        nextItemDisabled={nextPageId === null || undefined}
-                        prevItemId={prevPageId}
-                        prevItemTitle={prevPageTitle}
-                        prevItemImgUrl={prevPageImgUrl}
-                        prevItemDisabled={prevPageId === null || undefined}
-                    >
-
-                    </NextPrevDynamicPageButtons>
-
                     <section className="mt-48 overflow-x-auto">
 
                         <BannerHeader text={title} />
 
+                        <DynamicWrapper>
+                            <NextPrevDynamicPageButtons
+                                pageSlug="/portfolio/design/theatre"
+                                nextItemId={nextPageId}
+                                nextItemTitle={nextPageTitle}
+                                nextItemImgUrl={nextPageImgUrl}
+                                nextItemDisabled={nextPageId === null || undefined}
+                                prevItemId={prevPageId}
+                                prevItemTitle={prevPageTitle}
+                                prevItemImgUrl={prevPageImgUrl}
+                                prevItemDisabled={prevPageId === null || undefined}
+                            >
+
+                            </NextPrevDynamicPageButtons>
+                        </DynamicWrapper>
+
                         <div className="flex flex-col md:flex-row items-center w-full">
 
                             <AttributionBlock
+                                title={title}
                                 clientName={clientName}
                                 year={year}
                                 longItemDescription={longItemDescription}
@@ -87,10 +99,9 @@ export const TheatreDocPage = ({
                             <AutoplaySlider
                                 name={`${title}-slider`}
                                 bullets
-                                organicArrows={false}
+                                organicArrows={true}
                                 play
                                 cancelOnInteraction={true}
-                                interval={3000}
                                 infinite
                                 mobileTouch
                             >

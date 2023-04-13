@@ -16,6 +16,7 @@ export const Header = ({
     children
 }: Props) => {
     const [sticky, setSticky] = useState(false);
+    const [hidden, setHidden] = useState(false);
     const [bgColor, setBgColor] = useState("transparent");
 
     // Sticky Menu Area
@@ -39,17 +40,23 @@ export const Header = ({
     const isSticky = (e) => {
         const scrollTop = window.scrollY;
 
-        if (scrollTop >= 100) {
+        if (scrollTop >= 100 && scrollTop <= 250) {
             setSticky(true);
+        } else if (scrollTop >= 250) {
+            setHidden(true);
         } else {
+            setHidden(false);
             setSticky(false);
         }
     };
 
     return (
         <header
-            className={"header-section fixed top-0 z-50 flex flex-row items-center justify-between w-full px-4 md:px-8 transition-all ease-in-out " +
-                (sticky ? "h-32 " : "h-48 ") + className}
+            className={"header-section fixed top-0 z-50 flex flex-row items-center justify-between w-full px-4 md:px-8 transition-all ease-in-out opacity-100 " +
+                (hidden ? "!opacity-0 " : "") +
+                (sticky ? "h-32 " : "h-48 ") +
+                className
+            }
             id={id}
             style={{
                 backgroundColor: bgColor

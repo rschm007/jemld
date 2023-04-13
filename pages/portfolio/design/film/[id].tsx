@@ -4,10 +4,13 @@ import { getContentBySchemaName, getMainImageURLs, getPageContent } from "@/data
 import { filmContentAtom, theatreContentAtom } from "@/state/content";
 import { useAtom } from "jotai";
 import { useHydrateAtoms } from 'jotai/utils';
+import { atomWithStorage } from "jotai/vanilla/utils";
 import { useEffect, useState } from "react";
 import AwesomeSlider from "react-awesome-slider";
 import withAutoplay from 'react-awesome-slider/dist/autoplay';
 import 'react-awesome-slider/dist/styles.css';
+
+const neighborPagesImagesAtom = atomWithStorage('portfolio-design_film-neighbors', [])
 
 interface PropType {
     contentData: any;
@@ -23,7 +26,7 @@ export const TheatreDocPage = ({
         [filmContentAtom, contentData]
     ])
     const [content] = useAtom(filmContentAtom);
-    const [neighborPagesImages, setNeighborPagesImages] = useState([]);
+    const [neighborPagesImages, setNeighborPagesImages] = useAtom(neighborPagesImagesAtom);
 
     useEffect(() => {
         if (neighborPagesImages.length === 0) {
@@ -51,30 +54,28 @@ export const TheatreDocPage = ({
     const prevPageTitle = content[thisPageIndex - 1]?.title || null;
     const nextPageTitle = content[thisPageIndex + 1]?.title || null;
 
-    console.log(prevPageTitle, nextPageTitle)
-
     return (
         <>
             <main className="w-screen h-screen">
                 <LayoutPrimary>
 
-                    <NextPrevDynamicPageButtons
-                        pageSlug="/portfolio/design/theatre"
-                        nextItemId={nextPageId}
-                        nextItemTitle={nextPageTitle}
-                        nextItemImgUrl={nextPageImgUrl}
-                        nextItemDisabled={nextPageId === null || undefined}
-                        prevItemId={prevPageId}
-                        prevItemTitle={prevPageTitle}
-                        prevItemImgUrl={prevPageImgUrl}
-                        prevItemDisabled={prevPageId === null || undefined}
-                    >
-
-                    </NextPrevDynamicPageButtons>
-
                     <section className="mt-48 overflow-x-auto">
 
                         <BannerHeader text={title} />
+
+                        <NextPrevDynamicPageButtons
+                            pageSlug="/portfolio/design/film"
+                            nextItemId={nextPageId}
+                            nextItemTitle={nextPageTitle}
+                            nextItemImgUrl={nextPageImgUrl}
+                            nextItemDisabled={nextPageId === null || undefined}
+                            prevItemId={prevPageId}
+                            prevItemTitle={prevPageTitle}
+                            prevItemImgUrl={prevPageImgUrl}
+                            prevItemDisabled={prevPageId === null || undefined}
+                        >
+
+                        </NextPrevDynamicPageButtons>
 
                         <div className="flex flex-col md:flex-row items-center w-full">
 
@@ -87,10 +88,9 @@ export const TheatreDocPage = ({
                             <AutoplaySlider
                                 name={`${title}-slider`}
                                 bullets
-                                organicArrows={false}
+                                organicArrows={true}
                                 play
                                 cancelOnInteraction={true}
-                                interval={3000}
                                 infinite
                                 mobileTouch
                             >

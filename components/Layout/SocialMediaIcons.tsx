@@ -21,7 +21,7 @@ export const SocialMediaIcons = ({
     const iconClasses = "w-8 h-8";
 
     return (
-        <div className={"flex flex-row items-center space-x-1 " + className} id={id}>
+        <div className={"flex flex-row items-start space-x-1 " + className} id={id}>
             {
                 instagram && (
                     <a className={linkClasses}>

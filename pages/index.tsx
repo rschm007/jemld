@@ -26,15 +26,13 @@ export const Home = ({
   const [imagesMeta] = useAtom(homeImagesAtom);
   const [panels, setPanels] = useState([]);
 
-  console.log(contentData)
-  // console.log(imageUrlsData)
-  console.log(imagesMetaData)
-
   // grab first images from each design category for our panel images
   useLayoutEffect(() => {
-    const panels = getHomeImagePanelsFromMetaData(imagesMeta);
+    if (imagesMeta.length === 0) {
+      const panels = getHomeImagePanelsFromMetaData(imagesMetaData);
 
-    setPanels(panels)
+      setPanels(panels)
+    }
   }, [])
 
   return (

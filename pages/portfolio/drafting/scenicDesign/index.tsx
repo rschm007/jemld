@@ -1,7 +1,7 @@
 import Head from 'next/head'
 import { BannerHeader, LayoutPrimary } from '@/components'
 import { getContent, getImagePanelsFromMetaData, getMainImageURLs, mapImagesMetaData } from '@/database';
-import { homeImagesAtom } from '@/state';
+import { draftingImagesAtom, homeImagesAtom } from '@/state';
 import { useAtom } from 'jotai';
 import { useHydrateAtoms } from 'jotai/utils'
 import { PanelImage } from '@/components/Images/PanelImage';
@@ -19,9 +19,9 @@ export const Drafting = ({
 }: PropType) => {
     //@ts-ignore
     useHydrateAtoms([
-        [homeImagesAtom, imagesMetaData]
+        [draftingImagesAtom, imagesMetaData]
     ])
-    const [imagesMeta] = useAtom(homeImagesAtom);
+    const [imagesMeta] = useAtom(draftingImagesAtom);
     const [panels, setPanels] = useState([]);
 
     // grab first images from each design category for our panel images
@@ -46,8 +46,6 @@ export const Drafting = ({
                         <div className="md:grid md:grid-cols-4 gap-x-2">
                             {panels.sort((a, b) => a.orderNo - b.orderNo).map((img, i) => {
                                 const href = img.pageSlug.split("/");
-
-                                console.log(href)
 
                                 return (
                                     <PanelImage

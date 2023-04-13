@@ -33,11 +33,12 @@ export const NextPrevDynamicPageButtons = ({
 }: NextPrevDynamicPageButtonsProps) => {
 
     return (
-        <div className="dynamic-buttons fixed flex flex-col items-center justify-center w-full h-full z-50 pointer-events-none">
+        <div className={"dynamic-buttons relative flex flex-col items-center justify-center w-full h-full z-50 pointer-events-none " + (!nextItemDisabled || !prevItemDisabled ? "my-12 md:-mt-28 md:mb-12 " : "")}>
 
             {children}
 
-            <div className="flex flex-row relative z-0 items-center justify-between w-full">
+            <div className={"flex flex-row relative z-0 items-center w-full justify-between " + (prevItemDisabled ? "!justify-end " : "") + (nextItemDisabled ? "!justify-start " : "")}>
+
                 {!prevItemDisabled && (
                     <Link
                         className="group flex flex-row items-center justify-center bg-[rgba(0,0,0,0.3)] opacity-80 w-12 h-24 rounded-r-lg z-50 transition-all duration-300 ease-in-out hover:w-80 hover:bg-[rgba(0,0,0,0.8)] pointer-events-auto"
@@ -50,21 +51,37 @@ export const NextPrevDynamicPageButtons = ({
                         </span>
 
                         <div className="flex-row items-center justify-between h-full w-full ml-4 pl-8 hidden group-hover:flex transition-all duration-300 ease-in-out space-x-6">
+                            <div className="flex flex-col items-center max-w-[50%]">
+                                <motion.p
+                                    className="text-[11px] text-center text-[#fff] font-normal font-montserrat"
+                                    initial={{ opacity: 0 }}
+                                    animate={{ opacity: 1 }}
+                                    exit={{ opacity: 0 }}
+                                    transition={{
+                                        type: "spring",
+                                        stiffness: 260,
+                                        damping: 20,
+                                        delay: 500
+                                    }}
+                                >
+                                    Previous Page
+                                </motion.p>
 
-                            <motion.p
-                                className="text-xs text-center text-[#fff] font-semibold font-montserrat truncate"
-                                initial={{ opacity: 0 }}
-                                animate={{ opacity: 1 }}
-                                exit={{ opacity: 0 }}
-                                transition={{
-                                    type: "spring",
-                                    stiffness: 260,
-                                    damping: 20,
-                                    delay: 500
-                                }}
-                            >
-                                {prevItemTitle}
-                            </motion.p>
+                                <motion.p
+                                    className="text-sm text-center text-[#fff] font-semibold font-montserrat max-w-[100%] truncate"
+                                    initial={{ opacity: 0 }}
+                                    animate={{ opacity: 1 }}
+                                    exit={{ opacity: 0 }}
+                                    transition={{
+                                        type: "spring",
+                                        stiffness: 260,
+                                        damping: 20,
+                                        delay: 500
+                                    }}
+                                >
+                                    {prevItemTitle}
+                                </motion.p>
+                            </div>
 
                             <img src={prevItemImgUrl} className="w-36 h-full object-cover rounded-r-lg" alt={prevItemTitle} />
                         </div>
@@ -80,20 +97,37 @@ export const NextPrevDynamicPageButtons = ({
 
                             <img src={nextItemImgUrl} className="w-36 h-full object-cover rounded-l-lg" alt={nextItemTitle} />
 
-                            <motion.p
-                                className="text-xs text-center text-[#fff] font-semibold font-montserrat truncate"
-                                initial={{ opacity: 0 }}
-                                animate={{ opacity: 1 }}
-                                exit={{ opacity: 0 }}
-                                transition={{
-                                    type: "spring",
-                                    stiffness: 260,
-                                    damping: 20,
-                                    delay: 500
-                                }}
-                            >
-                                {nextItemTitle}
-                            </motion.p>
+                            <div className="flex flex-col items-center">
+                                <motion.p
+                                    className="text-[11px] text-center text-[#fff] font-normal font-montserrat truncate"
+                                    initial={{ opacity: 0 }}
+                                    animate={{ opacity: 1 }}
+                                    exit={{ opacity: 0 }}
+                                    transition={{
+                                        type: "spring",
+                                        stiffness: 260,
+                                        damping: 20,
+                                        delay: 500
+                                    }}
+                                >
+                                    Next Page
+                                </motion.p>
+
+                                <motion.p
+                                    className="text-sm text-center text-[#fff] font-semibold font-montserrat truncate"
+                                    initial={{ opacity: 0 }}
+                                    animate={{ opacity: 1 }}
+                                    exit={{ opacity: 0 }}
+                                    transition={{
+                                        type: "spring",
+                                        stiffness: 260,
+                                        damping: 20,
+                                        delay: 500
+                                    }}
+                                >
+                                    {nextItemTitle}
+                                </motion.p>
+                            </div>
                         </div>
 
                         <span className="absolute right-3">

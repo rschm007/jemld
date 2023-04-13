@@ -1,7 +1,7 @@
 import Head from 'next/head'
 import { BannerHeader, LayoutPrimary } from '@/components'
 import { getContent, getImagePanelsFromMetaData, getMainImageURLs, mapImagesMetaData } from '@/database';
-import { homeImagesAtom } from '@/state';
+import { draftingImagesAtom, homeImagesAtom } from '@/state';
 import { useAtom } from 'jotai';
 import { useHydrateAtoms } from 'jotai/utils'
 import { PanelImage } from '@/components/Images/PanelImage';
@@ -19,15 +19,20 @@ export const Drafting = ({
 }: PropType) => {
     //@ts-ignore
     useHydrateAtoms([
-        [homeImagesAtom, imagesMetaData]
+        [draftingImagesAtom, imagesMetaData]
     ])
-    const [imagesMeta] = useAtom(homeImagesAtom);
+    const [imagesMeta] = useAtom(draftingImagesAtom);
+    const [panels, setPanels] = useState([]);
     const [onePanels, setOnePanels] = useState([]);
     const [twoPanels, setTwoPanels] = useState([]);
 
     // grab first images from each design category for our panel images
     useLayoutEffect(() => {
-        const panels = getImagePanelsFromMetaData(imagesMeta, "drafting");
+        if (imagesMeta.length === 0) {
+            const panels = getImagePanelsFromMetaData(imagesMetaData, "drafting");
+
+            setPanels(panels)
+        }
 
         const _onePanels = panels.filter((p) => p.subCategory === "scenicDesign");
         const _twoPanels = panels.filter((p) => p.subCategory === "lightingDesign");

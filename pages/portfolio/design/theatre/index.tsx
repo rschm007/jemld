@@ -4,10 +4,8 @@ import { theatreContentAtom } from "@/state/content";
 import { useAtom } from "jotai";
 import { useState } from "react";
 import { useHydrateAtoms } from 'jotai/utils'
-import { BannerImage } from "@/components/Images/BannerImage";
 import BannerHeader from "@/components/Layout/BannerHeader";
 import { PanelImage } from "@/components/Images/PanelImage";
-import { getRelevantPageSlug } from "@/utils";
 
 interface PropType {
     contentData: any;

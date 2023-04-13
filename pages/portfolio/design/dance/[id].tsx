@@ -7,7 +7,10 @@ import { useState, useEffect } from "react";
 import AwesomeSlider from "react-awesome-slider";
 import withAutoplay from 'react-awesome-slider/dist/autoplay';
 import 'react-awesome-slider/dist/styles.css';
-import { useHydrateAtoms } from 'jotai/utils';
+import { atomWithStorage, useHydrateAtoms } from 'jotai/utils';
+import DynamicWrapper from "@/components/SSR/DynamicWrapper";
+
+const neighborPagesImagesAtom = atomWithStorage('portfolio-design_dance-neighbors', [])
 
 interface PropType {
     filesData: any;
@@ -25,7 +28,7 @@ export const DanceDocPage = ({
         [danceContentAtom, contentData]
     ])
     const [content] = useAtom(danceContentAtom);
-    const [neighborPagesImages, setNeighborPagesImages] = useState([]);
+    const [neighborPagesImages, setNeighborPagesImages] = useAtom(neighborPagesImagesAtom);
 
     useEffect(() => {
         if (neighborPagesImages.length === 0) {
@@ -58,23 +61,25 @@ export const DanceDocPage = ({
             <main className="w-screen h-screen">
                 <LayoutPrimary>
 
-                    <NextPrevDynamicPageButtons
-                        pageSlug="/portfolio/design/dance"
-                        nextItemId={nextPageId}
-                        nextItemTitle={nextPageTitle}
-                        nextItemImgUrl={nextPageImgUrl}
-                        nextItemDisabled={nextPageId === null || undefined}
-                        prevItemId={prevPageId}
-                        prevItemTitle={prevPageTitle}
-                        prevItemImgUrl={prevPageImgUrl}
-                        prevItemDisabled={prevPageId === null || undefined}
-                    >
-
-                    </NextPrevDynamicPageButtons>
-
                     <section className="mt-48 overflow-x-auto">
 
                         <BannerHeader text={title} />
+
+                        <DynamicWrapper>
+                            <NextPrevDynamicPageButtons
+                                pageSlug="/portfolio/design/dance"
+                                nextItemId={nextPageId}
+                                nextItemTitle={nextPageTitle}
+                                nextItemImgUrl={nextPageImgUrl}
+                                nextItemDisabled={nextPageId === null || undefined}
+                                prevItemId={prevPageId}
+                                prevItemTitle={prevPageTitle}
+                                prevItemImgUrl={prevPageImgUrl}
+                                prevItemDisabled={prevPageId === null || undefined}
+                            >
+
+                            </NextPrevDynamicPageButtons>
+                        </DynamicWrapper>
 
                         <div className="flex flex-col md:flex-row items-center w-full">
 
@@ -87,10 +92,9 @@ export const DanceDocPage = ({
                             <AutoplaySlider
                                 name={`${title}-slider`}
                                 bullets
-                                organicArrows={false}
+                                organicArrows={true}
                                 play
                                 cancelOnInteraction={true}
-                                interval={3000}
                                 infinite
                                 mobileTouch
                             >

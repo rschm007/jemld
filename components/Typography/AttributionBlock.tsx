@@ -1,7 +1,9 @@
 import { IDefaultProps } from "@/@types"
 import { AttributionContentLabel } from "./AttributionContentLabel";
+import { useState, useEffect } from "react";
 
 export interface AttributionBlockProps extends IDefaultProps {
+    title: string;
     clientName?: string;
     year?: string;
     longItemDescription?: string;
@@ -11,16 +13,44 @@ export interface AttributionBlockProps extends IDefaultProps {
 export const AttributionBlock = ({
     className = "",
     id,
+    title,
     clientName,
     year,
     longItemDescription,
     shortItemDescription
 }: AttributionBlockProps) => {
+    const [hidden, setHidden] = useState(false);
+
+    useEffect(() => {
+        window.addEventListener('scroll', isHidden);
+
+        return () => {
+            window.removeEventListener('scroll', isHidden);
+        };
+    }, []);
+
+    /* Method that will fix header after a specific scrollable */
+    const isHidden = (e) => {
+        const scrollTop = window.scrollY;
+
+        if (scrollTop >= 175) {
+            setHidden(false);
+        } else {
+            setHidden(true);
+        }
+    };
+
 
     return (
-        <article className={"flex flex-col items-center justify-center w-full space-y-11 mt-3 mb-16 mx-12 self-center" + className} id={id}>
+        <article className={"flex flex-col items-start justify-center w-full space-y-4 mt-3 mb-16 lg:ml-16 xl:ml-20 self-center" + className} id={id}>
 
-            <div className="flex flex-row items-center justify-center space-x-8">
+            <div className="flex flex-col items-start justify-start">
+                {(title != null || "") && (
+                    <h2 className={"text-center text-[2.5rem] mb-2 opacity-100 transition-all ease-in-out duration-300 " + (hidden ? "!opacity-0" : "")}>
+                        {title}
+                    </h2>
+                )}
+
                 {(clientName != null || "") && (
                     <AttributionContentLabel
                         label="Client"
@@ -37,7 +67,7 @@ export const AttributionBlock = ({
             </div>
 
             {(longItemDescription != null || "") && (
-                <div className="text-left md:text-center" dangerouslySetInnerHTML={{ __html: longItemDescription }}>
+                <div className="text-left text-xs" dangerouslySetInnerHTML={{ __html: longItemDescription }}>
                 </div>
             )
             }

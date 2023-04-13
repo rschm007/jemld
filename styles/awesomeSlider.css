@@ -1,10 +1,10 @@
 .awssld,
 .awssld__wrapper {
-    @apply h-[unset] max-h-[85vh] min-w-[62vw];
+    @apply h-[unset] max-h-[90vh] min-w-[70vw];
 }
 
 .awssld__content {
-    background-color: transparent !important;
+    background-color: black !important;
 }
 
 .awssld__timer--run {
@@ -32,6 +32,20 @@
 
 .awssld__bullets>button.awssld__bullets--active {
     background-color: #fff !important;
+}
+
+.awssld__controls button {
+    background: black !important;
+    opacity: 90%;
+    border-radius: 8px;
+}
+
+@media only screen and (max-width: 1200px) {
+
+    .awssld,
+    .awssld__wrapper {
+        @apply h-[unset] max-h-[90vh] min-w-[65vw];
+    }
 }
 
 @media only screen and (max-width: 768px) {
