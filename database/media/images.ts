@@ -25,7 +25,12 @@ export const getMainImageURLs = async (contentData: any, subCategory?: any) => {
     imageNameIds.forEach((imageName) => {
         const imageRef = ref(storage, `flamelink/media/${imageName}`)
         const url = getDownloadURL(imageRef).then((res) => {
-            return res
+            if (res) {
+                return res;
+            }
+        }).catch((error) => {
+            console.error(error);
+            return null;
         });
         imageUrls.push(url);
     })

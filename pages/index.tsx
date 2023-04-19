@@ -72,6 +72,11 @@ export async function getServerSideProps() {
   const imageUrlsData = await getMainImageURLs(contentData);
   const imagesMetaData = await mapImagesMetaData(contentData, imageUrlsData);
 
+  console.log("////////////////")
+  console.log(contentData)
+  console.log(imageUrlsData)
+  console.log("////////////////")
+
   return {
     props: {
       contentData: contentData,
