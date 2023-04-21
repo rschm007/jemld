@@ -9,10 +9,12 @@ import { useLayoutEffect, useState } from 'react';
 import { getRelevantPageSlug } from '@/utils';
 
 interface PropType {
+    contentData: any;
     imagesMetaData: any;
 }
 
 export const Design = ({
+    contentData,
     imagesMetaData
 }: PropType) => {
     //@ts-ignore
@@ -21,6 +23,9 @@ export const Design = ({
     ])
     const [imagesMeta] = useAtom(designImagesAtom);
     const [panels, setPanels] = useState([]);
+
+    console.log(contentData);
+    console.log(imagesMetaData);
 
     // grab first images from each design category for our panel images
     useLayoutEffect(() => {
@@ -67,6 +72,7 @@ export async function getServerSideProps() {
 
     return {
         props: {
+            contentData: contentData,
             imagesMetaData: imagesMetaData
         }
     }

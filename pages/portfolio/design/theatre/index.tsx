@@ -23,6 +23,9 @@ export const TheatrePage = ({
     const [content] = useAtom(theatreContentAtom);
     const [imagesMeta] = useState(imagesMetaData);
 
+    console.log(content);
+    console.log(imagesMeta);
+
     return (
         <>
             <main className="w-screen h-screen">

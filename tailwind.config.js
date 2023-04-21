@@ -17,5 +17,10 @@ module.exports = {
       'cover': 'cover',
     },
   },
-  plugins: [],
+  corePlugins: {
+    aspectRatio: false
+  },
+  plugins: [
+    require('@tailwindcss/aspect-ratio'),
+  ],
 }

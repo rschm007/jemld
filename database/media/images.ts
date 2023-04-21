@@ -2,18 +2,40 @@ import { Image } from "@/@types/Image";
 import { getFullPageSlug, stringToCamelcase } from "@/utils";
 import { getDownloadURL, getStorage, ref } from "firebase/storage";
 
+export const getHomePageContentData = async (contentData: any) => {
+    let dataArr = [];
+    const data = contentData[0].images;
+    data.forEach((x) => {
+        dataArr.push({
+            category: x.category,
+            imageName: x.imageName,
+            orderNo: x.orderNo
+        })
+    })
+
+    dataArr.sort((a, b) =>
+        a.orderNo - b.orderNo
+    );
+
+    return dataArr;
+}
+
+
 /**
  * @description GET an image from firebase
- * @param contentData contentData JSON of content data returend from getContent()
+ * @param contentData contentData JSON of content data returned from getContent()
  * @returns url array
  */
 export const getMainImageURLs = async (contentData: any, subCategory?: any) => {
     const imageNameIds = [];
 
     contentData.forEach((data) => {
+
         if (data?.imageNameId) {
-            if (data?.subCategory === subCategory) {
-                imageNameIds.push(`${data.imageNameId}_0.webp`);
+            if (subCategory) {
+                if (data?.subCategory === subCategory) {
+                    imageNameIds.push(`${data.imageNameId}_0.webp`);
+                }
             } else {
                 imageNameIds.push(`${data.imageNameId}_0.webp`);
             }
@@ -31,37 +53,6 @@ export const getMainImageURLs = async (contentData: any, subCategory?: any) => {
         }).catch((error) => {
             console.error(error);
             return null;
-        });
-        imageUrls.push(url);
-    })
-
-    const imageData = await Promise.all(imageUrls);
-    return imageData;
-}
-
-/**
- * @description GET an image from firebase
- * @param contentData contentData JSON of content data returend from getContent()
- * @param imageNameId field of schema content item
- * @returns url array
- */
-export const getImageURLsByImageNameId = async (contentData: any, imageNameId: string) => {
-    const imageNameIds = [];
-    let imageCount;
-
-    contentData.forEach((data, i) => {
-        if (data?.imageNameId === imageNameId) {
-            imageNameIds.push(`${data.imageNameId}_[${imageCount}].webp`);
-        }
-        imageCount++;
-    })
-
-    const imageUrls = [];
-    const storage = getStorage();
-    imageNameIds.forEach((imageName) => {
-        const imageRef = ref(storage, `flamelink/media/${imageName}`)
-        const url = getDownloadURL(imageRef).then((res) => {
-            return res
         });
         imageUrls.push(url);
     })
@@ -103,7 +94,7 @@ export const mapImagesMetaData = async (contentData: any, imageUrls: Array<any>)
     if (imageUrls.length > 0) {
         imageUrls.forEach((url) => {
             contentData.forEach((data) => {
-                if (url?.includes(`${data?.imageNameId}_0`)) {
+                if (url?.includes(`${data?.imageNameId}`)) {
                     const imageMeta: Image = {
                         title: data.title,
                         url: url,
@@ -111,7 +102,14 @@ export const mapImagesMetaData = async (contentData: any, imageUrls: Array<any>)
                         pageSlug: `${data.category}/${data._fl_meta_.schema}/${stringToCamelcase(data.id)}`,
                         orderNo: data.orderNo,
                         category: data.category,
-                        subCategory: data.subCategory || null
+                        subCategory: data.subCategory || null,
+                        mainImage: data.imageGallery.includes((i) => {
+                            if (i.mainImage === true) {
+                                return true;
+                            } else {
+                                return false;
+                            }
+                        })
                     }
                     images.push(imageMeta);
                 }

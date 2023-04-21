@@ -1,39 +1,21 @@
 import Head from 'next/head'
-import { BannerHeader, LayoutPrimary } from '@/components'
-import { getContent, getHomeImagePanelsFromMetaData, getImagePanelsFromMetaData, getMainImageURLs, mapImagesMetaData } from '@/database';
-import { homeImagesAtom } from '@/state';
-import { useAtom } from 'jotai';
-import { useHydrateAtoms } from 'jotai/utils'
+import { LayoutPrimary } from '@/components'
+import { getContentBySchemaName, getHomePageContentData } from '@/database';
 import { PanelImage } from '@/components/Images/PanelImage';
-import { useLayoutEffect, useState } from 'react';
-import { getRelevantPageSlug } from '@/utils';
+import { useState } from 'react';
+import { ref, getDownloadURL, getStorage } from 'firebase/storage';
 
 interface PropType {
   contentData: any;
-  imageUrlsData: any;
-  imagesMetaData: any;
+  imagesData: any;
 }
 
 export const Home = ({
   contentData,
-  imageUrlsData,
-  imagesMetaData
+  imagesData
 }: PropType) => {
-  //@ts-ignore
-  useHydrateAtoms([
-    [homeImagesAtom, imagesMetaData]
-  ])
-  const [imagesMeta] = useAtom(homeImagesAtom);
-  const [panels, setPanels] = useState([]);
-
-  // grab first images from each design category for our panel images
-  useLayoutEffect(() => {
-    if (imagesMeta.length === 0) {
-      const panels = getHomeImagePanelsFromMetaData(imagesMetaData);
-
-      setPanels(panels)
-    }
-  }, [])
+  const [content] = useState(contentData);
+  const [images] = useState(imagesData);
 
   return (
     <>
@@ -45,16 +27,14 @@ export const Home = ({
         <LayoutPrimary>
 
           <section className="mt-48 min-h-screen">
-            {/* <BannerHeader text="Design" /> */}
-
             <div className="md:grid md:grid-cols-4 gap-x-2 ">
-              {panels.map((img, i) => (
+              {content.map((x, i) => (
                 <PanelImage
                   key={i}
-                  src={img.url}
-                  alt={img.title}
-                  title={img.category}
-                  href={`portfolio/${img.category}`}
+                  src={images[i]}
+                  alt={x.category}
+                  title={x.category}
+                  href={`portfolio/${x.category}`}
                 />
               ))}
             </div>
@@ -68,20 +48,30 @@ export const Home = ({
 }
 
 export async function getServerSideProps() {
-  const contentData = await getContent();
-  const imageUrlsData = await getMainImageURLs(contentData);
-  const imagesMetaData = await mapImagesMetaData(contentData, imageUrlsData);
+  const content = await getContentBySchemaName("homepageImages");
+  const contentData = await getHomePageContentData(content);
 
-  console.log("////////////////")
-  console.log(contentData)
-  console.log(imageUrlsData)
-  console.log("////////////////")
+  let images = [];
+  await contentData.forEach((x) => {
+    const storage = getStorage();
+    const imageRef = ref(storage, `flamelink/media/${x.imageName}`)
+    const url = getDownloadURL(imageRef).then((res) => {
+      if (res) {
+        return res;
+      }
+    }).catch((error) => {
+      console.error(error);
+      return null;
+    });
+    images.push(url);
+  })
+
+  const imagesData = await Promise.all(images);
 
   return {
     props: {
       contentData: contentData,
-      imageUrlsData: imageUrlsData,
-      imagesMetaData: imagesMetaData
+      imagesData: imagesData
     }
   }
 }

@@ -14,4 +14,5 @@ export type Image = {
     orderNo: number;
     category: string;
     subCategory?: string;
+    mainImage: boolean;
 }
