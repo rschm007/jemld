@@ -1,38 +1,21 @@
-import Head from 'next/head'
 import { BannerHeader, LayoutPrimary } from '@/components'
-import { getContent, getImagePanelsFromMetaData, getMainImageURLs, mapImagesMetaData } from '@/database';
-import { draftingImagesAtom, homeImagesAtom } from '@/state';
-import { useAtom } from 'jotai';
-import { useHydrateAtoms } from 'jotai/utils'
+import { getContent, getContentBySchemaName } from '@/database';
 import { PanelImage } from '@/components/Images/PanelImage';
-import { useLayoutEffect, useState } from 'react';
-import { getRelevantPageSlug } from '@/utils';
+import { useEffect, useState } from 'react';
+import _ from 'lodash';
+import { getDownloadURL, getStorage, ref } from 'firebase/storage';
 
 interface PropType {
-    contentData: any;
-    imagesMetaData: any;
+    pageContentData: any;
+    panelsData: any;
 }
 
-export const Drafting = ({
-    contentData,
-    imagesMetaData
+export const ScenicDesign = ({
+    pageContentData,
+    panelsData
 }: PropType) => {
-    //@ts-ignore
-    useHydrateAtoms([
-        [draftingImagesAtom, imagesMetaData]
-    ])
-    const [imagesMeta] = useAtom(draftingImagesAtom);
-    const [panels, setPanels] = useState([]);
-
-    // grab first images from each design category for our panel images
-    useLayoutEffect(() => {
-        const panels = getImagePanelsFromMetaData(imagesMeta, "drafting");
-
-        const _panels = panels.filter((p) => p.subCategory === "scenicDesign");
-
-        setPanels(_panels);
-
-    }, [])
+    const [content, setContent] = useState(pageContentData);
+    const [panels, setPanels] = useState(panelsData);
 
     return (
         <>
@@ -41,23 +24,28 @@ export const Drafting = ({
 
                     <section className="mt-48 min-h-screen">
 
-                        <BannerHeader text="Scenic Design Drafting" />
+                        <BannerHeader text="Scenic Design" />
 
                         <div className="md:grid md:grid-cols-4 gap-x-2">
-                            {panels.sort((a, b) => a.orderNo - b.orderNo).map((img, i) => {
-                                const href = img.pageSlug.split("/");
 
-                                return (
-                                    <PanelImage
-                                        key={i}
-                                        src={img.url}
-                                        alt={img.title}
-                                        title={img.title}
-                                        href={"scenicDesign/" + href[2]}
-                                        titleClasses="!text-xl !md:text-3xl"
-                                    />
-                                )
-                            })}
+                            {content && panels && (
+                                content.map((c, i) => {
+
+                                    if (panels[i] != null) {
+                                        return (
+                                            <PanelImage
+                                                key={i}
+                                                src={panels[i]}
+                                                alt={c.title}
+                                                title={c.title}
+                                                href={"scenicDesign/" + c.id}
+                                                titleClasses="!text-xl !md:text-3xl"
+                                                loadingStrategy="lazy"
+                                            />
+                                        )
+                                    }
+                                })
+                            )}
 
                         </div>
 
@@ -70,16 +58,60 @@ export const Drafting = ({
 }
 
 export async function getServerSideProps() {
-    const contentData = await getContent();
-    const imageUrlsData = await getMainImageURLs(contentData);
-    const imagesMetaData = await mapImagesMetaData(contentData, imageUrlsData);
+    const contentData = await getContentBySchemaName("drafting");
+    const scenicContentData = [];
+
+    contentData.sort((a, b) => {
+        if (a.orderNo < b.orderNo) {
+            return -1;
+        }
+        if (a.orderNo > b.orderNo) {
+            return 1;
+        }
+        // a must be equal to b
+        return 0;
+    });
+
+    contentData.forEach((x) => {
+        if (x.subCategory === "scenicDesign") {
+            scenicContentData.push(x);
+        }
+    })
+
+    const imageNames = [];
+    const panels = [];
+    const pageContentData = await contentData.filter(async (d) => {
+        await d.imageGallery.forEach(async (x) => {
+            if (x.hasOwnProperty('mainImage')) {
+                panels.push(x);
+                imageNames.push(x.title)
+            }
+        });
+    })
+
+    const images = [];
+    await imageNames.forEach((x) => {
+        const storage = getStorage();
+        const imageRef = ref(storage, `flamelink/media/${x}`)
+        const url = getDownloadURL(imageRef).then((res) => {
+            if (res) {
+                return res;
+            }
+        }).catch((error) => {
+            console.error(error);
+            return null;
+        });
+        images.push(url);
+    })
+
+    const panelsData = await Promise.all(images);
 
     return {
         props: {
-            contentData: contentData,
-            imagesMetaData: imagesMetaData
+            pageContentData: pageContentData,
+            panelsData: panelsData
         }
     }
 }
 
-export default Drafting;
+export default ScenicDesign;

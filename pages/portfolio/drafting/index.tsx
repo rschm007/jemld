@@ -1,47 +1,27 @@
-import Head from 'next/head'
 import { BannerHeader, LayoutPrimary } from '@/components'
-import { getContent, getImagePanelsFromMetaData, getMainImageURLs, mapImagesMetaData } from '@/database';
-import { draftingImagesAtom, homeImagesAtom } from '@/state';
-import { useAtom } from 'jotai';
-import { useHydrateAtoms } from 'jotai/utils'
+import { getContent, getContentBySchemaName } from '@/database';
 import { PanelImage } from '@/components/Images/PanelImage';
-import { useLayoutEffect, useState } from 'react';
-import { getRelevantPageSlug } from '@/utils';
+import { useEffect, useState } from 'react';
+import _ from 'lodash';
+import { getDownloadURL, getStorage, ref } from 'firebase/storage';
 
 interface PropType {
-    contentData: any;
-    imagesMetaData: any;
+    lightingPanelData: any;
+    scenicPanelData: any;
+    imagesData: any;
 }
 
 export const Drafting = ({
-    contentData,
-    imagesMetaData
+    lightingPanelData,
+    scenicPanelData,
+    imagesData
 }: PropType) => {
-    //@ts-ignore
-    useHydrateAtoms([
-        [draftingImagesAtom, imagesMetaData]
-    ])
-    const [imagesMeta] = useAtom(draftingImagesAtom);
-    const [panels, setPanels] = useState([]);
-    const [onePanels, setOnePanels] = useState([]);
-    const [twoPanels, setTwoPanels] = useState([]);
+    const [lightingPanel, setLightingPanel] = useState(lightingPanelData);
+    const [scenicPanel, setScenicPanel] = useState(scenicPanelData);
+    const [images, setImages] = useState(imagesData);
 
-    // grab first images from each design category for our panel images
-    useLayoutEffect(() => {
-        if (imagesMeta.length === 0) {
-            const panels = getImagePanelsFromMetaData(imagesMetaData, "drafting");
-
-            setPanels(panels)
-        }
-
-        const _onePanels = panels.filter((p) => p.subCategory === "scenicDesign");
-        const _twoPanels = panels.filter((p) => p.subCategory === "lightingDesign");
-
-        setOnePanels(_onePanels);
-        setTwoPanels(_twoPanels);
-
-        console.log(_onePanels)
-    }, [])
+    console.log(lightingPanel)
+    console.log(scenicPanel)
 
     return (
         <>
@@ -53,25 +33,24 @@ export const Drafting = ({
                         <BannerHeader text="Drafting" />
 
                         <div className="md:grid md:grid-cols-4 gap-x-2">
-                            {onePanels.length > 0 && (
+                            {lightingPanel && (
                                 <PanelImage
-                                    src={onePanels[0].url}
-                                    alt={onePanels[0].title}
-                                    title={onePanels[0].title}
-                                    href={`${onePanels[0].pageSlug.split("/")[1]}` + `/${onePanels[0].subCategory}`}
-                                    titleClasses="!text-xl !md:text-3xl"
+                                    src={images[0]}
+                                    alt={lightingPanel.altText}
+                                    title="Dance"
+                                    href="drafting/lightingDesign"
                                 />
                             )}
 
-                            {twoPanels.length > 1 && (
+                            {scenicPanel && (
                                 <PanelImage
-                                    src={twoPanels[0].url}
-                                    alt={twoPanels[0].title}
-                                    title={twoPanels[0].title}
-                                    href={`${twoPanels[0].pageSlug.split("/")[1]}` + `/${twoPanels[0].subCategory}`}
-                                    titleClasses="!text-xl !md:text-3xl"
+                                    src={images[1]}
+                                    alt={scenicPanel.altText}
+                                    title="Theatre"
+                                    href="drafting/scenicDesign"
                                 />
                             )}
+
                         </div>
 
                     </section>
@@ -83,14 +62,62 @@ export const Drafting = ({
 }
 
 export async function getServerSideProps() {
-    const contentData = await getContent();
-    const imageUrlsData = await getMainImageURLs(contentData);
-    const imagesMetaData = await mapImagesMetaData(contentData, imageUrlsData);
+    const contentData = await getContentBySchemaName("drafting");
+    const lightingContentData = [];
+    const scenicContentData = [];
+
+    contentData.forEach((x) => {
+        if (x.subCategory === "lightingDesign") {
+            lightingContentData.push(x);
+        } else if (x.subCategory === "scenicDesign") {
+            scenicContentData.push(x);
+        }
+    })
+
+    const imageNames = [];
+
+    let lightingPanelData = null;
+    await lightingContentData.filter(async (d) => {
+        await d.imageGallery.forEach(async (x) => {
+            if (x.hasOwnProperty('mainCatImage')) {
+                lightingPanelData = x;
+                imageNames.push(x.title)
+            }
+        });
+    })
+
+    let scenicPanelData = null;
+    await scenicContentData.filter(async (d) => {
+        await d.imageGallery.forEach(async (x) => {
+            if (x.hasOwnProperty('mainCatImage')) {
+                scenicPanelData = x;
+                imageNames.push(x.title)
+            }
+        });
+    })
+
+    let images = [];
+    await imageNames.forEach((x) => {
+        const storage = getStorage();
+        const imageRef = ref(storage, `flamelink/media/${x}`)
+        const url = getDownloadURL(imageRef).then((res) => {
+            if (res) {
+                return res;
+            }
+        }).catch((error) => {
+            console.error(error);
+            return null;
+        });
+        images.push(url);
+    })
+
+    const imagesData = await Promise.all(images);
 
     return {
         props: {
-            contentData: contentData,
-            imagesMetaData: imagesMetaData
+            lightingPanelData: lightingPanelData,
+            scenicPanelData: scenicPanelData,
+            imagesData: imagesData
         }
     }
 }

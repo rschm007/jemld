@@ -1,38 +1,21 @@
 import { LayoutPrimary } from "@/components";
-import { getContentBySchemaName, getMainImageURLs, mapImagesMetaData } from "@/database";
-import { danceContentAtom, theatreContentAtom } from "@/state/content";
-import { useAtom } from "jotai";
-import { useRouter } from "next/router";
+import { getContentBySchemaName } from "@/database";
 import { useState } from "react";
-import { useHydrateAtoms } from 'jotai/utils'
-import { BannerImage } from "@/components/Images/BannerImage";
 import BannerHeader from "@/components/Layout/BannerHeader";
+import { getStorage, ref, getDownloadURL } from "firebase/storage";
 import { PanelImage } from "@/components/Images/PanelImage";
 
 interface PropType {
-    contentData: any;
-    imageUrlsData: any;
-    imagesMetaData: any;
+    pageContentData: any;
+    panelsData: any;
 }
 
-export const TheatrePage = ({
-    contentData,
-    imageUrlsData,
-    imagesMetaData
+export const DancePage = ({
+    pageContentData,
+    panelsData
 }: PropType) => {
-    //@ts-ignore
-    useHydrateAtoms([
-        [danceContentAtom, contentData]
-    ])
-    const [content] = useAtom(danceContentAtom);
-    const [imagesMeta] = useState(imagesMetaData);
-
-    console.log(contentData)
-    console.log(imageUrlsData);
-    console.log(imagesMeta)
-
-    const router = useRouter();
-    const id = router.query.id;
+    const [content, setContent] = useState(pageContentData);
+    const [panels, setPanels] = useState(panelsData);
 
     return (
         <>
@@ -44,20 +27,24 @@ export const TheatrePage = ({
                         <BannerHeader text="Dance" />
 
                         <div className="md:grid md:grid-cols-4 gap-x-2 min-h-screen">
-                            {imagesMeta.sort((a, b) => a.orderNo - b.orderNo).map((img, i) => {
-                                const href = img.pageSlug.split("/");
+                            {content && panels && (
+                                content.map((c, i) => {
 
-                                return (
-                                    <PanelImage
-                                        key={i}
-                                        src={img.url}
-                                        alt={img.title}
-                                        title={img.title}
-                                        href={href[1] + "/" + href[2]}
-                                        titleClasses="!text-xl !md:text-3xl"
-                                    />
-                                )
-                            })}
+                                    if (panels[i] != null) {
+                                        return (
+                                            <PanelImage
+                                                key={i}
+                                                src={panels[i]}
+                                                alt={c.title}
+                                                title={c.title}
+                                                href={"dance/" + c.id}
+                                                titleClasses="!text-xl !md:text-3xl"
+                                                loadingStrategy="lazy"
+                                            />
+                                        )
+                                    }
+                                })
+                            )}
                         </div>
                     </section>
 
@@ -67,20 +54,54 @@ export const TheatrePage = ({
     )
 }
 
-export async function getServerSideProps({ query }) {
-    const id = query;
-
+export async function getServerSideProps() {
     const contentData = await getContentBySchemaName("dance");
-    const imageUrlsData = await getMainImageURLs(contentData);
-    const imagesMetaData = await mapImagesMetaData(contentData, imageUrlsData);
+
+    contentData.sort((a, b) => {
+        if (a.orderNo < b.orderNo) {
+            return -1;
+        }
+        if (a.orderNo > b.orderNo) {
+            return 1;
+        }
+        // a must be equal to b
+        return 0;
+    });
+
+    const imageNames = [];
+    const panels = [];
+    const pageContentData = await contentData.filter(async (d) => {
+        await d.imageGallery.forEach(async (x) => {
+            if (x.hasOwnProperty('mainImage')) {
+                panels.push(x);
+                imageNames.push(x.title)
+            }
+        });
+    })
+
+    const images = [];
+    await imageNames.forEach((x) => {
+        const storage = getStorage();
+        const imageRef = ref(storage, `flamelink/media/${x}`)
+        const url = getDownloadURL(imageRef).then((res) => {
+            if (res) {
+                return res;
+            }
+        }).catch((error) => {
+            console.error(error);
+            return null;
+        });
+        images.push(url);
+    })
+
+    const panelsData = await Promise.all(images);
 
     return {
         props: {
-            contentData: contentData,
-            imageUrlsData: imageUrlsData,
-            imagesMetaData: imagesMetaData
+            pageContentData: pageContentData,
+            panelsData: panelsData
         }
     }
 }
 
-export default TheatrePage;
+export default DancePage;

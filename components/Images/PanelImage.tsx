@@ -3,6 +3,7 @@ import { motion } from "framer-motion";
 import Link from "next/link";
 import Image from 'next/image'
 import { useState } from "react";
+import { FadeLoader } from "react-spinners";
 
 export interface PanelImageProps extends IDefaultPropsWithChildren {
     src: string;
@@ -11,6 +12,8 @@ export interface PanelImageProps extends IDefaultPropsWithChildren {
     title?: string;
     imgClasses?: string;
     titleClasses?: string;
+    quality?: number;
+    loadingStrategy?: "eager" | "lazy";
 }
 
 export const PanelImage = ({
@@ -22,7 +25,9 @@ export const PanelImage = ({
     alt,
     title,
     imgClasses = "",
-    titleClasses = ""
+    titleClasses = "",
+    quality = 100,
+    loadingStrategy = "eager"
 }: PanelImageProps) => {
     const [loading, setLoading] = useState(true);
 
@@ -43,6 +48,14 @@ export const PanelImage = ({
             <Link
                 href={href}
             >
+                <FadeLoader
+                    className="relative w-full h-full z-50 self-center justify-self-center !left-[45%] !top-[45%]"
+                    color="white"
+                    loading={loading}
+                    aria-label="Loading Spinner"
+                    data-testid="loader"
+                />
+
                 <Image
                     className={"object-cover w-full h-full object-bottom relative brightness-100 group-hover:brightness-[0.25] transition-all ease-in-out delay-75 z-0 bg-darkGray " + (loading
                         ? "blur-lg"
@@ -52,8 +65,9 @@ export const PanelImage = ({
                     alt={alt}
                     width={250}
                     height={500}
-                    unoptimized
-                    loading="eager"
+                    unoptimized={quality === 100}
+                    quality={quality}
+                    loading={loadingStrategy}
                     onLoadingComplete={() => setLoading(false)}
                 >
                     {children}
