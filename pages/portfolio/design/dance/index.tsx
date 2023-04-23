@@ -17,6 +17,9 @@ export const DancePage = ({
     const [content, setContent] = useState(pageContentData);
     const [panels, setPanels] = useState(panelsData);
 
+    console.log(content)
+    console.log(panels)
+
     return (
         <>
             <main className="w-screen h-screen">
@@ -28,21 +31,28 @@ export const DancePage = ({
 
                         <div className="md:grid md:grid-cols-4 gap-x-2 min-h-screen">
                             {content && panels && (
-                                content.map((c, i) => {
+                                panels.map((p, i) => {
 
-                                    if (panels[i] != null) {
+                                    const imageNameId = p.split("alt=")[0].split("%2F")[2];
+                                    console.log(imageNameId)
+                                    const match = content.find((c) => imageNameId.includes(c.imageNameId))
+
+                                    console.log(match)
+
+                                    if (match) {
                                         return (
                                             <PanelImage
                                                 key={i}
-                                                src={panels[i]}
-                                                alt={c.title}
-                                                title={c.title}
-                                                href={"dance/" + c.id}
+                                                src={p}
+                                                alt={match.title}
+                                                title={match.title}
+                                                href={"dance/" + match.id}
                                                 titleClasses="!text-xl !md:text-3xl"
                                                 loadingStrategy="lazy"
                                             />
                                         )
                                     }
+
                                 })
                             )}
                         </div>

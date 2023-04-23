@@ -30,6 +30,8 @@ export const DanceDocPage = ({
     const [content] = useAtom(danceContentAtom);
     const [neighborPagesImages, setNeighborPagesImages] = useAtom(neighborPagesImagesAtom);
 
+    console.log(contentData)
+
     useEffect(() => {
         if (neighborPagesImages.length === 0) {
             getMainImageURLs(contentData)
@@ -55,6 +57,9 @@ export const DanceDocPage = ({
     const nextPageImgUrl = neighborPagesImages[thisPageIndex + 1];
     const prevPageTitle = content[thisPageIndex - 1]?.title || null;
     const nextPageTitle = content[thisPageIndex + 1]?.title || null;
+
+    console.log(pageContentData)
+    console.log(urls)
 
     return (
         <>
@@ -99,7 +104,7 @@ export const DanceDocPage = ({
                                 infinite
                                 mobileTouch
                             >
-                                {urls[0].map((url, i) => (
+                                {(urls != null || undefined) && (urls.length != 0) && urls.map((url, i) => (
                                     <div data-src={url} key={i} />
                                 ))}
                             </AutoplaySlider>
