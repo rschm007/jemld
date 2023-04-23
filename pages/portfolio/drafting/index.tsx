@@ -20,9 +20,6 @@ export const Drafting = ({
     const [scenicPanel, setScenicPanel] = useState(scenicPanelData);
     const [images, setImages] = useState(imagesData);
 
-    console.log(lightingPanel)
-    console.log(scenicPanel)
-
     return (
         <>
             <main className="w-screen h-screen">

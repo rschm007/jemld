@@ -79,31 +79,29 @@ export const ProgrammingDocPage = ({
                             </NextPrevDynamicPageButtons>
                         </DynamicWrapper>
 
-                        {urls.length > 0 && (
-                            <div className="flex flex-col md:flex-row items-center w-full">
+                        <div className="flex flex-col md:flex-row items-center w-full">
 
-                                <AttributionBlock
-                                    title={title}
-                                    clientName={clientName}
-                                    year={year}
-                                    longItemDescription={longItemDescription}
-                                />
-                                <AutoplaySlider
-                                    name={`${title}-slider`}
-                                    bullets
-                                    organicArrows={false}
-                                    play
-                                    cancelOnInteraction={true}
-                                    interval={3000}
-                                    infinite
-                                    mobileTouch
-                                >
-                                    {urls[0].map((url, i) => (
-                                        <div data-src={url} key={i} />
-                                    ))}
-                                </AutoplaySlider>
-                            </div>
-                        )}
+                            <AttributionBlock
+                                title={title}
+                                clientName={clientName}
+                                year={year}
+                                longItemDescription={longItemDescription}
+                            />
+                            <AutoplaySlider
+                                name={`${title}-slider`}
+                                bullets
+                                organicArrows={false}
+                                play
+                                cancelOnInteraction={true}
+                                interval={3000}
+                                infinite
+                                mobileTouch
+                            >
+                                {(urls != null || undefined) && (urls.length != 0) && urls.map((url, i) => (
+                                    <div data-src={url} key={i} />
+                                ))}
+                            </AutoplaySlider>
+                        </div>
 
                     </section>
 

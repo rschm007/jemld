@@ -98,7 +98,7 @@ export const InstallationDocPage = ({
                                 infinite
                                 mobileTouch
                             >
-                                {urls[0].map((url, i) => (
+                                {(urls != null || undefined) && (urls.length != 0) && urls.map((url, i) => (
                                     <div data-src={url} key={i} />
                                 ))}
                             </AutoplaySlider>

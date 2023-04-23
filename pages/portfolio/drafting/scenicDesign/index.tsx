@@ -29,21 +29,25 @@ export const ScenicDesign = ({
                         <div className="md:grid md:grid-cols-4 gap-x-2">
 
                             {content && panels && (
-                                content.map((c, i) => {
+                                panels.map((p, i) => {
 
-                                    if (panels[i] != null) {
+                                    const imageNameId = p.split("alt=")[0].split("%2F")[2];
+                                    const match = content.find((c) => imageNameId.includes(c.imageNameId))
+
+                                    if (match) {
                                         return (
                                             <PanelImage
                                                 key={i}
-                                                src={panels[i]}
-                                                alt={c.title}
-                                                title={c.title}
-                                                href={"scenicDesign/" + c.id}
+                                                src={p}
+                                                alt={match.title}
+                                                title={match.title}
+                                                href={"scenicDesign/" + match.id}
                                                 titleClasses="!text-xl !md:text-3xl"
                                                 loadingStrategy="lazy"
                                             />
                                         )
                                     }
+
                                 })
                             )}
 

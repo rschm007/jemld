@@ -17,9 +17,6 @@ export const DancePage = ({
     const [content, setContent] = useState(pageContentData);
     const [panels, setPanels] = useState(panelsData);
 
-    console.log(content)
-    console.log(panels)
-
     return (
         <>
             <main className="w-screen h-screen">
@@ -34,10 +31,7 @@ export const DancePage = ({
                                 panels.map((p, i) => {
 
                                     const imageNameId = p.split("alt=")[0].split("%2F")[2];
-                                    console.log(imageNameId)
                                     const match = content.find((c) => imageNameId.includes(c.imageNameId))
-
-                                    console.log(match)
 
                                     if (match) {
                                         return (

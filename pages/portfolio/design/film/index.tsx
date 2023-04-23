@@ -17,8 +17,6 @@ export const FilmPage = ({
     const [content, setContent] = useState(pageContentData);
     const [panels, setPanels] = useState(panelsData);
 
-    console.log(content)
-
     return (
         <>
             <main className="w-screen h-screen">
@@ -30,21 +28,25 @@ export const FilmPage = ({
 
                         <div className="md:grid md:grid-cols-4 gap-x-2 min-h-screen">
                             {content && panels && (
-                                content.map((c, i) => {
+                                panels.map((p, i) => {
 
-                                    if (panels[i] != null) {
+                                    const imageNameId = p.split("alt=")[0].split("%2F")[2];
+                                    const match = content.find((c) => imageNameId.includes(c.imageNameId))
+
+                                    if (match) {
                                         return (
                                             <PanelImage
                                                 key={i}
-                                                src={panels[i]}
-                                                alt={c.title}
-                                                title={c.title}
-                                                href={"film/" + c.id}
+                                                src={p}
+                                                alt={match.title}
+                                                title={match.title}
+                                                href={"film/" + match.id}
                                                 titleClasses="!text-xl !md:text-3xl"
                                                 loadingStrategy="lazy"
                                             />
                                         )
                                     }
+
                                 })
                             )}
                         </div>
