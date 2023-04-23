@@ -75,22 +75,27 @@ export async function getServerSideProps() {
 
     let lightingPanelData = null;
     await lightingContentData.filter(async (d) => {
-        await d?.imageGallery.forEach(async (x) => {
-            if (x.hasOwnProperty('mainCatImage')) {
-                lightingPanelData = x;
-                imageNames.push(x.title)
-            }
-        });
+        if (d?.imageGallery != null || undefined) {
+            await d?.imageGallery.forEach(async (x) => {
+                if (x.hasOwnProperty('mainCatImage')) {
+                    lightingPanelData = x;
+                    imageNames.push(x.title)
+                }
+            });
+        }
+
     })
 
     let scenicPanelData = null;
     await scenicContentData.filter(async (d) => {
-        await d?.imageGallery.forEach(async (x) => {
-            if (x.hasOwnProperty('mainCatImage')) {
-                scenicPanelData = x;
-                imageNames.push(x.title)
-            }
-        });
+        if (d?.imageGallery != null || undefined) {
+            await d?.imageGallery.forEach(async (x) => {
+                if (x.hasOwnProperty('mainCatImage')) {
+                    scenicPanelData = x;
+                    imageNames.push(x.title)
+                }
+            });
+        }
     })
 
     let images = [];
