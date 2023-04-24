@@ -1,21 +1,33 @@
 import Head from 'next/head'
 import { LayoutPrimary } from '@/components'
-import { getContentBySchemaName, getHomePageContentData } from '@/database';
+import { getContent } from '@/database';
 import { PanelImage } from '@/components/Images/PanelImage';
 import { useState } from 'react';
 import { ref, getDownloadURL, getStorage } from 'firebase/storage';
 
 interface PropType {
   contentData: any;
+  dancePanelData: any;
+  theatrePanelData: any;
+  processContentData: any;
   imagesData: any;
 }
 
 export const Home = ({
   contentData,
+  dancePanelData,
+  theatrePanelData,
+  processContentData,
   imagesData
 }: PropType) => {
-  const [content] = useState(contentData);
-  const [images] = useState(imagesData);
+  const [dancePanel, setDancePanel] = useState(dancePanelData);
+  const [theatrePanel, setTheatrePanel] = useState(theatrePanelData);
+  const [processPanel, setProcessPanel] = useState(processContentData);
+  const [images, setImages] = useState(imagesData);
+
+  console.log(contentData)
+  console.log(processContentData)
+  console.log(imagesData)
 
   return (
     <>
@@ -27,16 +39,33 @@ export const Home = ({
         <LayoutPrimary>
 
           <section className="mt-48 min-h-screen">
-            <div className="md:grid md:grid-cols-4 gap-x-2 ">
-              {content.map((x, i) => (
+            <div className="md:grid md:grid-cols-3 gap-x-2 ">
+              {dancePanel && (
                 <PanelImage
-                  key={i}
-                  src={images[i]}
-                  alt={x.category}
-                  title={x.category}
-                  href={`portfolio/${x.category}`}
+                  src={images[0]}
+                  alt={dancePanel.altText}
+                  title="Dance"
+                  href="portfolio/design/dance"
                 />
-              ))}
+              )}
+
+              {theatrePanel && (
+                <PanelImage
+                  src={images[1]}
+                  alt={theatrePanel.altText}
+                  title="Theatre"
+                  href="portfolio/design/theatre"
+                />
+              )}
+
+              {processPanel && (
+                <PanelImage
+                  src={images[2]}
+                  alt="Process"
+                  title="Process"
+                  href="portfolio/process"
+                />
+              )}
             </div>
 
           </section>
@@ -48,13 +77,52 @@ export const Home = ({
 }
 
 export async function getServerSideProps() {
-  const content = await getContentBySchemaName("homepageImages");
-  const contentData = await getHomePageContentData(content);
+  const contentData = await getContent();
+  const danceContentData = [];
+  const theatreContentData = [];
+  const processContentData = [];
+
+  contentData.forEach((x) => {
+    if (x._fl_meta_.schema === "dance") {
+      danceContentData.push(x);
+    } else if (x._fl_meta_.schema === "theatre") {
+      theatreContentData.push(x);
+    }
+  })
+
+  const imageNames = [];
+
+  let dancePanelData = null;
+  await danceContentData.filter(async (d) => {
+    await d.imageGallery.forEach(async (x) => {
+      if (x.hasOwnProperty('mainCatImage')) {
+        dancePanelData = x;
+        imageNames.push(x.title)
+      }
+    });
+  })
+
+  let theatrePanelData = null;
+  await theatreContentData.filter(async (d) => {
+    await d.imageGallery.forEach(async (x) => {
+      if (x.hasOwnProperty('mainCatImage')) {
+        theatrePanelData = x;
+        imageNames.push(x.title)
+      }
+    });
+  })
+
+  await contentData.filter(async (c) => {
+    if (c?.processFiles != null || undefined && c?.processFiles.length > 0) {
+      await processContentData.push(c);
+      await imageNames.push(c.processFiles[0].title);
+    }
+  })
 
   let images = [];
-  await contentData.forEach((x) => {
+  await imageNames.forEach((x) => {
     const storage = getStorage();
-    const imageRef = ref(storage, `flamelink/media/${x.imageName}`)
+    const imageRef = ref(storage, `flamelink/media/${x}`)
     const url = getDownloadURL(imageRef).then((res) => {
       if (res) {
         return res;
@@ -71,6 +139,9 @@ export async function getServerSideProps() {
   return {
     props: {
       contentData: contentData,
+      dancePanelData: dancePanelData,
+      theatrePanelData: theatrePanelData,
+      processContentData: processContentData,
       imagesData: imagesData
     }
   }

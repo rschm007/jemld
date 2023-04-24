@@ -104,3 +104,46 @@ export const getPageContent = async (contentData: Array<any>, id: string) => {
     const pageContentJson = JSON.parse(JSON.stringify(content));
     return pageContentJson;
 }
+
+/**
+ * @description get ALL collections that match the schema name
+ * @param contentData firestore content object
+ * @param id
+ * @returns JSON
+ */
+export const getProcessPageContent = async (contentData: Array<any>, id: string) => {
+    let contentMatch = await contentData.find((c) => c.id.toLowerCase() === id.toLowerCase());
+
+    const imageNames = [];
+    let imageUrls = [];
+    if (contentMatch?.processFiles) {
+        await contentMatch.processFiles.forEach(async (x) => {
+            imageNames.push(x.title)
+        })
+
+        await imageNames.forEach(async (x) => {
+            const storage = getStorage();
+            const imageRef = ref(storage, `flamelink/media/${x}`)
+            const url = getDownloadURL(imageRef).then((res) => {
+                if (res) {
+                    return res;
+                }
+            }).catch((error) => {
+                console.error(error);
+                return null;
+            });
+            imageUrls.push(url);
+        })
+    }
+
+    const images = await Promise.all(imageUrls);
+
+    const content = {
+        data: contentMatch,
+        imageTitles: imageNames,
+        urls: images
+    }
+
+    const pageContentJson = JSON.parse(JSON.stringify(content));
+    return pageContentJson;
+}
