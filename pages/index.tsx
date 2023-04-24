@@ -43,7 +43,7 @@ export const Home = ({
               {dancePanel && (
                 <PanelImage
                   src={images[0]}
-                  alt={dancePanel.altText}
+                  alt="Dance"
                   title="Dance"
                   href="portfolio/design/dance"
                 />
@@ -52,7 +52,7 @@ export const Home = ({
               {theatrePanel && (
                 <PanelImage
                   src={images[1]}
-                  alt={theatrePanel.altText}
+                  alt="Theatre"
                   title="Theatre"
                   href="portfolio/design/theatre"
                 />
@@ -97,7 +97,9 @@ export async function getServerSideProps() {
     await d.imageGallery.forEach(async (x) => {
       if (x.hasOwnProperty('mainCatImage')) {
         dancePanelData = x;
-        imageNames.push(x.title)
+        if (x?.title) {
+          imageNames.push(x.title)
+        }
       }
     });
   })
@@ -107,7 +109,9 @@ export async function getServerSideProps() {
     await d.imageGallery.forEach(async (x) => {
       if (x.hasOwnProperty('mainCatImage')) {
         theatrePanelData = x;
-        imageNames.push(x.title)
+        if (x?.title) {
+          imageNames.push(x.title)
+        }
       }
     });
   })
@@ -115,7 +119,9 @@ export async function getServerSideProps() {
   await contentData.filter(async (c) => {
     if (c?.processFiles != null || undefined && c?.processFiles.length > 0) {
       await processContentData.push(c);
-      await imageNames.push(c.processFiles[0].title);
+      if (c?.processFiles[0]?.title) {
+        await imageNames.push(c.processFiles[0].title);
+      }
     }
   })
 
