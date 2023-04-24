@@ -75,7 +75,7 @@ export async function getServerSideProps() {
 
     let lightingPanelData = null;
     await lightingContentData.filter(async (d) => {
-        if (d?.imageGallery != null || undefined) {
+        if ((d?.imageGallery != null || undefined)) {
             await d?.imageGallery.forEach(async (x) => {
                 if (x.hasOwnProperty('mainCatImage')) {
                     lightingPanelData = x;
