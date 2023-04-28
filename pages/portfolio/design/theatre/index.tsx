@@ -30,21 +30,23 @@ export const TheatrePage = ({
                             {content && panels && (
                                 panels.map((p, i) => {
 
-                                    const imageNameId = p.split("alt=")[0].split("%2F")[2];
-                                    const match = content.find((c) => imageNameId.includes(c.imageNameId))
+                                    if (p != null || undefined) {
+                                        const imageNameId = p.split("alt=")[0].split("%2F")[2];
+                                        const match = content.find((c) => imageNameId.includes(c.imageNameId))
 
-                                    if (match) {
-                                        return (
-                                            <PanelImage
-                                                key={i}
-                                                src={p}
-                                                alt={match.title}
-                                                title={match.title}
-                                                href={"theatre/" + match.id}
-                                                titleClasses="!text-xl !md:text-3xl"
-                                                loadingStrategy="lazy"
-                                            />
-                                        )
+                                        if (match) {
+                                            return (
+                                                <PanelImage
+                                                    key={i}
+                                                    src={p}
+                                                    alt={match.title}
+                                                    title={match.title}
+                                                    href={"theatre/" + match.id}
+                                                    titleClasses="!text-xl !md:text-3xl"
+                                                    loadingStrategy="lazy"
+                                                />
+                                            )
+                                        }
                                     }
 
                                 })

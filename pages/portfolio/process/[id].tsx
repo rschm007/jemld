@@ -23,13 +23,6 @@ export const ProcessDocPage = ({
 
     const title = pageContentData.data.title;
 
-    console.log(pageContentData)
-
-
-    function setLoading(arg0: boolean) {
-        throw new Error("Function not implemented.");
-    }
-
     return (
         <>
             <main className="w-screen h-screen">

@@ -46,6 +46,7 @@ export const DanceDocPage = ({
     const title = pageContentData.data.title;
     const clientName = pageContentData.data.clientName;
     const year = pageContentData.data.year.toString();
+    const longDescription = pageContentData.data.longDescription;
     const longItemDescription = pageContentData.data.longItemDescription;
     // variables for next/prev buttons
     const thisPageIndex = content.findIndex((c) => c.id === pageContentData.data.id);
@@ -87,6 +88,7 @@ export const DanceDocPage = ({
                                 title={title}
                                 clientName={clientName}
                                 year={year}
+                                shortItemDescription={longDescription}
                                 longItemDescription={longItemDescription}
                             />
 

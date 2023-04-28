@@ -30,25 +30,33 @@ export const ProcessPage = ({
 
                         <div className="md:grid md:grid-cols-4 gap-x-2 min-h-screen">
                             {content && panels && (
-                                panels.map((c, i) => {
+                                panels.map((p, i) => {
 
-                                    const imageNameId = c.split("alt=")[0].split("%2F")[2];
-                                    const match = content.find((c) => imageNameId.includes(c.processFilesNameId))
+                                    if (p != null || undefined) {
+                                        const imageNameId = p.split("alt=")[0].split("%2F")[2].split("%20")[0];
+                                        // const match = content.find((c) => imageNameId.includes(c.processFilesNameId))
+                                        const match = content.filter((c) => {
+                                            if (c?.processFilesNameId) {
 
-                                    if (match && (panelIds.includes(match.processFilesNameId) === false)) {
-                                        panelIds.push(match.processFilesNameId);
+                                                return c.processFilesNameId.includes(imageNameId);
+                                            }
+                                        })
 
-                                        return (
-                                            <PanelImage
-                                                key={i}
-                                                src={c}
-                                                alt={match.title}
-                                                title={match.title}
-                                                href={"process/" + match.id}
-                                                titleClasses="!text-xl !md:text-3xl"
-                                                loadingStrategy="lazy"
-                                            />
-                                        )
+                                        if (match && !panelIds.includes(match.processFilesNameId)) {
+                                            panelIds.push(match.processFilesNameId);
+
+                                            return (
+                                                <PanelImage
+                                                    key={i}
+                                                    src={p}
+                                                    alt={match[0].title}
+                                                    title={match[0].title}
+                                                    href={"process/" + match[0].id}
+                                                    titleClasses="!text-xl !md:text-3xl"
+                                                    loadingStrategy="lazy"
+                                                />
+                                            )
+                                        }
                                     }
 
                                 })
@@ -80,7 +88,7 @@ export async function getServerSideProps() {
 
     const processContentData = [];
     await contentData.filter(async (c) => {
-        if (c?.processFiles != null || undefined && c?.processFiles.length > 0) {
+        if (c?.processFiles != null || undefined || "" && c?.processFiles.length > 0) {
             await processContentData.push(c);
             c.processFiles.forEach(async (x) => {
                 await imageNames.push(x.title);

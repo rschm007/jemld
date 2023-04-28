@@ -66,6 +66,12 @@ export const AttributionBlock = ({
                 )}
             </div>
 
+            {(shortItemDescription != null || "") && (
+                <div className="text-left text-xs" dangerouslySetInnerHTML={{ __html: shortItemDescription }}>
+                </div>
+            )
+            }
+
             {(longItemDescription != null || "") && (
                 <div className="text-left text-xs" dangerouslySetInnerHTML={{ __html: longItemDescription }}>
                 </div>
