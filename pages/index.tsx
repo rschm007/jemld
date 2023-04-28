@@ -25,10 +25,6 @@ export const Home = ({
   const [processPanel, setProcessPanel] = useState(processContentData);
   const [images, setImages] = useState(imagesData);
 
-  console.log(contentData)
-  console.log(processContentData)
-  console.log(imagesData)
-
   return (
     <>
       <Head>

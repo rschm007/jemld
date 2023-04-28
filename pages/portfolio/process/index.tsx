@@ -88,7 +88,7 @@ export async function getServerSideProps() {
 
     const processContentData = [];
     await contentData.filter(async (c) => {
-        if (c?.processFiles != null || undefined || "" && c?.processFiles.length > 0) {
+        if (c?.processFiles && c?.processFiles.length > 0) {
             await processContentData.push(c);
             c.processFiles.forEach(async (x) => {
                 await imageNames.push(x.title);
@@ -97,19 +97,22 @@ export async function getServerSideProps() {
     })
 
     const images = [];
-    await imageNames.forEach((x) => {
-        const storage = getStorage();
-        const imageRef = ref(storage, `flamelink/media/${x}`)
-        const url = getDownloadURL(imageRef).then((res) => {
-            if (res) {
-                return res;
-            }
-        }).catch((error) => {
-            console.error(error);
-            return null;
-        });
-        images.push(url);
-    })
+    if (imageNames.length > 0) {
+        await imageNames.forEach((x) => {
+            const storage = getStorage();
+            const imageRef = ref(storage, `flamelink/media/${x}`)
+            const url = getDownloadURL(imageRef).then((res) => {
+                if (res) {
+                    return res;
+                }
+            }).catch((error) => {
+                console.error(error);
+                return null;
+            });
+            images.push(url);
+        })
+    }
+
 
     const panelsData = await Promise.all(images);
 

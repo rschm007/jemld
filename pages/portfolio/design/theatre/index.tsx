@@ -42,6 +42,7 @@ export const TheatrePage = ({
                                                     alt={match.title}
                                                     title={match.title}
                                                     href={"theatre/" + match.id}
+                                                    quality={80}
                                                     titleClasses="!text-xl !md:text-3xl"
                                                     loadingStrategy="lazy"
                                                 />
