@@ -21,10 +21,6 @@ export const TheatrePage = ({
 
     let panelIds: Array<string> = [];
 
-    console.log(content)
-    console.log(imagesData)
-    console.log(panels)
-
     return (
         <>
             <main className="w-screen h-screen">
@@ -41,8 +37,6 @@ export const TheatrePage = ({
                                     if (p != null || undefined) {
                                         const imageNameId = p.split("alt=")[0].split("%2F")[2];
                                         const match = content.find((c) => imageNameId.includes(c.imageNameId));
-
-                                        console.log(match)
 
                                         if (match && !panelIds.includes(match.imageNameId)) {
                                             panelIds.push(match.imageNameId);

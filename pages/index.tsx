@@ -45,18 +45,18 @@ export const Home = ({
                 />
               )}
 
-              {theatrePanel && (
+              {theatrePanel &&
                 <PanelImage
                   src={images[1]}
                   alt="Theatre"
                   title="Theatre"
                   href="portfolio/design/theatre"
                 />
-              )}
+              }
 
               {processPanel && (
                 <PanelImage
-                  src={images[2]}
+                  src={"/images/process/r&j_lighting pckgpdf-1.png"}
                   alt="Process"
                   title="Process"
                   href="portfolio/process"
@@ -86,6 +86,7 @@ export async function getServerSideProps() {
     }
   })
 
+  const imageIds = [];
   const imageNames = [];
 
   let dancePanelData = null;
@@ -93,7 +94,8 @@ export async function getServerSideProps() {
     await d.imageGallery.forEach(async (x) => {
       if (x.hasOwnProperty('mainCatImage')) {
         dancePanelData = x;
-        if (x?.title) {
+        if (x?.title && !imageIds.includes(d.imageNameId) && imageNames.length < 1) {
+          imageIds.push(d.imageNameId);
           imageNames.push(x.title)
         }
       }
@@ -105,7 +107,8 @@ export async function getServerSideProps() {
     await d.imageGallery.forEach(async (x) => {
       if (x.hasOwnProperty('mainCatImage')) {
         theatrePanelData = x;
-        if (x?.title) {
+        if (x?.title && !imageIds.includes(d.imageNameId) && imageNames.length < 2) {
+          imageIds.push(d.imageNameId);
           imageNames.push(x.title)
         }
       }
@@ -115,7 +118,9 @@ export async function getServerSideProps() {
   await contentData.filter(async (c) => {
     if (c?.processFiles != null || undefined && c?.processFiles.length > 0) {
       await processContentData.push(c);
-      if (c?.processFiles[0]?.title) {
+
+      if (c?.processFiles[0]?.title && imageNames.length < 3) {
+        await imageIds.push(c.imageNameId)
         await imageNames.push(c.processFiles[0].title);
       }
     }

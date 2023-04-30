@@ -15,9 +15,6 @@ export const AboutPage = ({
     const [content] = useState(contentData);
     const [image] = useState(imageUrlData);
 
-    console.log(content);
-    console.log(imageUrlData);
-
     return (
         <>
             <main className="w-screen h-screen">

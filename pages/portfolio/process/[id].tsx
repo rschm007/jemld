@@ -3,7 +3,6 @@ import { getContent, getProcessPageContent } from "@/database";
 import { useEffect, useState } from "react";
 import Image from 'next/image'
 import Link from "next/link";
-import ReactPlayer from 'react-player/lazy'
 
 interface PropType {
     contentData: any;

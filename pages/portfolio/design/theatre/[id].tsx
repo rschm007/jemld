@@ -60,8 +60,6 @@ export const TheatreDocPage = ({
     const prevPageTitle = content[thisPageIndex - 1]?.title || null;
     const nextPageTitle = content[thisPageIndex + 1]?.title || null;
 
-    console.log(nextPageId, prevPageId)
-
     return (
         <>
             <main className="w-screen h-screen">
