@@ -48,14 +48,13 @@ export const ProcessDocPage = ({
                                                 height={500}
                                                 unoptimized
                                                 loading="lazy"
-                                            /></Link>
-
-
+                                            />
+                                        </Link>
                                     )}
 
                                     {url.includes("pdf") && (
                                         <object
-                                            className="object-cover w-9/12 h-full min-h-[70vh] object-bottom relative brightness-100 group-hover:brightness-[0.25] transition-all ease-in-out delay-75 z-0 bg-darkGray"
+                                            className="object-cover w-9/12 h-full min-h-[90vh] object-bottom relative brightness-100 group-hover:brightness-[0.25] transition-all ease-in-out delay-75 z-0 bg-darkGray mb-12"
                                             data={url}
                                             type="application/pdf"
                                             width="100%"

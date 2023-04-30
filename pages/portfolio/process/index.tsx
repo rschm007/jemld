@@ -20,8 +20,6 @@ export const ProcessPage = ({
 
     let panelIds: Array<string> = [];
 
-    console.log(panels)
-
     return (
         <>
             <main className="w-screen h-screen">
@@ -39,15 +37,15 @@ export const ProcessPage = ({
                                         const imageNameId = p.split("alt=")[0].split("%2F")[2].split("%20")[0].split("_")[0];
                                         // const match = content.find((c) => imageNameId.includes(c.processFilesNameId))
                                         const match = content.filter((c) => {
-                                            if (c?.processFilesNameId) {
-                                                const longId = c.processFilesNameId.replace("&", "%26");
+                                            if (c?.imageNameId) {
+                                                const longId = c.imageNameId.replace("&", "%26");
 
                                                 return longId.includes(imageNameId);
                                             }
                                         })
 
-                                        if (match && !panelIds.includes(match[0].processFilesNameId)) {
-                                            panelIds.push(match[0].processFilesNameId);
+                                        if (match && !panelIds.includes(match[0].imageNameId)) {
+                                            panelIds.push(match[0].imageNameId);
 
                                             return (
                                                 <PanelImage
@@ -92,33 +90,34 @@ export async function getServerSideProps() {
 
     const processContentData = [];
     await contentData.filter(async (c) => {
-        if (c?.processFiles && c?.processFiles.length > 0) {
+        if ((c?.processFiles && c?.processFiles.length > 0) && (c?.imageGallery && c?.imageGallery.length > 0)) {
             await processContentData.push(c);
-            c.processFiles.forEach(async (x) => {
-                await imageNames.push(x.title);
-            })
+
+            await c?.imageGallery.forEach(async (x) => {
+                if (x.hasOwnProperty('mainImage')) {
+                    imageNames.push(x.title)
+                }
+            });
         }
     })
 
     const images = [];
     if (imageNames.length > 0) {
         await imageNames.forEach((x) => {
-            if (x.includes("png" || "webp" || "jpg" || "jpeg")) {
-                const storage = getStorage();
-                const imageRef = ref(storage, `flamelink/media/${x}`)
-                const url = getDownloadURL(imageRef).then((res) => {
-                    if (res) {
-                        return res;
-                    }
-                }).catch((error) => {
-                    console.error(error);
-                    return null;
-                });
-                images.push(url);
-            }
+            const storage = getStorage();
+            const imageRef = ref(storage, `flamelink/media/${x}`)
+            const url = getDownloadURL(imageRef).then((res) => {
+                if (res) {
+                    return res;
+                }
+            }).catch((error) => {
+                console.error(error);
+                return null;
+            });
+            images.push(url);
+
         })
     }
-
 
     const panelsData = await Promise.all(images);
 
