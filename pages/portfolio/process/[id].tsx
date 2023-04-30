@@ -3,7 +3,7 @@ import { getContent, getProcessPageContent } from "@/database";
 import { useEffect, useState } from "react";
 import Image from 'next/image'
 import Link from "next/link";
-import PDF from "@/components/Files/PDF";
+import ReactPlayer from 'react-player/lazy'
 
 interface PropType {
     contentData: any;
@@ -39,7 +39,7 @@ export const ProcessDocPage = ({
                             {pageContentData.urls.map((url, i) => (
                                 <>
                                     {url.includes("png" || "webp" || "jpg" || "jpeg") && (
-                                        <Link href={url} key={i} className="flex flex-row w-full items-center justify-center">
+                                        <Link href={url} key={url} className="flex flex-row w-full items-center justify-center">
                                             <Image
                                                 className="object-cover w-7/12 h-full object-bottom relative brightness-100 group-hover:brightness-[0.25] transition-all ease-in-out delay-75 z-0 bg-darkGray "
                                                 src={url}
@@ -54,6 +54,7 @@ export const ProcessDocPage = ({
 
                                     {url.includes("pdf") && (
                                         <object
+                                            key={url}
                                             className="object-cover w-9/12 h-full min-h-[90vh] object-bottom relative brightness-100 group-hover:brightness-[0.25] transition-all ease-in-out delay-75 z-0 bg-darkGray mb-12"
                                             data={url}
                                             type="application/pdf"
@@ -61,6 +62,13 @@ export const ProcessDocPage = ({
                                             height="100%"
                                         />
 
+                                    )}
+
+                                    {url.includes("mp4") && (
+                                        <video key={url}
+                                            className="object-cover w-9/12 h-full min-h-[90vh] object-bottom relative brightness-100 group-hover:brightness-[0.25] transition-all ease-in-out delay-75 z-0 bg-darkGray mb-12" width="750" height="500" controls >
+                                            <source src={url} type="video/mp4" />
+                                        </video>
                                     )}
                                 </>
                             ))
