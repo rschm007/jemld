@@ -7,11 +7,13 @@ import { PanelImage } from "@/components/Images/PanelImage";
 
 interface PropType {
     pageContentData: any;
+    imagesData: any;
     panelsData: any;
 }
 
 export const DancePage = ({
     pageContentData,
+    imagesData,
     panelsData
 }: PropType) => {
     const [content, setContent] = useState(pageContentData);
@@ -37,7 +39,7 @@ export const DancePage = ({
                                         return (
                                             <PanelImage
                                                 key={i}
-                                                src={p}
+                                                src={`/images/dance/${imagesData[i]}`}
                                                 alt={match.title}
                                                 title={match.title}
                                                 href={"dance/" + match.id}
@@ -103,6 +105,7 @@ export async function getServerSideProps() {
     return {
         props: {
             pageContentData: pageContentData,
+            imagesData: imageNames,
             panelsData: panelsData
         }
     }

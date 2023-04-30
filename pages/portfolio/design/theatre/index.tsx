@@ -7,15 +7,23 @@ import { PanelImage } from "@/components/Images/PanelImage";
 
 interface PropType {
     pageContentData: any;
+    imagesData: any;
     panelsData: any;
 }
 
 export const TheatrePage = ({
     pageContentData,
+    imagesData,
     panelsData
 }: PropType) => {
     const [content, setContent] = useState(pageContentData);
     const [panels, setPanels] = useState(panelsData);
+
+    let panelIds: Array<string> = [];
+
+    console.log(content)
+    console.log(imagesData)
+    console.log(panels)
 
     return (
         <>
@@ -32,17 +40,20 @@ export const TheatrePage = ({
 
                                     if (p != null || undefined) {
                                         const imageNameId = p.split("alt=")[0].split("%2F")[2];
-                                        const match = content.find((c) => imageNameId.includes(c.imageNameId))
+                                        const match = content.find((c) => imageNameId.includes(c.imageNameId));
 
-                                        if (match) {
+                                        console.log(match)
+
+                                        if (match && !panelIds.includes(match.imageNameId)) {
+                                            panelIds.push(match.imageNameId);
+
                                             return (
                                                 <PanelImage
                                                     key={i}
-                                                    src={p}
+                                                    src={`/images/theatre/${imagesData[i]}`}
                                                     alt={match.title}
                                                     title={match.title}
                                                     href={"theatre/" + match.id}
-                                                    quality={80}
                                                     titleClasses="!text-xl !md:text-3xl"
                                                     loadingStrategy="lazy"
                                                 />
@@ -75,13 +86,17 @@ export async function getServerSideProps() {
         return 0;
     });
 
+    const imageIds = [];
     const imageNames = [];
     const panels = [];
     const pageContentData = await contentData.filter(async (d) => {
         await d.imageGallery.forEach(async (x) => {
             if (x.hasOwnProperty('mainImage')) {
-                panels.push(x);
-                imageNames.push(x.title)
+                if (!imageIds.includes(d.imageNameId)) {
+                    imageIds.push(d.imageNameId);
+                    panels.push(x);
+                    imageNames.push(x.title)
+                }
             }
         });
     })
@@ -106,6 +121,7 @@ export async function getServerSideProps() {
     return {
         props: {
             pageContentData: pageContentData,
+            imagesData: imageNames,
             panelsData: panelsData
         }
     }
