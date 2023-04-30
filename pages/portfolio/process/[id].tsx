@@ -3,6 +3,7 @@ import { getContent, getProcessPageContent } from "@/database";
 import { useEffect, useState } from "react";
 import Image from 'next/image'
 import Link from "next/link";
+import PDF from "@/components/Files/PDF";
 
 interface PropType {
     contentData: any;
@@ -21,6 +22,8 @@ export const ProcessDocPage = ({
         }
     }, [contentData])
 
+    console.log(pageContentData)
+
     const title = pageContentData.data.title;
 
     return (
@@ -36,15 +39,34 @@ export const ProcessDocPage = ({
 
                             {pageContentData.urls.map((url, i) => (
                                 <Link href={url} key={i} className="flex flex-row w-full items-center justify-center">
-                                    <Image
-                                        className="object-cover w-7/12 h-full object-bottom relative brightness-100 group-hover:brightness-[0.25] transition-all ease-in-out delay-75 z-0 bg-darkGray "
-                                        src={url}
-                                        alt={pageContentData.data.title}
-                                        width={250}
-                                        height={500}
-                                        unoptimized
-                                        loading="lazy"
-                                    />
+                                    {url.includes("png" || "webp" || "jpg" || "jpeg") && (
+                                        <Image
+                                            className="object-cover w-7/12 h-full object-bottom relative brightness-100 group-hover:brightness-[0.25] transition-all ease-in-out delay-75 z-0 bg-darkGray "
+                                            src={url}
+                                            alt={pageContentData.data.title}
+                                            width={250}
+                                            height={500}
+                                            unoptimized
+                                            loading="lazy"
+                                        />
+                                    )}
+
+                                    {url.includes("pdf") && (
+                                        // <PDF
+                                        //     className="object-cover w-7/12 h-full object-bottom relative brightness-100 group-hover:brightness-[0.25] transition-all ease-in-out delay-75 z-0 bg-darkGray "
+                                        //     src={url}
+                                        // />
+
+                                        <object
+                                            className="object-cover w-9/12 h-full min-h-[70vh] object-bottom relative brightness-100 group-hover:brightness-[0.25] transition-all ease-in-out delay-75 z-0 bg-darkGray"
+                                            data={url}
+                                            type="application/pdf"
+                                            width="100%"
+                                            height="100%"
+                                        />
+
+                                    )}
+
                                 </Link>
 
                             ))

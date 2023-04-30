@@ -1,9 +1,10 @@
 import { LayoutPrimary } from "@/components";
-import { getContent, getContentBySchemaName } from "@/database";
+import { firestore, getContent, getContentBySchemaName } from "@/database";
 import { useState } from "react";
 import BannerHeader from "@/components/Layout/BannerHeader";
 import { getStorage, ref, getDownloadURL } from "firebase/storage";
 import { PanelImage } from "@/components/Images/PanelImage";
+import { collection, getDocs } from "firebase/firestore/lite";
 
 interface PropType {
     pageContentData: any;
@@ -17,7 +18,9 @@ export const ProcessPage = ({
     const [content, setContent] = useState(pageContentData);
     const [panels, setPanels] = useState(panelsData);
 
-    let panelIds = [];
+    let panelIds: Array<string> = [];
+
+    console.log(panels)
 
     return (
         <>
@@ -33,17 +36,18 @@ export const ProcessPage = ({
                                 panels.map((p, i) => {
 
                                     if (p != null || undefined) {
-                                        const imageNameId = p.split("alt=")[0].split("%2F")[2].split("%20")[0];
+                                        const imageNameId = p.split("alt=")[0].split("%2F")[2].split("%20")[0].split("_")[0];
                                         // const match = content.find((c) => imageNameId.includes(c.processFilesNameId))
                                         const match = content.filter((c) => {
                                             if (c?.processFilesNameId) {
+                                                const longId = c.processFilesNameId.replace("&", "%26");
 
-                                                return c.processFilesNameId.includes(imageNameId);
+                                                return longId.includes(imageNameId);
                                             }
                                         })
 
-                                        if (match && !panelIds.includes(match.processFilesNameId)) {
-                                            panelIds.push(match.processFilesNameId);
+                                        if (match && !panelIds.includes(match[0].processFilesNameId)) {
+                                            panelIds.push(match[0].processFilesNameId);
 
                                             return (
                                                 <PanelImage
@@ -99,17 +103,19 @@ export async function getServerSideProps() {
     const images = [];
     if (imageNames.length > 0) {
         await imageNames.forEach((x) => {
-            const storage = getStorage();
-            const imageRef = ref(storage, `flamelink/media/${x}`)
-            const url = getDownloadURL(imageRef).then((res) => {
-                if (res) {
-                    return res;
-                }
-            }).catch((error) => {
-                console.error(error);
-                return null;
-            });
-            images.push(url);
+            if (x.includes("png" || "webp" || "jpg" || "jpeg")) {
+                const storage = getStorage();
+                const imageRef = ref(storage, `flamelink/media/${x}`)
+                const url = getDownloadURL(imageRef).then((res) => {
+                    if (res) {
+                        return res;
+                    }
+                }).catch((error) => {
+                    console.error(error);
+                    return null;
+                });
+                images.push(url);
+            }
         })
     }
 
