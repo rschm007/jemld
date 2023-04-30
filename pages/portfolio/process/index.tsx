@@ -38,8 +38,7 @@ export const ProcessPage = ({
                                         // const match = content.find((c) => imageNameId.includes(c.processFilesNameId))
                                         const match = content.filter((c) => {
                                             if (c?.imageNameId) {
-                                                const longId = c.imageNameId.replace("&", "%26");
-
+                                                const longId = c.imageNameId.replace("&", "%26"); 4
                                                 return longId.includes(imageNameId);
                                             }
                                         })
@@ -86,6 +85,7 @@ export async function getServerSideProps() {
         return 0;
     });
 
+    const imageIds = [];
     const imageNames = [];
 
     const processContentData = [];
@@ -95,7 +95,10 @@ export async function getServerSideProps() {
 
             await c?.imageGallery.forEach(async (x) => {
                 if (x.hasOwnProperty('mainImage')) {
-                    imageNames.push(x.title)
+                    if (!imageIds.includes(c.imageNameId)) {
+                        imageIds.push(c.imageNameId);
+                        imageNames.push(x.title);
+                    }
                 }
             });
         }
