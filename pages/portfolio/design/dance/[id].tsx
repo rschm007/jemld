@@ -27,7 +27,7 @@ export const DanceDocPage = ({
     useHydrateAtoms([
         [danceContentAtom, contentData]
     ])
-    const [content] = useAtom(danceContentAtom);
+    const [content, setContent] = useAtom(danceContentAtom);
     const [neighborPagesImages, setNeighborPagesImages] = useAtom(neighborPagesImagesAtom);
 
     useEffect(() => {
@@ -38,6 +38,12 @@ export const DanceDocPage = ({
                 });
         }
     }, [])
+
+    useEffect(() => {
+        if (content != contentData) {
+            setContent(contentData);
+        }
+    }, [contentData])
 
     const AutoplaySlider = withAutoplay(AwesomeSlider);
 
@@ -51,7 +57,7 @@ export const DanceDocPage = ({
     // variables for next/prev buttons
     const thisPageIndex = content.findIndex((c) => c.id === pageContentData.data.id);
     const prevPageId = content[thisPageIndex - 1]?.id || null;
-    const prevPageImgUrl = neighborPagesImages[thisPageIndex - 1];
+    const prevPageImgUrl = `/images/dance/${content[thisPageIndex - 1]}`;
     const nextPageId = content[thisPageIndex + 1]?.id || null;
     const nextPageImgUrl = neighborPagesImages[thisPageIndex + 1];
     const prevPageTitle = content[thisPageIndex - 1]?.title || null;
@@ -89,7 +95,6 @@ export const DanceDocPage = ({
                                 clientName={clientName}
                                 year={year}
                                 shortItemDescription={longDescription}
-                                longItemDescription={longItemDescription}
                             />
 
                             <AutoplaySlider
@@ -119,6 +124,18 @@ export async function getServerSideProps(context) {
     const id = context.query.id;
 
     const contentData = await getContentBySchemaName("dance");
+
+    contentData.sort((a, b) => {
+        if (a.orderNo < b.orderNo) {
+            return -1;
+        }
+        if (a.orderNo > b.orderNo) {
+            return 1;
+        }
+        // a must be equal to b
+        return 0;
+    });
+
     const filesData = await getFiles();
     const pageContentData = await getPageContent(contentData, id);
 

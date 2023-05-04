@@ -41,7 +41,7 @@ export const NextPrevDynamicPageButtons = ({
 
                 {!prevItemDisabled && (
                     <Link
-                        className="group flex flex-row items-center justify-center bg-[rgba(0,0,0,0.3)] opacity-80 w-12 h-24 rounded-r-lg z-50 transition-all duration-300 ease-in-out hover:w-80 hover:bg-[rgba(0,0,0,0.8)] pointer-events-auto"
+                        className="group flex flex-row items-center justify-center bg-[rgba(0,0,0,0.3)] opacity-80 w-12 h-24 rounded-r-lg z-50 transition-all duration-300 ease-in-out hover:w-60 hover:bg-[rgba(0,0,0,0.8)] pointer-events-auto"
                         href={`${pageSlug}/${prevItemId}`}
                     >
                         <span className="absolute left-3">
@@ -50,7 +50,7 @@ export const NextPrevDynamicPageButtons = ({
                             </svg>
                         </span>
 
-                        <div className="flex-row items-center justify-between h-full w-full ml-4 pl-8 hidden group-hover:flex transition-all duration-300 ease-in-out space-x-6">
+                        <div className="flex-row-reverse items-center justify-between h-full w-full mr-4 pr-8 hidden group-hover:flex transition-all duration-300 ease-in-out space-x-6">
                             <div className="flex flex-col items-center max-w-[50%]">
                                 <motion.p
                                     className="text-[11px] text-center text-[#fff] font-normal font-montserrat"
@@ -83,19 +83,19 @@ export const NextPrevDynamicPageButtons = ({
                                 </motion.p>
                             </div>
 
-                            <img src={prevItemImgUrl} className="w-36 h-full object-cover rounded-r-lg" alt={prevItemTitle} />
+                            {/* <img src={prevItemImgUrl} className="w-36 h-full object-cover rounded-r-lg" alt={prevItemTitle} /> */}
                         </div>
                     </Link>
                 )}
 
                 {!nextItemDisabled && (
                     <Link
-                        className="group flex flex-row items-center justify-center bg-[rgba(0,0,0,0.3)] opacity-80 w-12 h-24 rounded-l-lg z-50 transition-all duration-300 ease-in-out hover:w-80 hover:bg-[rgba(0,0,0,0.8)] pointer-events-auto"
+                        className="group flex flex-row items-center justify-center bg-[rgba(0,0,0,0.3)] opacity-80 w-12 h-24 rounded-l-lg z-50 transition-all duration-300 ease-in-out hover:w-60 hover:bg-[rgba(0,0,0,0.8)] pointer-events-auto"
                         href={`${pageSlug}/${nextItemId}`}
                     >
-                        <div className="flex-row items-center justify-between h-full w-full mr-4 pr-8 hidden group-hover:flex transition-all duration-300 ease-in-out space-x-6">
+                        <div className="flex-row items-center justify-between h-full w-full ml-4 pl-8 hidden group-hover:flex transition-all duration-300 ease-in-out space-x-6">
 
-                            <img src={nextItemImgUrl} className="w-36 h-full object-cover rounded-l-lg" alt={nextItemTitle} />
+                            {/* <img src={nextItemImgUrl} className="w-36 h-full object-cover rounded-l-lg" alt={nextItemTitle} /> */}
 
                             <div className="flex flex-col items-center">
                                 <motion.p

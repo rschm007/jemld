@@ -121,6 +121,18 @@ export async function getServerSideProps(context) {
     const id = context.query.id;
 
     const contentData = await getContentBySchemaName("theatre");
+
+    contentData.sort((a, b) => {
+        if (a.orderNo < b.orderNo) {
+            return -1;
+        }
+        if (a.orderNo > b.orderNo) {
+            return 1;
+        }
+        // a must be equal to b
+        return 0;
+    });
+
     const pageContentData = await getPageContent(contentData, id);
 
     return {
