@@ -6,7 +6,6 @@ import { useState } from 'react';
 import { ref, getDownloadURL, getStorage } from 'firebase/storage';
 
 interface PropType {
-  contentData: any;
   dancePanelData: any;
   theatrePanelData: any;
   processContentData: any;
@@ -14,7 +13,6 @@ interface PropType {
 }
 
 export const Home = ({
-  contentData,
   dancePanelData,
   theatrePanelData,
   processContentData,
@@ -96,7 +94,7 @@ export async function getServerSideProps() {
         dancePanelData = x;
         if (x?.title && !imageIds.includes(d.imageNameId) && imageNames.length < 1) {
           imageIds.push(d.imageNameId);
-          imageNames.push(x.title)
+          imageNames.push(x.title);
         }
       }
     });
@@ -109,7 +107,7 @@ export async function getServerSideProps() {
         theatrePanelData = x;
         if (x?.title && !imageIds.includes(d.imageNameId) && imageNames.length < 2) {
           imageIds.push(d.imageNameId);
-          imageNames.push(x.title)
+          imageNames.push(x.title);
         }
       }
     });
@@ -145,7 +143,6 @@ export async function getServerSideProps() {
 
   return {
     props: {
-      contentData: contentData,
       dancePanelData: dancePanelData,
       theatrePanelData: theatrePanelData,
       processContentData: processContentData,

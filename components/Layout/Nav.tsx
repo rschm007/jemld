@@ -52,9 +52,10 @@ export const Nav = ({
                 />
 
                 <div className={"w-full h-full flex-col items-center justify-center space-y-4 " + (open ? "flex" : "hidden")}>
-                    <Link href="/" className={mobileLinkStyles + (router.pathname === "/" ? "active-link" : "")}>
+                    {/* eslint-disable-next-line @next/next/no-html-link-for-pages */}
+                    <a href="/" className={mobileLinkStyles + (router.pathname === "/" ? "active-link" : "")}>
                         Home
-                    </Link>
+                    </a>
 
                     <Link href="/about" className={mobileLinkStyles + (router.pathname === "/about" ? "active-link" : "")}>
                         About

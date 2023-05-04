@@ -5,12 +5,10 @@ import BannerHeader from "@/components/Layout/BannerHeader";
 
 interface PropType {
     contentData: any;
-    imageUrlData: any;
 }
 
 export const ResumePage = ({
     contentData,
-    imageUrlData
 }: PropType) => {
     const [content] = useState(contentData);
 
