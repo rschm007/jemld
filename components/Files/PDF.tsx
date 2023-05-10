@@ -20,8 +20,8 @@ export default function PDF({
 
     return (
         <figure className={className} id={id}>
-            <Document file={src} onLoadSuccess={onDocumentLoadSuccess}>
-                <Page pageNumber={pageNumber} />
+            <Document file={src} onLoadSuccess={onDocumentLoadSuccess} pageMode="useNone" pageLayout="singlePage">
+                <Page pageNumber={pageNumber} wrap={false} />
             </Document>
         </figure>
 
