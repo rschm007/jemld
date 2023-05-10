@@ -36,7 +36,8 @@ export const TheatrePage = ({
 
                                     if (p != null || undefined) {
                                         const imageNameId = p.split("alt=")[0].split("%2F")[2];
-                                        const match = content.find((c) => imageNameId.includes(c.imageNameId));
+                                        const _imageNameId = imageNameId.replace("%26", "&");
+                                        const match = content.find((c) => _imageNameId.includes(c.imageNameId));
 
                                         if (match && !panelIds.includes(match.imageNameId)) {
                                             panelIds.push(match.imageNameId);

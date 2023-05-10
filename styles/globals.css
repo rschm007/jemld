@@ -55,3 +55,16 @@ ol {
         background-color: #166534 !important;
     }
 }
+
+/* typography */
+.attribution span,
+.attribution p,
+.attribution h1,
+.attribution h2,
+.attribution h3,
+.attribution h4,
+.attribution button,
+.attribution ul,
+.attribution ol {
+    background: transparent !important;
+}

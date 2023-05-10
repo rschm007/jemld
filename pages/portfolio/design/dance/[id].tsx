@@ -68,9 +68,7 @@ export const DanceDocPage = ({
             <main className="w-screen h-screen">
                 <LayoutPrimary>
 
-                    <section className="mt-48 overflow-x-auto">
-
-                        <BannerHeader text={title} />
+                    <section className="overflow-x-auto">
 
                         <DynamicWrapper>
                             <NextPrevDynamicPageButtons
@@ -84,7 +82,7 @@ export const DanceDocPage = ({
                             </NextPrevDynamicPageButtons>
                         </DynamicWrapper>
 
-                        <div className="flex flex-col md:flex-row items-center w-full">
+                        <div className="flex flex-col md:flex-row items-center w-full md:mt-[17rem]">
 
                             <AttributionBlock
                                 title={title}

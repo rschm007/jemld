@@ -19,34 +19,13 @@ export const AttributionBlock = ({
     longItemDescription,
     shortItemDescription
 }: AttributionBlockProps) => {
-    const [hidden, setHidden] = useState(false);
-
-    useEffect(() => {
-        window.addEventListener('scroll', isHidden);
-
-        return () => {
-            window.removeEventListener('scroll', isHidden);
-        };
-    }, []);
-
-    /* Method that will fix header after a specific scrollable */
-    const isHidden = (e) => {
-        const scrollTop = window.scrollY;
-
-        if (scrollTop >= 175) {
-            setHidden(false);
-        } else {
-            setHidden(true);
-        }
-    };
-
 
     return (
         <article className={"flex flex-col items-start justify-center w-full space-y-4 mt-3 mb-16 lg:ml-16 xl:ml-20 mr-12 self-center" + className} id={id}>
 
             <div className="flex flex-col items-start justify-start">
                 {(title != null || "") && (
-                    <h2 className={"text-left text-[2.5rem] mb-2 opacity-100 transition-all ease-in-out duration-300 " + (hidden ? "!opacity-0" : "")}>
+                    <h2 className="text-left text-[2.5rem] mb-2">
                         {title}
                     </h2>
                 )}
@@ -67,13 +46,13 @@ export const AttributionBlock = ({
             </div>
 
             {(shortItemDescription != null || "") && (
-                <div className="text-left text-xs" dangerouslySetInnerHTML={{ __html: shortItemDescription }}>
+                <div className="attribution text-left text-xs" dangerouslySetInnerHTML={{ __html: shortItemDescription }}>
                 </div>
             )
             }
 
             {(longItemDescription != null || "") && (
-                <div className="text-left text-xs" dangerouslySetInnerHTML={{ __html: longItemDescription }}>
+                <div className="attribution text-left text-xs" dangerouslySetInnerHTML={{ __html: longItemDescription }}>
                 </div>
             )
             }

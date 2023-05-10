@@ -25,7 +25,7 @@ export const NextPrevDynamicPageButtons = ({
 }: NextPrevDynamicPageButtonsProps) => {
 
     return (
-        <div className={"dynamic-buttons relative flex flex-col items-center justify-center w-full h-full z-50 pointer-events-none " + (!nextItemDisabled || !prevItemDisabled ? "my-12 md:-mt-28 md:mb-12 " : "")}>
+        <div className="dynamic-buttons absolute flex flex-col items-center justify-center w-full h-24 z-50 pointer-events-none top-40">
 
             {children}
 
@@ -45,20 +45,11 @@ export const NextPrevDynamicPageButtons = ({
                         <div className="flex-row-reverse items-center justify-between h-full w-full mr-4 pr-8 hidden group-hover:flex transition-all duration-300 ease-in-out space-x-6">
                             <div className="flex flex-col items-center max-w-[50%]">
 
-                                <motion.p
+                                <p
                                     className="text-sm text-center text-white font-semibold font-montserrat truncate"
-                                    initial={{ opacity: 0 }}
-                                    animate={{ opacity: 1 }}
-                                    exit={{ opacity: 0 }}
-                                    transition={{
-                                        type: "spring",
-                                        stiffness: 260,
-                                        damping: 20,
-                                        delay: 500
-                                    }}
                                 >
                                     Previous Show
-                                </motion.p>
+                                </p>
 
                             </div>
 
@@ -78,20 +69,11 @@ export const NextPrevDynamicPageButtons = ({
 
                             <div className="flex flex-col items-center">
 
-                                <motion.p
+                                <p
                                     className="text-sm text-center text-white font-semibold font-montserrat truncate"
-                                    initial={{ opacity: 0 }}
-                                    animate={{ opacity: 1 }}
-                                    exit={{ opacity: 0 }}
-                                    transition={{
-                                        type: "spring",
-                                        stiffness: 260,
-                                        damping: 20,
-                                        delay: 500
-                                    }}
                                 >
                                     Next Show
-                                </motion.p>
+                                </p>
 
                             </div>
                         </div>
