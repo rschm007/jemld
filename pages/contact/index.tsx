@@ -24,14 +24,15 @@ export const ContactPage = ({
                     <section className="space-y-2 mt-48">
 
                         <div className="mb-12 md:my-24 px-8 md:px-32 w-full h-full flex flex-col-reverse md:flex-row items-center justify-center md:space-y-8">
-                            <figure className="w-full h-full hidden md:block">
+                            <figure className="contact-slider w-full h-full hidden md:block">
                                 <AutoplaySlider
                                     name="contact-slider"
                                     bullets
                                     organicArrows={false}
-                                    play
-                                    cancelOnInteraction
+                                    play={true}
+                                    cancelOnInteraction={false}
                                     interval={3000}
+                                    infinite
                                     style={{
                                         maxWidth: "45rem",
                                         background: "#000"

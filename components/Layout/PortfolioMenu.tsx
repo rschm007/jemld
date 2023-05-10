@@ -38,24 +38,30 @@ export const PortfolioMenu = ({
 
                         <Menu.Item>
                             {({ active }) => (
-                                <Link className={linkStyles + " text-offWhite !no-underline"} href="/portfolio/design/theatre">
-                                    Theatre
+                                <Link href="/portfolio/design/theatre" passHref legacyBehavior>
+                                    <a className={linkStyles + " text-offWhite !no-underline"}>
+                                        Theatre
+                                    </a>
                                 </Link>
                             )}
                         </Menu.Item>
 
                         <Menu.Item>
                             {({ active }) => (
-                                <Link className={linkStyles + " text-offWhite !no-underline"} href="/portfolio/design/dance">
-                                    Dance
+                                <Link href="/portfolio/design/dance" passHref legacyBehavior>
+                                    <a className={linkStyles + " text-offWhite !no-underline"}>
+                                        Dance
+                                    </a>
                                 </Link>
                             )}
                         </Menu.Item>
 
                         <Menu.Item>
                             {({ active }) => (
-                                <Link className={linkStyles + " text-offWhite !no-underline"} href="/portfolio/process">
-                                    Process
+                                <Link href="/portfolio/process" passHref legacyBehavior>
+                                    <a className={linkStyles + " text-offWhite !no-underline"}>
+                                        Process
+                                    </a>
                                 </Link>
                             )}
                         </Menu.Item>

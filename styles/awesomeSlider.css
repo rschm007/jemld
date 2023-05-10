@@ -40,6 +40,10 @@
     border-radius: 8px;
 }
 
+.contact-slider .awssld__bullets {
+    display: none;
+}
+
 @media only screen and (max-width: 1200px) {
 
     .awssld,

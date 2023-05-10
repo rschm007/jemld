@@ -5,12 +5,8 @@ import Link from "next/link";
 export interface NextPrevDynamicPageButtonsProps extends IDefaultPropsWithChildren {
     pageSlug: string;
     nextItemId: string | null;
-    nextItemTitle: string | null;
-    nextItemImgUrl: string | null;
     nextItemDisabled: boolean;
     prevItemId: string | null;
-    prevItemTitle: string | null;
-    prevItemImgUrl: string | null;
     prevItemDisabled: boolean;
 }
 
@@ -23,12 +19,8 @@ export const NextPrevDynamicPageButtons = ({
     children,
     pageSlug,
     nextItemId,
-    nextItemTitle,
-    nextItemImgUrl,
     nextItemDisabled,
     prevItemId,
-    prevItemTitle,
-    prevItemImgUrl,
     prevItemDisabled,
 }: NextPrevDynamicPageButtonsProps) => {
 
@@ -52,23 +44,9 @@ export const NextPrevDynamicPageButtons = ({
 
                         <div className="flex-row-reverse items-center justify-between h-full w-full mr-4 pr-8 hidden group-hover:flex transition-all duration-300 ease-in-out space-x-6">
                             <div className="flex flex-col items-center max-w-[50%]">
-                                <motion.p
-                                    className="text-[11px] text-center text-[#fff] font-normal font-montserrat"
-                                    initial={{ opacity: 0 }}
-                                    animate={{ opacity: 1 }}
-                                    exit={{ opacity: 0 }}
-                                    transition={{
-                                        type: "spring",
-                                        stiffness: 260,
-                                        damping: 20,
-                                        delay: 500
-                                    }}
-                                >
-                                    Previous Page
-                                </motion.p>
 
                                 <motion.p
-                                    className="text-sm text-center text-[#fff] font-semibold font-montserrat max-w-[100%] truncate"
+                                    className="text-sm text-center text-white font-semibold font-montserrat truncate"
                                     initial={{ opacity: 0 }}
                                     animate={{ opacity: 1 }}
                                     exit={{ opacity: 0 }}
@@ -79,8 +57,9 @@ export const NextPrevDynamicPageButtons = ({
                                         delay: 500
                                     }}
                                 >
-                                    {prevItemTitle}
+                                    Previous Show
                                 </motion.p>
+
                             </div>
 
                             {/* <img src={prevItemImgUrl} className="w-36 h-full object-cover rounded-r-lg" alt={prevItemTitle} /> */}
@@ -98,23 +77,9 @@ export const NextPrevDynamicPageButtons = ({
                             {/* <img src={nextItemImgUrl} className="w-36 h-full object-cover rounded-l-lg" alt={nextItemTitle} /> */}
 
                             <div className="flex flex-col items-center">
-                                <motion.p
-                                    className="text-[11px] text-center text-[#fff] font-normal font-montserrat truncate"
-                                    initial={{ opacity: 0 }}
-                                    animate={{ opacity: 1 }}
-                                    exit={{ opacity: 0 }}
-                                    transition={{
-                                        type: "spring",
-                                        stiffness: 260,
-                                        damping: 20,
-                                        delay: 500
-                                    }}
-                                >
-                                    Next Page
-                                </motion.p>
 
                                 <motion.p
-                                    className="text-sm text-center text-[#fff] font-semibold font-montserrat truncate"
+                                    className="text-sm text-center text-white font-semibold font-montserrat truncate"
                                     initial={{ opacity: 0 }}
                                     animate={{ opacity: 1 }}
                                     exit={{ opacity: 0 }}
@@ -125,8 +90,9 @@ export const NextPrevDynamicPageButtons = ({
                                         delay: 500
                                     }}
                                 >
-                                    {nextItemTitle}
+                                    Next Show
                                 </motion.p>
+
                             </div>
                         </div>
 

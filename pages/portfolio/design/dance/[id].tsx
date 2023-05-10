@@ -76,12 +76,8 @@ export const DanceDocPage = ({
                             <NextPrevDynamicPageButtons
                                 pageSlug="/portfolio/design/dance"
                                 nextItemId={nextPageId}
-                                nextItemTitle={nextPageTitle}
-                                nextItemImgUrl={nextPageImgUrl}
                                 nextItemDisabled={nextPageId === null || undefined}
                                 prevItemId={prevPageId}
-                                prevItemTitle={prevPageTitle}
-                                prevItemImgUrl={prevPageImgUrl}
                                 prevItemDisabled={prevPageId === null || undefined}
                             >
 

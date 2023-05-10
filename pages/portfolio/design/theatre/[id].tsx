@@ -73,12 +73,8 @@ export const TheatreDocPage = ({
                             <NextPrevDynamicPageButtons
                                 pageSlug="/portfolio/design/theatre"
                                 nextItemId={nextPageId}
-                                nextItemTitle={nextPageTitle}
-                                nextItemImgUrl={nextPageImgUrl}
                                 nextItemDisabled={nextPageId === null || undefined}
                                 prevItemId={prevPageId}
-                                prevItemTitle={prevPageTitle}
-                                prevItemImgUrl={prevPageImgUrl}
                                 prevItemDisabled={prevPageId === null || undefined}
                             >
 

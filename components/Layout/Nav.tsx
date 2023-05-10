@@ -57,18 +57,24 @@ export const Nav = ({
                         Home
                     </a>
 
-                    <Link href="/about" className={mobileLinkStyles + (router.pathname === "/about" ? "active-link" : "")}>
-                        About
+                    <Link href="/about" passHref legacyBehavior>
+                        <a className={mobileLinkStyles + (router.pathname === "/about" ? "active-link" : "")}>
+                            About
+                        </a>
                     </Link>
 
                     <PortfolioMenu linkStyles={mobileLinkStyles} scrolledDown={scrolledDown} />
 
-                    <Link href="/resume" className={mobileLinkStyles + (router.pathname === "/resume" ? "active-link" : "")}>
-                        Resume
+                    <Link href="/resume" passHref legacyBehavior>
+                        <a className={mobileLinkStyles + (router.pathname === "/resume" ? "active-link" : "")}>
+                            Resume
+                        </a>
                     </Link>
 
-                    <Link href="/contact" className={mobileLinkStyles + (router.pathname === "/contact" ? "active-link" : "")}>
-                        Contact
+                    <Link href="/contact" passHref legacyBehavior>
+                        <a className={mobileLinkStyles + (router.pathname === "/contact" ? "active-link" : "")}>
+                            Contact
+                        </a>
                     </Link>
                 </div>
 

@@ -5,13 +5,14 @@ module.exports = {
     "./components/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
-    extend: {},
-    colors: {
-      'offWhite': "#f8f8f8",
-      'lavender': "#a057b1",
-      'bubblegum': "#a78bfa",
-      "darkViolet": "#160d33",
-      "darkGray": "#404040"
+    extend: {
+      colors: {
+        'offWhite': "#e0e0e0",
+        'lavender': "#a057b1",
+        'bubblegum': "#a78bfa",
+        "darkViolet": "#160d33",
+        "darkGray": "#404040"
+      },
     },
     objectPosition: {
       'cover': 'cover',
