@@ -1,6 +1,6 @@
 .awssld,
 .awssld__wrapper {
-    @apply h-[unset] max-h-[90vh] min-w-[70vw];
+    @apply h-[unset] max-h-[90vh] min-w-[75vw];
 }
 
 .awssld__content {
@@ -42,6 +42,15 @@
 
 .contact-slider .awssld__bullets {
     display: none;
+}
+
+.contact-slider,
+.contact-slider .awssld,
+.contact-slider .awssld__wrapper,
+.contact-slider .awssld__container,
+.contact-slider .awssld__box {
+    max-width: 70vw !important;
+    min-width: 50vw !important;
 }
 
 @media only screen and (max-width: 1200px) {

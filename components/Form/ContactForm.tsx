@@ -87,18 +87,14 @@ export const ContactForm = ({
     return (
         <form
             onSubmit={handleSubmit}
-            className={"rounded-lg shadow-xl flex flex-col px-8 py-8 bg-[#fff] dark:bg-blue-500 " + className}
+            className={"flex flex-col px-8 py-8 bg-transparent " + className}
             id={id}
         >
-            <h1 className="text-2xl font-bold dark:text-gray-50">
-                Get in Touch
-            </h1>
-
             <label
                 htmlFor="fullname"
-                className="text-gray-500 font-light mt-8 dark:text-gray-50"
+                className=" font-light mt-8"
             >
-                Full name<span className="text-red-500 dark:text-gray-50">*</span>
+                Full name<span className="text-red-500">*</span>
             </label>
             <input
                 type="text"
@@ -107,13 +103,13 @@ export const ContactForm = ({
                     setFullname(e.target.value);
                 }}
                 name="fullname"
-                className="bg-transparent border-b py-2 pl-4 focus:outline-none focus:rounded-md focus:ring-1 ring-green-500 font-light text-gray-500"
+                className="bg-transparent border-b border-slate-900 py-2 pl-4 focus:outline-none focus:rounded-md focus:ring-1 ring-green-500 font-light "
             />
 
 
             <label
                 htmlFor="email"
-                className="text-gray-500 font-light mt-4 dark:text-gray-50"
+                className=" font-light mt-4"
             >
                 E-mail<span className="text-red-500">*</span>
             </label>
@@ -124,13 +120,13 @@ export const ContactForm = ({
                 onChange={(e) => {
                     setEmail(e.target.value);
                 }}
-                className="bg-transparent border-b py-2 pl-4 focus:outline-none focus:rounded-md focus:ring-1 ring-green-500 font-light text-gray-500"
+                className="bg-transparent border-b border-slate-900 py-2 pl-4 focus:outline-none focus:rounded-md focus:ring-1 ring-green-500 font-light "
             />
 
 
             <label
                 htmlFor="subject"
-                className="text-gray-500 font-light mt-4 dark:text-gray-50"
+                className=" font-light mt-4"
             >
                 Subject<span className="text-red-500">*</span>
             </label>
@@ -141,12 +137,12 @@ export const ContactForm = ({
                 onChange={(e) => {
                     setSubject(e.target.value);
                 }}
-                className="bg-transparent border-b py-2 pl-4 focus:outline-none focus:rounded-md focus:ring-1 ring-green-500 font-light text-gray-500"
+                className="bg-transparent border-b border-slate-900 py-2 pl-4 focus:outline-none focus:rounded-md focus:ring-1 ring-green-500 font-light "
             />
 
             <label
                 htmlFor="message"
-                className="text-gray-500 font-light mt-4 dark:text-gray-50"
+                className=" font-light mt-4"
             >
                 Message<span className="text-red-500">*</span>
             </label>
@@ -156,7 +152,7 @@ export const ContactForm = ({
                 onChange={(e) => {
                     setMessage(e.target.value);
                 }}
-                className="bg-transparent border-b py-2 pl-4 focus:outline-none focus:rounded-md focus:ring-1 ring-green-500 font-light text-gray-500"
+                className="bg-transparent border-b border-slate-900 py-2 pl-4 focus:outline-none focus:rounded-md focus:ring-1 ring-green-500 font-light "
             ></textarea>
 
             <div className="flex flex-row items-center justify-start">

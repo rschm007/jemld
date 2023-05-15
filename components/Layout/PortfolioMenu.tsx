@@ -20,7 +20,7 @@ export const PortfolioMenu = ({
 
     return (
         <Menu>
-            <Menu.Button className={linkStyles + (router.pathname.includes("portfolio") ? "active-link" : "")}>Portfolio</Menu.Button>
+            <Menu.Button className={linkStyles + (router.pathname.includes("portfolio") && router.pathname.toLowerCase().indexOf("process") === -1 ? "active-link" : "")}>Portfolio</Menu.Button>
             <Transition
                 as={Fragment}
                 enter="transition ease-out duration-100"
@@ -31,7 +31,7 @@ export const PortfolioMenu = ({
                 leaveTo="transform opacity-0 scale-95"
             >
                 <Menu.Items
-                    className="flex flex-col relative md:absolute md:!ml-[7rem] md:mt-[9rem] origin-top-right divide-y divide-gray-100 bg-white shadow-lg focus:outline-none"
+                    className="flex flex-col relative md:absolute md:!ml-[7rem] md:mt-[7rem] origin-top-right divide-y divide-gray-100 bg-white shadow-lg focus:outline-none"
                     style={{ backgroundColor: scrolledDown ? `${hexToRgba("#166534", 1)}` : `${hexToRgba("#166534", 0.8)}` }}
                 >
                     <div className="flex flex-col items-center justify-start p-2">
@@ -51,16 +51,6 @@ export const PortfolioMenu = ({
                                 <Link href="/portfolio/design/dance" passHref legacyBehavior>
                                     <a className={linkStyles + " text-offWhite !no-underline"}>
                                         Dance
-                                    </a>
-                                </Link>
-                            )}
-                        </Menu.Item>
-
-                        <Menu.Item>
-                            {({ active }) => (
-                                <Link href="/portfolio/process" passHref legacyBehavior>
-                                    <a className={linkStyles + " text-offWhite !no-underline"}>
-                                        Process
                                     </a>
                                 </Link>
                             )}

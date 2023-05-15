@@ -34,6 +34,12 @@ export const Nav = ({
 
                 <PortfolioMenu linkStyles={linkStyles} scrolledDown={scrolledDown} />
 
+                <Link href="/portfolio/process" passHref legacyBehavior>
+                    <a className={linkStyles + (router.pathname === "/portfolio/process" ? "active-link" : "")}>
+                        Process
+                    </a>
+                </Link>
+
                 <Link href="/resume" className={linkStyles + (router.pathname === "/resume" ? "active-link" : "")}>
                     Resume
                 </Link>
@@ -64,6 +70,12 @@ export const Nav = ({
                     </Link>
 
                     <PortfolioMenu linkStyles={mobileLinkStyles} scrolledDown={scrolledDown} />
+
+                    <Link href="/portfolio/process" passHref legacyBehavior>
+                        <a className={mobileLinkStyles + (router.pathname === "/portfolio/process" ? "active-link" : "")}>
+                            Process
+                        </a>
+                    </Link>
 
                     <Link href="/resume" passHref legacyBehavior>
                         <a className={mobileLinkStyles + (router.pathname === "/resume" ? "active-link" : "")}>

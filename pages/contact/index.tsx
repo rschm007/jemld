@@ -34,7 +34,6 @@ export const ContactPage = ({
                                     interval={3000}
                                     infinite
                                     style={{
-                                        maxWidth: "45rem",
                                         background: "#000"
                                     }}
                                 >
@@ -44,7 +43,21 @@ export const ContactPage = ({
                                 </AutoplaySlider>
                             </figure>
 
-                            <ContactForm className="w-full md:w-2/3" />
+                            <div className="flex flex-col items-center justify-center h-full w-full space-y-4">
+                                <h1 className="text-4xl font-bold">
+                                    Get in Touch
+                                </h1>
+
+                                <div className="flex flex-col items-center justify-start">
+                                    <a className="underline text-blue-800" href="mailto:jemld@jemld.com">
+                                        Jemld@jemld.com
+                                    </a>
+                                </div>
+
+                                <ContactForm className="w-full" />
+                            </div>
+
+
                         </div>
 
                     </section>
