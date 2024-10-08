@@ -50,7 +50,7 @@ export const ContactPage = ({
 
                                 <div className="flex flex-col items-center justify-start">
                                     <a className="underline text-blue-800" href="mailto:jemld@jemld.com">
-                                        Jemld@jemld.com
+                                        jemlightdesign@gmail.com
                                     </a>
                                 </div>
 

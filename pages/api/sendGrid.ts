@@ -3,12 +3,16 @@ import sendgrid from "@sendgrid/mail";
 sendgrid.setApiKey(process.env.SENDGRID_API_KEY);
 
 export const sendEmailHandler = async (req, res) => {
-    try {
-        await sendgrid.send({
-            to: "jacquelinemalenke@gmail.com", // Your email where you'll receive emails
-            from: "jacquelinemalenke@gmail.com", // your website email address here
-            subject: `[Lead from website] : ${req.body.subject}`,
-            html: `<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+  if (req.method !== 'POST') {
+    return res.status(405).json({ error: 'Method Not Allowed' });
+  }
+
+  try {
+    await sendgrid.send({
+      to: "jemlightdesign@gmail.com", // Your email where you'll receive emails
+      from: "jemlightdesign@gmail.com", // your website email address here
+      subject: `[Lead from website] : ${req.body.subject}`,
+      html: `<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
           <html lang="en">
           <head>
             <meta charset="utf-8">
@@ -40,15 +44,15 @@ export const sendEmailHandler = async (req, res) => {
                   </div>
           </body>
           </html>`,
-        }).then(() => {
-            console.log('Email sent');
-        })
-    } catch (error) {
-        // console.log(error);
-        return res.status(error.statusCode || 500).json({ error: error.message });
-    }
+    }).then(() => {
+      console.log('Email sent');
+    })
+  } catch (error) {
+    console.error(error);
+    return res.status(error.statusCode || 500).json({ error: error.message });
+  }
 
-    return res.status(200).json({ error: "" });
+  return res.status(200).json({ error: "" });
 }
 
 export default sendEmailHandler;

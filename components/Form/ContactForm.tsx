@@ -82,7 +82,6 @@ export const ContactForm = ({
             setShowFailureMessage(false);
             setButtonText("Send");
         }
-        // console.log(fullname, email, subject, message);
     };
     return (
         <form
