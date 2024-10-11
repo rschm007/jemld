@@ -8,7 +8,7 @@ export const Footer = ({
 }: IDefaultPropsWithChildren) => {
 
     return (
-        <footer className={"flex flex-col w-full h-[25rem] md:h-48 bg-darkGray " + className} id={id}>
+        <footer className={"flex flex-col w-full h-[25rem] md:h-48 bg-neutral-900 " + className} id={id}>
             <div className="flex flex-col md:flex-row w-full justify-between items-center px-8 md:px-20 pt-8 space-y-4">
 
                 <div className="flex flex-col items-start justify-start">

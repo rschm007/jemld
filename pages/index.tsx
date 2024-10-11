@@ -23,6 +23,8 @@ export const Home = ({
   const [processPanel, setProcessPanel] = useState(processContentData);
   const [images, setImages] = useState(imagesData);
 
+  console.log(theatrePanelData)
+
   return (
     <>
       <Head>
@@ -89,28 +91,32 @@ export async function getServerSideProps() {
 
   let dancePanelData = null;
   await danceContentData.filter(async (d) => {
-    await d.imageGallery.forEach(async (x) => {
-      if (x.hasOwnProperty('mainCatImage')) {
-        dancePanelData = x;
-        if (x?.title && !imageIds.includes(d.imageNameId) && imageNames.length < 1) {
-          imageIds.push(d.imageNameId);
-          imageNames.push(x.title);
+    if (d?.imageGallery) {
+      await d.imageGallery.forEach(async (x) => {
+        if (x.hasOwnProperty('mainCatImage')) {
+          dancePanelData = x;
+          if (x?.title && !imageIds.includes(d.imageNameId) && imageNames.length < 1) {
+            imageIds.push(d.imageNameId);
+            imageNames.push(x.title);
+          }
         }
-      }
-    });
+      });
+    }
   })
 
   let theatrePanelData = null;
   await theatreContentData.filter(async (d) => {
-    await d.imageGallery.forEach(async (x) => {
-      if (x.hasOwnProperty('mainCatImage')) {
-        theatrePanelData = x;
-        if (x?.title && !imageIds.includes(d.imageNameId) && imageNames.length < 2) {
-          imageIds.push(d.imageNameId);
-          imageNames.push(x.title);
+    if (d?.imageGallery) {
+      await d.imageGallery.forEach(async (x) => {
+        if (x.hasOwnProperty('mainCatImage')) {
+          theatrePanelData = x;
+          if (x?.title && !imageIds.includes(d.imageNameId) && imageNames.length < 2) {
+            imageIds.push(d.imageNameId);
+            imageNames.push(x.title);
+          }
         }
-      }
-    });
+      });
+    }
   })
 
   await contentData.filter(async (c) => {

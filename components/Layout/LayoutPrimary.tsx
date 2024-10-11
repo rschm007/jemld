@@ -17,14 +17,14 @@ export const LayoutPrimary = ({
         return () => {
             setMounted(false);
         }
-    })
+    }, []);     
 
     return (
         <div>
             <Header />
 
             <motion.div
-                className={"flex flex-col w-full h-full justify-between bg-offWhite overflow-x-auto overflow-y-auto " + className}
+                className={"flex flex-col w-full h-full justify-between bg-[#141d14] overflow-x-auto overflow-y-auto " + className}
                 id={id}
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}

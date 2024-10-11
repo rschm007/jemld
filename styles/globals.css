@@ -9,7 +9,7 @@
 @import "./awesomeSlider.css";
 
 body {
-    @apply bg-offWhite;
+    @apply bg-[#141d14];
 }
 
 h1,
@@ -18,13 +18,18 @@ h3,
 h4,
 button {
     font-family: "Playfair Display", serif;
+    @apply text-slate-100;
 }
 
 a,
 p,
 ul,
-ol {
+ol,
+span,
+label,
+div.attribution {
     font-family: 'Montserrat', sans-serif;
+    @apply text-slate-100;
 }
 
 /* font overrides */
