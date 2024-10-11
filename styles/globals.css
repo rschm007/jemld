@@ -9,7 +9,7 @@
 @import "./awesomeSlider.css";
 
 body {
-    @apply bg-[#081116];
+    @apply bg-[#141d14];
 }
 
 h1,
@@ -26,6 +26,7 @@ p,
 ul,
 ol,
 span,
+label,
 div.attribution {
     font-family: 'Montserrat', sans-serif;
     @apply text-slate-100;

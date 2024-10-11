@@ -49,7 +49,7 @@ export const ContactPage = ({
                                 </h1>
 
                                 <div className="flex flex-col items-center justify-start">
-                                    <a className="underline text-blue-800" href="mailto:jemld@jemld.com">
+                                    <a className="underline text-blue-600" href="mailto:jemld@jemld.com">
                                         jemlightdesign@gmail.com
                                     </a>
                                 </div>

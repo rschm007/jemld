@@ -122,7 +122,7 @@ export const ContactForm = ({
                             setName(e.target.value);
                         }}
                         name="name"
-                        className="bg-transparent border-b border-slate-900 py-2 pl-4 focus:outline-none focus:rounded-md focus:ring-1 ring-green-500 font-light "
+                        className="bg-slate-300 border-b border-slate-900 py-2 pl-4 focus:outline-none focus:rounded-md focus:ring-1 ring-green-500 font-light "
                     />
 
 
@@ -139,7 +139,7 @@ export const ContactForm = ({
                         onChange={(e) => {
                             setEmail(e.target.value);
                         }}
-                        className="bg-transparent border-b border-slate-900 py-2 pl-4 focus:outline-none focus:rounded-md focus:ring-1 ring-green-500 font-light "
+                        className="bg-slate-300 border-b border-slate-900 py-2 pl-4 focus:outline-none focus:rounded-md focus:ring-1 ring-green-500 font-light "
                     />
 
 
@@ -156,7 +156,7 @@ export const ContactForm = ({
                         onChange={(e) => {
                             setSubject(e.target.value);
                         }}
-                        className="bg-transparent border-b border-slate-900 py-2 pl-4 focus:outline-none focus:rounded-md focus:ring-1 ring-green-500 font-light "
+                        className="bg-slate-300 border-b border-slate-900 py-2 pl-4 focus:outline-none focus:rounded-md focus:ring-1 ring-green-500 font-light "
                     />
 
                     <label
@@ -171,13 +171,13 @@ export const ContactForm = ({
                         onChange={(e) => {
                             setMessage(e.target.value);
                         }}
-                        className="bg-transparent border-b border-slate-900 py-2 pl-4 focus:outline-none focus:rounded-md focus:ring-1 ring-green-500 font-light "
+                        className="bg-slate-300 border-b border-slate-900 py-2 pl-4 focus:outline-none focus:rounded-md focus:ring-1 ring-green-500 font-light "
                     ></textarea>
 
                     <div className="flex flex-row items-center justify-start">
                         <button
                             type="submit"
-                            className="px-10 mt-8 py-2 bg-[#130F49] text-[#fff] font-light rounded-md text-lg flex flex-row items-center"
+                            className="px-10 mt-8 py-2 bg-emerald-800 text-[#fff] font-light rounded-md text-lg flex flex-row items-center"
                         >
                             Submit
                             <svg
