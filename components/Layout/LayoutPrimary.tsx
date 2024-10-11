@@ -24,7 +24,7 @@ export const LayoutPrimary = ({
             <Header />
 
             <motion.div
-                className={"flex flex-col w-full h-full justify-between bg-offWhite overflow-x-auto overflow-y-auto " + className}
+                className={"flex flex-col w-full h-full justify-between bg-[#081116] overflow-x-auto overflow-y-auto " + className}
                 id={id}
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}

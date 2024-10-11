@@ -64,11 +64,7 @@ export const Header = ({
         >
             {/* eslint-disable-next-line @next/next/no-html-link-for-pages */}
             <a href="/">
-                {sticky ? (
-                    <Image src="/JQLogo_full_white-text.svg" className="w-80" alt="JQ Lights" width="150" height="100" />
-                ) : (
-                    <Image src="/JQLogo_full_color.svg" className="w-80" alt="JQ Lights" width="150" height="100" />
-                )}
+                <Image src="/JQLogo_full_white-text.svg" className="w-80" alt="JQ Lights" width="150" height="100" />
             </a>
 
             <Nav scrolledDown={sticky} />
