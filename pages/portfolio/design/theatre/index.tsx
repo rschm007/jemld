@@ -85,15 +85,18 @@ export async function getServerSideProps() {
     const imageNames = [];
     const panels = [];
     const pageContentData = await contentData.filter(async (d) => {
-        await d.imageGallery.forEach(async (x) => {
-            if (x.hasOwnProperty('mainImage')) {
-                if (!imageIds.includes(d.imageNameId)) {
-                    imageIds.push(d.imageNameId);
-                    panels.push(x);
-                    imageNames.push(x.title)
+        if (d?.imageGallery) {
+            await d.imageGallery.forEach(async (x) => {
+                if (x.hasOwnProperty('mainImage')) {
+                    if (!imageIds.includes(d.imageNameId)) {
+                        imageIds.push(d.imageNameId);
+                        panels.push(x);
+                        imageNames.push(x.title)
+                    }
                 }
-            }
-        });
+            });
+        }
+
     })
 
     const images = [];
